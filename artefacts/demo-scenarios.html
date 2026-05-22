@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tangible demo scenarios</title>
+<style>
+ :root {
+ --bg: #f6f7f9;
+ --card: #ffffff;
+ --ink: #0f1419;
+ --ink-soft: #424a55;
+ --ink-mute: #6b7480;
+ --line: #e5e8ec;
+ --line-strong: #cdd3da;
+ --accent: #0b5fff;
+ --pain-bg: #fef4ee;
+ --pain-line: #f4cbb0;
+ --pain-ink: #8a3d12;
+ --sc-bg: #eef5ed;
+ --sc-line: #b9d4b3;
+ --sc-ink: #1f5a2e;
+ --sit-bg: #f3f5f8;
+ --sit-line: #d8dee6;
+ --real: #b8336a;
+ --constructed: #5a6473;
+ --pill-q: #b34700;
+ --pill-s: #1d4ed8;
+ --pill-c: #047857;
+ --pill-p: #6d28d9;
+ --pill-team-cs: #b91c1c;
+ --pill-team-er: #6d28d9;
+ --pill-team-qa: #047857;
+ --pill-team-ops: #1d4ed8;
+ }
+ * { box-sizing: border-box; }
+ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif; font-size: 14px; line-height: 1.45; }.wrap { max-width: 1080px; margin: 0 auto; padding: 28px 24px 80px; }
+
+ header.intro {
+ background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+ border: 1px solid var(--line);
+ border-radius: 10px;
+ padding: 22px 26px;
+ margin-bottom: 22px;
+ }
+ header.intro h1 { margin: 0 0 8px; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+ header.intro.sub { color: var(--ink-soft); font-size: 13px; margin-bottom: 12px; }
+ header.intro.frame { background: #fff8e6; border: 1px solid #f0d68a; padding: 12px 14px; border-radius: 6px; font-size: 13px; color: #6e4f00; }
+ header.intro.frame b { color: #4a3500; }.filters {
+ background: var(--card);
+ border: 1px solid var(--line);
+ border-radius: 10px;
+ padding: 14px 18px;
+ margin-bottom: 18px;
+ display: flex;
+ flex-wrap: wrap;
+ gap: 16px 24px;
+ align-items: center;
+ }.filter-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }.filter-group.label { font-size: 11px; color: var(--ink-mute); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-right: 2px; }.chip {
+ border: 1px solid var(--line-strong);
+ background: #fff;
+ color: var(--ink-soft);
+ padding: 4px 10px;
+ border-radius: 999px;
+ font-size: 12px;
+ cursor: pointer;
+ user-select: none;
+ transition: all 0.12s ease;
+ }.chip:hover { border-color: var(--ink-mute); }.chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }.reset {
+ margin-left: auto;
+ font-size: 12px;
+ color: var(--accent);
+ background: none;
+ border: none;
+ cursor: pointer;
+ padding: 4px 6px;
+ }.reset:hover { text-decoration: underline; }.count {
+ font-size: 12px;
+ color: var(--ink-mute);
+ margin: 0 4px 14px;
+ }.card {
+ background: var(--card);
+ border: 1px solid var(--line);
+ border-radius: 10px;
+ padding: 20px 22px 18px;
+ margin-bottom: 18px;
+ transition: opacity 0.15s ease;
+ }.card.hidden { display: none; }.card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 10px; }.card-head h2 { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -0.005em; }.card-num { font-size: 11px; color: var(--ink-mute); font-weight: 600; letter-spacing: 0.08em; margin-bottom: 4px; }.source-flag {
+ font-size: 11px;
+ font-weight: 600;
+ padding: 3px 8px;
+ border-radius: 4px;
+ white-space: nowrap;
+ flex-shrink: 0;
+ }.source-flag.real { background: #fce8f0; color: var(--real); border: 1px solid #f0bdd0; }.source-flag.constructed { background: #eef0f3; color: var(--constructed); border: 1px solid #d8dde3; }.badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }.badge {
+ font-size: 11px;
+ font-weight: 500;
+ padding: 3px 8px;
+ border-radius: 4px;
+ background: #f3f5f8;
+ color: var(--ink-soft);
+ border: 1px solid var(--line);
+ }.badge.persona { background: #eef2fb; color: #1e3a8a; border-color: #c9d6f0; }.badge.qsc-q { background: #fdf1e8; color: var(--pill-q); border-color: #f4cba7; }.badge.qsc-s { background: #e8eefd; color: var(--pill-s); border-color: #c0cef5; }.badge.qsc-c { background: #e6f4ee; color: var(--pill-c); border-color: #b6dcc6; }.badge.qsc-p { background: #f1ebfa; color: var(--pill-p); border-color: #cfbcef; }.badge.team-cs { background: #fdecec; color: var(--pill-team-cs); border-color: #f4c2c2; }.badge.team-er { background: #f1ebfa; color: var(--pill-team-er); border-color: #cfbcef; }.badge.team-qa { background: #e6f4ee; color: var(--pill-team-qa); border-color: #b6dcc6; }.badge.team-ops { background: #e8eefd; color: var(--pill-team-ops); border-color: #c0cef5; }.body {
+ display: grid;
+ grid-template-columns: 1fr 1fr 1fr;
+ gap: 12px;
+ margin-bottom: 12px;
+ }.block {
+ border: 1px solid;
+ border-radius: 8px;
+ padding: 12px 14px;
+ font-size: 13px;
+ line-height: 1.5;
+ }.block.blk-label {
+ font-size: 10.5px;
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 0.08em;
+ margin-bottom: 6px;
+ display: block;
+ }.block.situation { background: var(--sit-bg); border-color: var(--sit-line); }.block.situation.blk-label { color: var(--ink-soft); }.block.pain { background: var(--pain-bg); border-color: var(--pain-line); }.block.pain.blk-label { color: var(--pain-ink); }.block.angle { background: var(--sc-bg); border-color: var(--sc-line); }.block.angle.blk-label { color: var(--sc-ink); }.resonates {
+ padding-top: 12px;
+ border-top: 1px dashed var(--line);
+ font-size: 12.5px;
+ color: var(--ink-soft);
+ }.resonates b {
+ color: var(--ink);
+ font-weight: 600;
+ }
+
+ footer {
+ margin-top: 40px;
+ padding-top: 16px;
+ border-top: 1px solid var(--line);
+ font-size: 11.5px;
+ color: var(--ink-mute);
+ text-align: center;
+ }
+ footer.stamp {
+ display: inline-block;
+ padding: 3px 8px;
+ background: #fff3f3;
+ color: #8a1414;
+ border: 1px solid #f4caca;
+ border-radius: 4px;
+ font-weight: 600;
+ letter-spacing: 0.04em;
+ margin-bottom: 6px;
+ }
+
+ @media (max-width: 920px) {.body { grid-template-columns: 1fr; }
+ }
+
+ /* Inline reference photo tile inside a scenario card */
+ a.scenario-ref {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   margin: 0 0 14px;
+   padding: 8px 10px;
+   background: #fcfbf8;
+   border: 1px solid #ececec;
+   border-radius: 6px;
+   max-width: 380px;
+   text-decoration: none;
+   color: #1a1a1a;
+   transition: border-color 0.15s;
+ }
+ a.scenario-ref:hover { border-color: #ffbc0d; color: #1a1a1a; }
+ a.scenario-ref img {
+   width: 92px;
+   height: 68px;
+   object-fit: cover;
+   border-radius: 4px;
+   border: 1px solid #ececec;
+   flex-shrink: 0;
+ }
+ .scenario-ref-label {
+   font-size: 11.5px;
+   line-height: 1.35;
+   min-width: 0;
+ }
+ .scenario-ref-label strong {
+   display: block;
+   color: #27251f;
+   font-weight: 600;
+   margin-bottom: 2px;
+   font-size: 12px;
+ }
+ .scenario-ref-label span { color: #5a5a5a; }
+</style>
+<style id="dash-rail-style">
+ body { padding-left: 188px !important; }.dash-rail {
+ position: fixed;
+ top: 0;
+ left: 0;
+ bottom: 0;
+ width: 168px;
+ background: #ffffff;
+ border-right: 1px solid #e5e5e5;
+ padding: 22px 14px 22px 18px;
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+ font-size: 12.5px;
+ z-index: 1000;
+ overflow-y: auto;
+ box-sizing: border-box;
+ }.dash-rail__brand {
+ font-size: 10px;
+ text-transform: uppercase;
+ letter-spacing: 0.7px;
+ color: #8a8a85;
+ margin-bottom: 4px;
+ }.dash-rail__home {
+ display: block;
+ font-weight: 700;
+ color: #27251f;
+ text-decoration: none;
+ padding-bottom: 14px;
+ margin-bottom: 14px;
+ border-bottom: 1px solid #ececec;
+ letter-spacing: -0.1px;
+ font-size: 14px;
+ }.dash-rail__home:hover { color: #da291c; }.dash-rail__label {
+ font-size: 9.5px;
+ text-transform: uppercase;
+ letter-spacing: 0.7px;
+ color: #8a8a85;
+ margin: 0 0 8px;
+ padding: 0 4px;
+ }.dash-rail nav { display: flex; flex-direction: column; gap: 1px; }.dash-rail nav a {
+ color: #5a5a5a;
+ text-decoration: none;
+ padding: 7px 8px;
+ border-radius: 4px;
+ line-height: 1.35;
+ border-left: 3px solid transparent;
+ }.dash-rail nav a:hover { background: #fafaf7; color: #27251f; }.dash-rail nav a.current {
+ background: #fffdf5;
+ color: #27251f;
+ font-weight: 600;
+ border-left-color: #ffbc0d;
+ }
+ @media (max-width: 820px) {
+ body { padding-left: 0 !important; }.dash-rail {
+ position: static;
+ width: auto;
+ height: auto;
+ border-right: none;
+ border-bottom: 1px solid #e5e5e5;
+ padding: 12px 16px;
+ }.dash-rail__home { padding-bottom: 8px; margin-bottom: 8px; }.dash-rail nav { flex-direction: row; flex-wrap: wrap; gap: 4px; }.dash-rail__label { display: none; }
+ }
+ @media print {.dash-rail { display: none; }
+ body { padding-left: 0 !important; }
+ }
+</style>
+<style id="unified-design">
+  /* Unified design tokens — locks look & feel across the prep bundle */
+  body {
+    background: #fafaf7 !important;
+    color: #1a1a1a !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Page title — exactly one per page */
+  h1 {
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.4px !important;
+    color: #27251f !important;
+    margin: 0 0 6px !important;
+  }
+
+  /* Page header bar — flat, with thick corp-dark bottom border */
+  .wrap > header,
+  .wrap > header.top,
+  .wrap > header.intro,
+  header.page-head {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 3px solid #27251f !important;
+    border-radius: 0 !important;
+    padding: 0 0 14px !important;
+    margin: 0 0 22px !important;
+  }
+
+  /* Main section headers — skip small-caps label sections (.context on dashboard, .tldr on op-model) */
+  section:not(.context):not(.tldr) > h2 {
+    color: #27251f !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.1px !important;
+  }
+
+  /* Stat strip & subtitles */
+  .stat-strip { color: #5a5a5a !important; }
+  .stat-strip strong { color: #27251f !important; }
+  .subtitle, .sub { color: #5a5a5a !important; }
+
+  /* TOC chip */
+  nav.toc { border: 1px solid #ececec !important; background: #ffffff !important; }
+  nav.toc strong { color: #27251f !important; }
+  nav.toc a { color: #27251f !important; }
+  nav.toc a:hover { color: #da291c !important; }
+</style>
+</head>
+<body>
+<aside class="dash-rail">
+ <div class="dash-rail__brand">McD RFP prep</div>
+ <a class="dash-rail__home" href="../index.html">← Dashboard</a>
+ <div class="dash-rail__label">Artefacts</div>
+ <nav>
+ <a href="operating-model-briefer.html" class="">Operating model</a>
+ <a href="personas-onepager.html" class="">Personas</a>
+ <a href="demo-scenarios.html" class="current">Demo scenarios</a>
+ <a href="feature-workflow-map.html" class="">Feature mapping</a>
+ </nav>
+</aside>
+
+<div class="wrap">
+
+<header class="intro">
+ <h1>Tangible demo scenarios</h1>
+ <div class="frame">
+ <b>What this is:</b> insider scenarios I think will land well with Paul, Kathy and the CFT — drawn from my four years on the floor at Maccas Dickson. <b>What this isn't:</b> the demo plan. Validate, refine, sequence and dress them up with the product expertise I don't have. Two are real anecdotes from my time on station; the rest are constructed from real McD operating detail and should feel familiar to anyone who's spent time in a restaurant. <b>Filter chips below</b> let you slice by QSC pillar, persona and corporate team.
+ </div>
+</header>
+
+<div class="filters">
+ <div class="filter-group">
+ <span class="label">QSC</span>
+ <button class="chip" data-filter="qsc" data-value="quality">Quality</button>
+ <button class="chip" data-filter="qsc" data-value="service">Service</button>
+ <button class="chip" data-filter="qsc" data-value="cleanliness">Cleanliness</button>
+ <button class="chip" data-filter="qsc" data-value="people">People</button>
+ </div>
+ <div class="filter-group">
+ <span class="label">Persona</span>
+ <button class="chip" data-filter="persona" data-value="shift">Shift Mgr</button>
+ <button class="chip" data-filter="persona" data-value="restaurant">Restaurant Mgr</button>
+ <button class="chip" data-filter="persona" data-value="area">Area Supervisor</button>
+ </div>
+ <div class="filter-group">
+ <span class="label">Corp Team</span>
+ <button class="chip" data-filter="team" data-value="cs">Customer Service</button>
+ <button class="chip" data-filter="team" data-value="er">Employee Relations</button>
+ <button class="chip" data-filter="team" data-value="qa">Quality Assurance</button>
+ <button class="chip" data-filter="team" data-value="ops">Ops</button>
+ </div>
+ <div class="filter-group">
+ <span class="label">Source</span>
+ <button class="chip" data-filter="source" data-value="real">★ Real anecdote</button>
+ <button class="chip" data-filter="source" data-value="constructed">Constructed</button>
+ </div>
+ <button class="reset" id="resetBtn">Clear filters</button>
+</div>
+
+<div class="count" id="count">Showing 7 of 7 scenarios</div>
+
+<!-- ============ SCENARIO 1 ============ -->
+<article class="card" data-qsc="quality" data-persona="shift" data-team="qa" data-source="real">
+ <div class="card-head">
+ <div>
+ <div class="card-num">SCENARIO 01</div>
+ <h2>Fry station overhead cover failure</h2>
+ </div>
+ <span class="source-flag real">★ Real anecdote — Ben, Dickson ACT</span>
+ </div>
+ <div class="badges">
+ <span class="badge persona">Shift Manager</span>
+ <span class="badge qsc-q">QSC · Quality</span>
+ <span class="badge team-qa">Quality Assurance / Safety</span>
+ </div>
+ <a class="scenario-ref" href="../assets/reference/fry-station-vats.jpg" target="_blank">
+  <img src="../assets/reference/fry-station-vats.jpg" alt="Fry station vats" loading="lazy">
+  <div class="scenario-ref-label">
+   <strong>Fry station — reference photo</strong>
+   <span>Click to see the vats &amp; overhead hood</span>
+  </div>
+ </a>
+ <div class="body">
+ <div class="block situation">
+ <span class="blk-label">Situation</span>
+ Mid-shift, non-peak. Crew member working fry station follows the widely-practised <i>informal</i> drainage technique — basket on the retaining hook, bang the handle against the stainless steel hood. This shift, the heavy metal hood cover spanning the six-bay drive-thru fry line detaches from its mounting and swings down, hanging precariously over a vat of hot oil. Crew is immobilised. Near-miss: full hood collapse into the vat would mean a massive oil splash and food contamination across the line.
+ </div>
+ <div class="block pain">
+ <span class="blk-label">Current state — Donesafe / verbal</span>
+ Crew yells over to the shift manager, both hands full mid-fry. Shift manager <i>might</i> jot a note. More likely: forgotten amidst the demands of the shift. Mounting gets re-secured later by maintenance with no record of cause. The informal banging procedure that caused the mount fatigue persists store-wide — and propagates crew-to-crew. Same failure recurs in 6 months, untraceable.
+ </div>
+ <div class="block angle">
+ <span class="blk-label">Suggested SC angle</span>
+ Shift manager opens Issue on the in-hand iPad in &lt;15s — voice-records description, photo of the dangling cover, AI prefills incident type and severity. Two auto-actions: (1) maintenance ticket for the mount railing; (2) corrective procedure flag escalating the informal "banging" technique for cross-store comms. The systemic cause gets surfaced, not just the symptom.
+ </div>
+ </div>
+ <div class="resonates"><b>Why this resonates:</b> equipment hazard PLUS unsanctioned crew technique on the same record. The "verbal-to-forgotten" pattern is Paul's exact stated pain.</div>
+</article>
+
+<!-- ============ SCENARIO 2 ============ -->
+<article class="card" data-qsc="cleanliness" data-persona="shift" data-team="qa" data-source="real">
+ <div class="card-head">
+ <div>
+ <div class="card-num">SCENARIO 02</div>
+ <h2>Summernats — fry unit oil leak during peak</h2>
+ </div>
+ <span class="source-flag real">★ Real anecdote — Ben, Dickson ACT</span>
+ </div>
+ <div class="badges">
+ <span class="badge persona">Shift Manager</span>
+ <span class="badge qsc-c">QSC · Cleanliness</span>
+ <span class="badge qsc-q">QSC · Quality</span>
+ <span class="badge team-qa">Quality Assurance / Safety</span>
+ </div>
+ <div class="body">
+ <div class="block situation">
+ <span class="blk-label">Situation</span>
+ Annual Summernats weekend — one of the busiest local-event peaks of the year in Canberra. Crew assigned single-station for the duration (I was 100% on fry). Oil starts leaking significantly from the fry unit; a slip hazard spreads across the floor. The drive-thru is stacked back to the street, headset chatter constant, PCC streak at risk. Workflow physically cannot pause.
+ </div>
+ <div class="block pain">
+ <span class="blk-label">Current state — Donesafe / verbal</span>
+ Standard Donesafe flow asks the shift manager to step away from the line, find a device, navigate a form with free-text fields. That doesn't happen during Summernats. Manager throws a wet floor sign down, yells "watch the floor" and keeps moving. Hazard goes unlogged. If someone slips later, there's no record this was a known issue.
+ </div>
+ <div class="block angle">
+ <span class="blk-label">Suggested SC angle</span>
+ Manager pulls phone, taps Issue, says "oil leak fry unit three spreading across the floor" — voice-to-text + AI prefill + photo, submitted without leaving the line. Auto-routes to equipment maintenance + safety team. Trend data later shows this fryer unit is a repeat offender on peak days.
+ </div>
+ </div>
+ <div class="resonates"><b>Why this resonates:</b> a concrete, named local peak event Paul/Kathy will recognise instantly — and it concretises Paul's "minimise administrative friction in restaurant" priority better than any abstract example.</div>
+</article>
+
+<!-- ============ SCENARIO 3 ============ -->
+<article class="card" data-qsc="service,cleanliness,quality" data-persona="area" data-team="ops,qa" data-source="constructed">
+ <div class="card-head">
+ <div>
+ <div class="card-num">SCENARIO 03</div>
+ <h2>Area supervisor — multi-site walk-through, four stores in a day</h2>
+ </div>
+ <span class="source-flag constructed">Constructed · Paul's stated mobile persona</span>
+ </div>
+ <div class="badges">
+ <span class="badge persona">Area Supervisor</span>
+ <span class="badge qsc-s">QSC · Service</span>
+ <span class="badge qsc-c">QSC · Cleanliness</span>
+ <span class="badge qsc-q">QSC · Quality</span>
+ <span class="badge team-ops">Ops</span>
+ <span class="badge team-qa">Quality Assurance</span>
+ </div>
+ <div class="body">
+ <div class="block situation">
+ <span class="blk-label">Situation</span>
+ Area supervisor visiting four stores across her cluster in a single day. Store 2: Happy Meal merch display damaged in the front-of-house. Store 3: a crew member working with no hat (uniform breach). Store 4: dining area unsanitary at 2pm. She has 25 minutes between stops, drives between them, and is — as the KB puts it — run off her feet.
+ </div>
+ <div class="block pain">
+ <span class="blk-label">Current state — iPhone Notes + memory</span>
+ Notes typed into iPhone Notes between stops. Sometimes a text to the restaurant manager from the car park. Back at the office Friday she tries to remember everything. Half the non-conformities never make it to Donesafe. No trend visible across her cluster — and the merch display is still damaged the following week.
+ </div>
+ <div class="block angle">
+ <span class="blk-label">Suggested SC angle</span>
+ Mobile-first inspection on her own phone during the walk-through. Tap-select non-conformity from a pre-built list, photo, auto-assign to that store's RM with deadline. Two minutes per finding. Cluster-level dashboard shows trends by store, by non-conformity type. She leaves the floor with everything captured — no end-of-week catch-up.
+ </div>
+ </div>
+ <div class="resonates"><b>Why this resonates:</b> Paul called out ops consultants and area supervisors as <i>the</i> mobile use case in the Gong — "doing everything on their phone, a lot of time around on the road." Strongest possible visual contrast to the "pin a browser tab" status quo Kathy described.</div>
+</article>
+
+<!-- ============ SCENARIO 4 ============ -->
+<article class="card" data-qsc="quality,cleanliness" data-persona="restaurant" data-team="qa" data-source="constructed">
+ <div class="card-head">
+ <div>
+ <div class="card-num">SCENARIO 04</div>
+ <h2>Council health inspector — unannounced visit</h2>
+ </div>
+ <span class="source-flag constructed">Constructed · maps to Kathy's named example</span>
+ </div>
+ <div class="badges">
+ <span class="badge persona">Restaurant Manager</span>
+ <span class="badge qsc-q">QSC · Quality</span>
+ <span class="badge qsc-c">QSC · Cleanliness</span>
+ <span class="badge team-qa">Quality Assurance</span>
+ </div>
+ <div class="body">
+ <div class="block situation">
+ <span class="blk-label">Situation</span>
+ Local council health inspector walks in unannounced, Wednesday 11am, pre-lunch ramp. Restaurant manager hosts the walk-through. Inspector flags two minor non-conformities: one chemical bottle missing its label in the back dock; one cool-room temperature log with a four-hour gap. Verbal "fix it and document it." The formal PDF report lands in the RM's inbox four days later.
+ </div>
+ <div class="block pain">
+ <span class="blk-label">Current state — Donesafe</span>
+ RM memorises the two issues on a Post-it. Logs them as a free-text Donesafe incident that night. The inspector's PDF lives in email. No structured record links the visit, the non-conformities, the corrective actions, and the closure evidence. Area supervisor sees the Donesafe entry but never the PDF — and has no view of inspector visits across her cluster.
+ </div>
+ <div class="block angle">
+ <span class="blk-label">Suggested SC angle</span>
+ "Health Inspector Visit" inspection template — structured fields, two non-conformities captured live with photos, PDF attached. Auto-generates two corrective actions with owners and deadlines, closes when evidence is uploaded. Area supervisor's dashboard rolls up inspector visits across the cluster. Quality Assurance team has the full chain on one record.
+ </div>
+ </div>
+ <div class="resonates"><b>Why this resonates:</b> Kathy named this verbatim in the Gong — "health inspector visits they enter in there as well." Already part of their flow; SC just does it properly end-to-end.</div>
+</article>
+
+<!-- ============ SCENARIO 5 ============ -->
+<article class="card" data-qsc="people" data-persona="restaurant" data-team="er" data-source="constructed">
+ <div class="card-head">
+ <div>
+ <div class="card-num">SCENARIO 05</div>
+ <h2>Misconduct allegation — crew vs shift manager</h2>
+ </div>
+ <span class="source-flag constructed">Constructed · maps to Kathy's named example</span>
+ </div>
+ <div class="badges">
+ <span class="badge persona">Restaurant Manager</span>
+ <span class="badge qsc-p">People (no direct QSC equivalent)</span>
+ <span class="badge team-er">Employee Relations / Workplace Investigations</span>
+ </div>
+ <div class="body">
+ <div class="block situation">
+ <span class="blk-label">Situation</span>
+ A 17-year-old crew member tells a crew trainer they're being routinely assigned the worst flex tasks — toilet duty, cardboard cutting — by one specific shift manager, over multiple shifts. Crew trainer escalates to the 2IC; 2IC escalates to the Restaurant Manager. Allegation is unproven but plausible — and the crew member is under 18.
+ </div>
+ <div class="block pain">
+ <span class="blk-label">Current state — Donesafe</span>
+ RM opens a Donesafe incident with a free-text narrative. Visibility can't easily be restricted to the right people. Sharing the record with the Employee Relations corporate team means screenshots or exports. Roster evidence (who was on which flex on which shift) lives separately. No clean audit trail of who accessed what when — critical for a minor.
+ </div>
+ <div class="block angle">
+ <span class="blk-label">Suggested SC angle</span>
+ Sensitive-issue template with restricted visibility (RM, 2IC, ER corporate only). Structured fields for allegation, witnesses, evidence. Linked roster snapshots. Full audit trail of access and edits. ER corporate runs the investigation directly off the same record without re-keying.
+ </div>
+ </div>
+ <div class="resonates"><b>Why this resonates:</b> Kathy explicitly named "bullying, harassment, misconduct" investigations. Chris flagged in the Gong that McD is one of Australia's biggest employers of young people — confidentiality controls are the differentiator.</div>
+</article>
+
+<!-- ============ SCENARIO 6 ============ -->
+<article class="card" data-qsc="quality" data-persona="shift,restaurant" data-team="cs,qa" data-source="constructed">
+ <div class="card-head">
+ <div>
+ <div class="card-num">SCENARIO 06</div>
+ <h2>Foreign object complaint — Big Mac, drive-thru returner</h2>
+ </div>
+ <span class="source-flag constructed">Constructed · maps to Kathy's named example</span>
+ </div>
+ <div class="badges">
+ <span class="badge persona">Shift Manager → Restaurant Manager</span>
+ <span class="badge qsc-q">QSC · Quality</span>
+ <span class="badge team-cs">Customer Service</span>
+ <span class="badge team-qa">Quality Assurance</span>
+ </div>
+ <div class="body">
+ <div class="block situation">
+ <span class="blk-label">Situation</span>
+ Customer drives back through 20 minutes after picking up their order, claims they found a small metal fragment in their Big Mac. Shift manager remakes the order and offers a refund. Customer leaves saying "I'll be in touch." Could be a clamshell grill artefact; could be slicer wear; could be unfounded. Either way it's both a customer service issue and a food safety incident.
+ </div>
+ <div class="block pain">
+ <span class="blk-label">Current state — Donesafe + corporate inbox</span>
+ Shift manager fills a customer complaint form. Quality Assurance has no line of sight until someone exports data weekly. Customer Service team gets a parallel inbound through the corporate complaints inbox — different thread, same incident. Two records, no equipment linkage, no traceability back to grill ID or slicer maintenance history.
+ </div>
+ <div class="block angle">
+ <span class="blk-label">Suggested SC angle</span>
+ Single incident record. Photo of object if available, structured "object type / colour / size" fields if not. Auto-routes to BOTH Customer Service and Quality Assurance with the same context. Linked to equipment IDs so QA can pull maintenance history with one click. Trend reporting surfaces foreign-object incidents by equipment across the network.
+ </div>
+ </div>
+ <div class="resonates"><b>Why this resonates:</b> Kathy's exact example — "a food safety incident, they put it through Donesafe… certain questions which then they would investigate on their end." Two corporate teams touching one record is the demonstration angle she described.</div>
+</article>
+
+<!-- ============ SCENARIO 7 ============ -->
+<article class="card" data-qsc="quality" data-persona="shift" data-team="qa,ops" data-source="constructed">
+ <div class="card-head">
+ <div>
+ <div class="card-num">SCENARIO 07</div>
+ <h2>Walk-in freezer door — intermittent latch failure</h2>
+ </div>
+ <span class="source-flag constructed">Constructed · combines KB equipment + verbal-to-forgotten pattern</span>
+ </div>
+ <div class="badges">
+ <span class="badge persona">Shift Manager (close)</span>
+ <span class="badge qsc-q">QSC · Quality</span>
+ <span class="badge team-qa">Quality Assurance</span>
+ <span class="badge team-ops">Ops</span>
+ </div>
+ <div class="body">
+ <div class="block situation">
+ <span class="blk-label">Situation</span>
+ Closing shift manager notices the walk-in freezer door doesn't fully latch on the first push — needs a second nudge. Twice tonight, crew found it ajar after stock runs. If it stays ajar overnight: full freezer thaw, thousands of dollars of stock loss, a HACCP issue, and a board-level write-up. Equipment maintenance is third-party, overnight-only.
+ </div>
+ <div class="block pain">
+ <span class="blk-label">Current state — Post-it & verbal</span>
+ Shift manager writes "FREEZER DOOR DODGY" on a Post-it stuck to the door. Tells the RM verbally the next morning. RM tests the door in the moment, finds it latches fine, mentally dismisses as "crew didn't push hard enough." Latch fully fails nine days later mid-Saturday rush.
+ </div>
+ <div class="block angle">
+ <span class="blk-label">Suggested SC angle</span>
+ Quick issue capture: photo + voice — "freezer door not latching first push, recurring." Auto-routes to the third-party maintenance contractor with a priority flag. Auto-escalation if not actioned in 24 hours. Trend data exposes recurring latch failures by equipment model across the cluster.
+ </div>
+ </div>
+ <div class="resonates"><b>Why this resonates:</b> the verbal-to-forgotten pattern in its purest form, with food-safety stakes — directly attacks the structural failure mode Paul described and the trend-visibility gap Kathy described, on one scenario.</div>
+</article>
+</div>
+
+<script>
+(function () {
+ const chips = document.querySelectorAll('.chip');
+ const cards = document.querySelectorAll('.card');
+ const countEl = document.getElementById('count');
+ const resetBtn = document.getElementById('resetBtn');
+
+ const active = { qsc: new Set(), persona: new Set(), team: new Set(), source: new Set() };
+
+ function matchValue(cardVal, activeSet) {
+ if (activeSet.size === 0) return true;
+ if (!cardVal) return false;
+ const cardValues = cardVal.split(',').map(v => v.trim());
+ for (const v of activeSet) {
+ if (cardValues.includes(v)) return true;
+ }
+ return false;
+ }
+
+ function applyFilters() {
+ let shown = 0;
+ cards.forEach(card => {
+ const match =
+ matchValue(card.dataset.qsc, active.qsc) &&
+ matchValue(card.dataset.persona, active.persona) &&
+ matchValue(card.dataset.team, active.team) &&
+ matchValue(card.dataset.source, active.source);
+ card.classList.toggle('hidden', !match);
+ if (match) shown++;
+ });
+ countEl.textContent = `Showing ${shown} of ${cards.length} scenarios`;
+ }
+
+ chips.forEach(chip => {
+ chip.addEventListener('click', () => {
+ const f = chip.dataset.filter;
+ const v = chip.dataset.value;
+ if (active[f].has(v)) {
+ active[f].delete(v);
+ chip.classList.remove('active');
+ } else {
+ active[f].add(v);
+ chip.classList.add('active');
+ }
+ applyFilters();
+ });
+ });
+
+ resetBtn.addEventListener('click', () => {
+ Object.keys(active).forEach(k => active[k].clear());
+ chips.forEach(c => c.classList.remove('active'));
+ applyFilters();
+ });
+})();
+</script>
+</body>
+</html>

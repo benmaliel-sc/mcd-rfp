@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Corporate &lt;&gt; Franchise Operating Model Summary</title>
+<style>
+ :root {
+ --ink: #1a1a1a;
+ --muted: #5a5a5a;
+ --line: #d4d4d4;
+ --line-soft: #ececec;
+ --bg: #fafaf7;
+ --card: #ffffff;
+ --accent: #ffbc0d;
+ --corp: #27251f;
+ --franchise: #da291c;
+ --warn-bg: #fff8e1;
+ --warn-line: #e3a008;
+ --pitch-bg: #eef5ee;
+ --pitch-line: #2e7d32;
+ --insight-bg: #eef2fa;
+ --insight-line: #2e5aa8;
+ }
+ * { box-sizing: border-box; }
+ html, body { margin: 0; padding: 0; }
+ body {
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+ font-size: 14px;
+ line-height: 1.5;
+ color: var(--ink);
+ background: var(--bg);
+ padding: 32px 24px 64px;
+ }.wrap { max-width: 940px; margin: 0 auto; }
+ header {
+ border-bottom: 2px solid var(--corp);
+ padding-bottom: 12px;
+ margin-bottom: 16px;
+ }.head-row { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; }
+ h1 { font-size: 24px; margin: 0; letter-spacing: -0.3px; }.subtitle { color: var(--muted); font-size: 13px; }.stat-strip {
+ display: flex;
+ gap: 14px;
+ margin-top: 10px;
+ flex-wrap: wrap;
+ font-size: 13px;
+ color: var(--muted);
+ }.stat-strip strong { color: var(--corp); font-size: 15px; }
+ nav.toc {
+ background: var(--card);
+ border: 1px solid var(--line-soft);
+ border-radius: 6px;
+ padding: 10px 14px;
+ margin-bottom: 20px;
+ font-size: 13px;
+ color: var(--muted);
+ }
+ nav.toc strong { color: var(--corp); margin-right: 8px; letter-spacing: 0.3px; text-transform: uppercase; font-size: 11px; }
+ nav.toc a { color: var(--corp); text-decoration: none; margin-right: 14px; }
+ nav.toc a:hover { color: var(--franchise); text-decoration: underline; }
+ section {
+ background: var(--card);
+ border: 1px solid var(--line-soft);
+ border-radius: 6px;
+ padding: 16px 18px;
+ margin-bottom: 16px;
+ }
+ h2 {
+ font-size: 17px;
+ margin: 0 0 8px;
+ padding: 0 0 6px;
+ border-bottom: 1px solid var(--line-soft);
+ letter-spacing: -0.1px;
+ }
+ h2.num {
+ color: var(--franchise);
+ font-weight: 700;
+ margin-right: 6px;
+ }
+ h3 {
+ font-size: 14px;
+ margin: 14px 0 4px;
+ text-transform: uppercase;
+ letter-spacing: 0.4px;
+ color: var(--corp);
+ }
+ p { margin: 6px 0; }
+ ul { margin: 4px 0 6px; padding-left: 22px; }
+ li { margin-bottom: 2px; }
+ strong { color: var(--corp); }
+ em { color: #333; }.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+ @media (max-width: 720px) {.grid-2 { grid-template-columns: 1fr; } }
+ table {
+ width: 100%;
+ border-collapse: collapse;
+ margin: 6px 0;
+ font-size: 13px;
+ }
+ th, td { border: 1px solid var(--line); padding: 6px 8px; vertical-align: top; text-align: left; }
+ th { background: #f5f3ee; font-weight: 600; }
+ th.corp-col { background: var(--corp); color: white; }
+ th.fran-col { background: var(--franchise); color: white; }
+ td.both { text-align: center; background: #fafafa; }
+ tbody tr:hover { background: #fcfbf8; }.pill {
+ display: inline-block;
+ padding: 1px 7px;
+ border-radius: 9px;
+ font-size: 10px;
+ font-weight: 700;
+ letter-spacing: 0.4px;
+ text-transform: uppercase;
+ vertical-align: middle;
+ color: white;
+ }.pill-corp { background: var(--corp); }.pill-fran { background: var(--franchise); }.pill-both { background: #555; }.flag {
+ background: var(--warn-bg);
+ border-left: 3px solid var(--warn-line);
+ padding: 6px 10px;
+ font-size: 12.5px;
+ margin: 8px 0;
+ border-radius: 0 4px 4px 0;
+ }.flag::before { content: "DATED — "; font-weight: 700; color: #b07700; font-size: 10.5px; }.pitch {
+ background: var(--pitch-bg);
+ border-left: 3px solid var(--pitch-line);
+ padding: 8px 12px;
+ margin: 8px 0;
+ border-radius: 0 4px 4px 0;
+ }.pitch h3 {
+ margin: 0 0 4px;
+ font-size: 12px;
+ color: var(--pitch-line);
+ }.insight {
+ background: var(--insight-bg);
+ border-left: 3px solid var(--insight-line);
+ padding: 8px 12px;
+ margin: 8px 0;
+ border-radius: 0 4px 4px 0;
+ }.insight h3 {
+ margin: 0 0 4px;
+ font-size: 12px;
+ color: var(--insight-line);
+ }.src { color: var(--muted); font-size: 11.5px; font-style: italic; }
+ details {
+ margin: 6px 0;
+ background: #fcfbf8;
+ border: 1px dashed var(--line);
+ border-radius: 4px;
+ padding: 4px 10px;
+ font-size: 13px;
+ }
+ details summary {
+ cursor: pointer;
+ font-weight: 600;
+ color: var(--corp);
+ padding: 3px 0;
+ user-select: none;
+ }
+ details summary:hover { color: var(--franchise); }
+ details[open] summary { margin-bottom: 4px; }
+ /* Example checklists strip */
+ .examples-strip {
+   background: #fcfbf8;
+   border: 1px solid var(--line-soft);
+   border-radius: 8px;
+   padding: 14px 16px;
+   margin: 16px 0;
+ }
+ .examples-label {
+   font-size: 10.5px;
+   text-transform: uppercase;
+   letter-spacing: 0.7px;
+   color: var(--muted);
+   font-weight: 700;
+   margin-bottom: 10px;
+ }
+ .examples-grid {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 10px;
+ }
+ @media (max-width: 720px) { .examples-grid { grid-template-columns: 1fr 1fr; } }
+ .example-tile {
+   display: flex;
+   flex-direction: column;
+   gap: 6px;
+   text-decoration: none;
+   color: var(--ink);
+   border-radius: 6px;
+   border: 1px solid var(--line-soft);
+   background: #fff;
+   padding: 8px;
+   transition: border-color 0.15s, transform 0.05s;
+ }
+ .example-tile:hover { border-color: var(--accent); color: var(--ink); }
+ .example-tile:active { transform: translateY(1px); }
+ .example-thumb {
+   width: 100%;
+   height: 96px;
+   background-size: cover;
+   background-position: top center;
+   background-color: #f5f3ee;
+   border-radius: 4px;
+   border: 1px solid var(--line-soft);
+ }
+ .example-title {
+   font-size: 12px;
+   font-weight: 600;
+   color: var(--corp);
+   line-height: 1.3;
+ }
+ .example-sub {
+   font-size: 10.5px;
+   color: var(--muted);
+   line-height: 1.3;
+ }
+ section.tldr {
+   background: linear-gradient(180deg, #fffdf5 0%, #fff 100%);
+   border: 1px solid var(--accent);
+   border-left: 4px solid var(--accent);
+ }
+ section.tldr h2 {
+   color: var(--corp);
+   font-size: 13px;
+   text-transform: uppercase;
+   letter-spacing: 0.7px;
+   border-bottom: none;
+   padding: 0;
+   margin: 0 0 10px;
+ }
+ section.tldr ul { padding-left: 18px; margin: 0; }
+ section.tldr li { margin-bottom: 8px; font-size: 14px; line-height: 1.5; }
+ section.tldr li:last-child { margin-bottom: 0; }
+ nav.toc .subtoc {
+   display: block;
+   font-size: 11px;
+   margin-top: 4px;
+   padding-left: 12px;
+   color: var(--muted);
+ }
+ nav.toc .subtoc a {
+   color: var(--muted);
+   margin-right: 10px;
+   font-size: 11px;
+ }
+ footer {
+ margin-top: 20px;
+ padding-top: 8px;
+ border-top: 1px solid var(--line);
+ color: var(--muted);
+ font-size: 11.5px;
+ display: flex;
+ justify-content: space-between;
+ flex-wrap: wrap;
+ gap: 8px;
+ }
+</style>
+<style id="dash-rail-style">
+ body { padding-left: 188px !important; }.dash-rail {
+ position: fixed;
+ top: 0;
+ left: 0;
+ bottom: 0;
+ width: 168px;
+ background: #ffffff;
+ border-right: 1px solid #e5e5e5;
+ padding: 22px 14px 22px 18px;
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+ font-size: 12.5px;
+ z-index: 1000;
+ overflow-y: auto;
+ box-sizing: border-box;
+ }.dash-rail__brand {
+ font-size: 10px;
+ text-transform: uppercase;
+ letter-spacing: 0.7px;
+ color: #8a8a85;
+ margin-bottom: 4px;
+ }.dash-rail__home {
+ display: block;
+ font-weight: 700;
+ color: #27251f;
+ text-decoration: none;
+ padding-bottom: 14px;
+ margin-bottom: 14px;
+ border-bottom: 1px solid #ececec;
+ letter-spacing: -0.1px;
+ font-size: 14px;
+ }.dash-rail__home:hover { color: #da291c; }.dash-rail__label {
+ font-size: 9.5px;
+ text-transform: uppercase;
+ letter-spacing: 0.7px;
+ color: #8a8a85;
+ margin: 0 0 8px;
+ padding: 0 4px;
+ }.dash-rail nav { display: flex; flex-direction: column; gap: 1px; }.dash-rail nav a {
+ color: #5a5a5a;
+ text-decoration: none;
+ padding: 7px 8px;
+ border-radius: 4px;
+ line-height: 1.35;
+ border-left: 3px solid transparent;
+ }.dash-rail nav a:hover { background: #fafaf7; color: #27251f; }.dash-rail nav a.current {
+ background: #fffdf5;
+ color: #27251f;
+ font-weight: 600;
+ border-left-color: #ffbc0d;
+ }
+ @media (max-width: 820px) {
+ body { padding-left: 0 !important; }.dash-rail {
+ position: static;
+ width: auto;
+ height: auto;
+ border-right: none;
+ border-bottom: 1px solid #e5e5e5;
+ padding: 12px 16px;
+ }.dash-rail__home { padding-bottom: 8px; margin-bottom: 8px; }.dash-rail nav { flex-direction: row; flex-wrap: wrap; gap: 4px; }.dash-rail__label { display: none; }
+ }
+ @media print {.dash-rail { display: none; }
+ body { padding-left: 0 !important; }
+ }
+</style>
+<style id="unified-design">
+  /* Unified design tokens — locks look & feel across the prep bundle */
+  body {
+    background: #fafaf7 !important;
+    color: #1a1a1a !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Page title — exactly one per page */
+  h1 {
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.4px !important;
+    color: #27251f !important;
+    margin: 0 0 6px !important;
+  }
+
+  /* Page header bar — flat, with thick corp-dark bottom border */
+  .wrap > header,
+  .wrap > header.top,
+  .wrap > header.intro,
+  header.page-head {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 3px solid #27251f !important;
+    border-radius: 0 !important;
+    padding: 0 0 14px !important;
+    margin: 0 0 22px !important;
+  }
+
+  /* Main section headers — skip small-caps label sections (.context on dashboard, .tldr on op-model) */
+  section:not(.context):not(.tldr) > h2 {
+    color: #27251f !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.1px !important;
+  }
+
+  /* Stat strip & subtitles */
+  .stat-strip { color: #5a5a5a !important; }
+  .stat-strip strong { color: #27251f !important; }
+  .subtitle, .sub { color: #5a5a5a !important; }
+
+  /* TOC chip */
+  nav.toc { border: 1px solid #ececec !important; background: #ffffff !important; }
+  nav.toc strong { color: #27251f !important; }
+  nav.toc a { color: #27251f !important; }
+  nav.toc a:hover { color: #da291c !important; }
+</style>
+</head>
+<body>
+<aside class="dash-rail">
+ <div class="dash-rail__brand">McD RFP prep</div>
+ <a class="dash-rail__home" href="../index.html">← Dashboard</a>
+ <div class="dash-rail__label">Artefacts</div>
+ <nav>
+ <a href="operating-model-briefer.html" class="current">Operating model</a>
+ <a href="personas-onepager.html" class="">Personas</a>
+ <a href="demo-scenarios.html" class="">Demo scenarios</a>
+ <a href="feature-workflow-map.html" class="">Feature mapping</a>
+ </nav>
+</aside>
+
+<div class="wrap">
+
+<header>
+ <div class="head-row">
+ <h1>Corporate &lt;&gt; Franchise Operating Model Summary</h1>
+ </div>
+ <div class="stat-strip">
+ <span><strong>~1,200</strong> restaurants AU</span>
+ <span>·</span>
+ <span><strong>~150k</strong> employees est.</span>
+ <span>·</span>
+ <span><strong>~6k hazards / 3k incidents</strong> per month (Apr peak)</span>
+ <span>·</span>
+ <span><strong>~10 yrs</strong> on Donesafe</span>
+ </div>
+</header>
+
+<nav class="toc">
+ <strong>Contents</strong>
+ <a href="#tldr">TL;DR</a>
+ <a href="#s1">1. Corporate ↔ Licensee</a>
+ <a href="#s2">2. Safety flow today</a>
+ <a href="#s3">3. Framework triangulation</a>
+ <a href="#s4">4. For Monday's demo</a>
+ <span class="subtoc">Jump to: <a href="#decision-table">decision table</a><a href="#can-push">what corp can push</a><a href="#sell-shift">sell shift</a><a href="#incident-flow">incident flow</a><a href="#audit-cadence">audit cadence</a></span>
+</nav>
+
+<section id="tldr" class="tldr">
+<h2>TL;DR — the 5 things that matter</h2>
+<ul>
+ <li><strong>Tightest franchise model in QSR.</strong> Route-to-sell runs through corporate; selling individual licensees is structurally blocked. (More corporate-controlled than Domino's.)</li>
+ <li><strong>McOpCo is a controlled lab, not a profit centre.</strong> Cleanest evaluation signal and easiest rollout — but commercial justification depends on whether the franchise base adopts.</li>
+ <li><strong>Profit-motive friction is structural.</strong> Licensees bear compliance cost, capture upside from non-compliance. What works flawlessly in McOpCo won't port to franchise via the same playbook.</li>
+ <li><strong>The reporting failure mode is verbal-to-forgotten.</strong> Crew tells shift manager mid-task, hands full, never logged. The system has to make logging faster than forgetting.</li>
+ <li><strong>The room Monday is corporate office workers.</strong> Show them the in-restaurant experience their store-level counterparts would have, then how that data surfaces to the corporate lens they live in.</li>
+</ul>
+</section>
+
+<section id="s1">
+<h2><span class="num">1.</span> Corporate ↔ Licensee dynamic</h2>
+
+<p><span class="pill pill-corp">McOpCo</span> = corporate-operated restaurants (incl. Thornleigh flagship). <span class="pill pill-fran">Licensee</span> = McD's term for franchisee — the vast majority. AU split unconfirmed; global ~95% franchised is a useful anchor. Licensees range from single-store operators to families holding ~15 stores.</p>
+
+<h3 id="decision-table">Who decides what</h3>
+<table>
+ <thead>
+ <tr>
+ <th style="width:20%">Decision</th>
+ <th class="corp-col" style="width:40%">McD Corporate</th>
+ <th class="fran-col" style="width:40%">Licensee (within corporate frame)</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr><td>Real estate</td><td>Usually owns the land, picks location, builds, leases to licensee.</td><td>Pays rent. No location choice on entry (Alice Springs placements are real).</td></tr>
+ <tr><td>Menu, pricing, suppliers, equipment</td><td>100%. Promos, Happy Meal cycles, soft-serve machines, packaging — all centrally specified.</td><td>Zero. No supplier or equipment choice.</td></tr>
+ <tr><td>Technology stack</td><td>Mandates: POS, KDS, MeTime/MeOut (training + roster), Donesafe today.</td><td>Uses what corporate mandates. Limited local config.</td></tr>
+ <tr><td>Training content &amp; standards</td><td>McD AU is a Registered Training Org. Owns all content, QSC standards, SOC instruments, audits.</td><td>Delivers on the floor; runs crew-trainer model in-store.</td></tr>
+ <tr><td>Hiring / scheduling / day-to-day</td><td>Sets the rules (e.g. youth-labour hour caps enforced via KDS lockout — no manager override).</td><td>Hires, fires, schedules. Crew are employed by the licensee entity, not McD.</td></tr>
+ <tr><td>Marketing</td><td>National campaigns, brand, customer-facing collateral.</td><td>Very limited local activation. Cannot deviate from brand.</td></tr>
+ <tr><td>Insurance</td><td>Self-insured general lines + NSW workers' comp via MAFIP (mutual). KJ Risk broker. <strong>Program closed.</strong></td><td>Opt into MAFIP (economic default — hard to beat). A few self-manage.</td></tr>
+ <tr><td>Capital to enter</td><td>12-month full-time <strong>unpaid</strong> training, then $1–2M for franchise rights.</td><td>Pays. Must work full-time in-restaurant for an initial period after qualification.</td></tr>
+ </tbody>
+</table>
+
+<p><span class="pill pill-both">Bottom line</span> McD AU runs <strong>the tightest franchise model in QSR</strong> — much more corporate-controlled than Domino's. Route-to-sell is <strong>through corporate</strong>; selling individual licensees is structurally blocked.</p>
+
+<h3 id="can-push">What corporate can / can't push</h3>
+<div class="grid-2">
+ <div>
+ <h3>Corporate CAN unilaterally push</h3>
+ <ul>
+ <li>New tech platforms across the estate (Donesafe rolled this way ~10 yrs ago)</li>
+ <li>New incident / hazard workflows &amp; forms</li>
+ <li>Mandatory training modules in MeTime/MeOut; SOC competency instruments</li>
+ <li>Standardised audits, QSC checklists, food-safety protocols</li>
+ <li>System-level compliance (e.g. KDS lockout on youth-labour breach)</li>
+ </ul>
+ </div>
+ <div>
+ <h3>Corporate CAN'T (easily) force</h3>
+ <ul>
+ <li>How rigorously a licensee actually <em>uses</em> the system day-to-day</li>
+ <li>Severity classification on incidents — <span class="pill pill-fran">Licensee</span> stores get guidance &amp; definitions, not enforcement (vs <span class="pill pill-corp">McOpCo</span> auto-flagged critical) <span class="src">[Paul, Gong]</span></li>
+ <li>Local hiring &amp; scheduling decisions</li>
+ <li>Discretionary spend on top of corporate stack</li>
+ </ul>
+ </div>
+</div>
+
+<div class="insight">
+<h3>Profit-motive friction — the structural challenge</h3>
+<p>Licensees bear the cost of compliance and capture the upside from non-compliance — so drift is structural, not a character defect. What works flawlessly in McOpCo (salaried staff executing) won't port to franchise via the same playbook.</p>
+</div>
+
+<div class="insight">
+<h3>McOpCo is not a profit centre</h3>
+<p>McOpCo stores are <strong>controlled operational laboratories</strong> — proving grounds for new systems, standards, and equipment. Staff are salaried corporate employees, so no profit-motive resistance to new directives. <strong>Implication:</strong> McOpCo gives the cleanest evaluation signal and the easiest rollout — but commercial justification depends on franchise adoption.</p>
+</div>
+
+<h3 id="sell-shift">The McOpCo → franchise sell shifts entirely</h3>
+<table>
+ <thead>
+ <tr>
+ <th style="width:50%">McOpCo framing (what corporate hears)</th>
+ <th style="width:50%">Franchise rollout framing (what licensees hear)</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr><td>Visibility for corporate</td><td>Tangible benefit for the frontline manager</td></tr>
+ <tr><td>Quality &amp; standards adherence</td><td>Workload reduction — fewer cumbersome forms</td></tr>
+ <tr><td>Brand-level outcomes</td><td>Time saved; annual obligations less burdensome</td></tr>
+ <tr><td>Centralised control</td><td>Streamlined execution for shift mgrs / restaurant mgrs / area supervisors</td></tr>
+ </tbody>
+</table>
+<p>Franchise adoption levers: <strong>paper elimination</strong> and <strong>digitisation efficiency</strong>, pitched at frontline managers. Corporate-side benefits land too, but they're not what unlocks adoption.</p>
+</section>
+
+<section id="s2">
+<h2><span class="num">2.</span> How safety flows today</h2>
+
+<p><strong>In-store hierarchy</strong>: crew → crew trainer → shift manager → assistant restaurant manager / 2IC + department managers (Customer Experience / People Performance / Product Quality) → restaurant manager → <strong>area supervisor</strong> (mobile, multi-site) → ops consultants / corporate.</p>
+
+<h3 id="incident-flow">Incident flow</h3>
+<table>
+ <thead>
+ <tr>
+ <th style="width:16%">Step</th>
+ <th style="width:42%"><span class="pill pill-corp">McOpCo</span> path</th>
+ <th style="width:42%"><span class="pill pill-fran">Licensee</span> path</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr><td>Crew witness event</td><td colspan="2" class="both">Crew <strong>notify</strong> manager — they do NOT log. Paul explicitly removed crew logging due to low-quality noise. <span class="src">[Paul, Gong]</span></td></tr>
+ <tr><td>Capture</td><td colspan="2" class="both"><strong>Shift Manager</strong> or <strong>Restaurant Manager</strong> logs in Donesafe (browser pinned to phone/iPad — no real app today).</td></tr>
+ <tr><td>Triage / severity</td><td>Auto-flagged <strong>critical</strong> by default → safety team review.</td><td>Manager applies severity using corporate-supplied guide. No auto-critical.</td></tr>
+ <tr><td>Corrective actions</td><td colspan="2" class="both">Generated by form. Safety team can reassign. Owner closes investigation; CCTV uploaded.</td></tr>
+ <tr><td>Review &amp; close</td><td><strong>Ops Consultant</strong> (McOpCo area manager equivalent).</td><td><strong>Supervisor / General Manager</strong> (licensee internal hierarchy).</td></tr>
+ <tr><td>Reporting</td><td colspan="2" class="both">Donesafe → Power BI → Excel (Kathy manual). Severity trends not in-platform — <strong>the #1 pain</strong>. NSW workers' comp claims flow Donesafe → Solve via API. <span class="src">[Paul + Kathy, Gong]</span></td></tr>
+ </tbody>
+</table>
+
+<div class="insight">
+<h3>The current-state pain that wins the room</h3>
+<p>Dominant failure mode: <strong>verbal-to-shift-manager-to-forgotten</strong>.</p>
+<ol style="margin: 6px 0; padding-left: 22px;">
+ <li>Incident happens (oil spill, near-miss, equipment fault)</li>
+ <li>Crew verbally tells the shift manager mid-task, hands full</li>
+ <li>Shift manager <em>might</em> jot a note — more often, forgotten under shift pressure</li>
+ <li>No formal log. No corrective action. Systemic cause never surfaces.</li>
+</ol>
+<p><strong>The system has to make it faster to log than to forget.</strong> Voice capture, instant photo, AI-populated fields, low/zero mandatory fields at capture — these directly attack this failure mode.</p>
+</div>
+
+<h3 id="audit-cadence">Audit cadence — same instrument at every level</h3>
+<table>
+ <thead>
+ <tr>
+ <th style="width:22%">Level</th>
+ <th style="width:22%">Who</th>
+ <th style="width:56%">Cadence / purpose</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr><td>Within-shift</td><td>Shift Manager</td><td>Routine internal checks — cleanliness, line readiness, basic compliance</td></tr>
+ <tr><td>Daily / weekly</td><td>Restaurant Manager</td><td>Store-level assessment; signs off on standards</td></tr>
+ <tr><td>Per-visit, multi-site</td><td>Area Supervisor</td><td>Walk-the-floor non-conformity logging across the cluster</td></tr>
+ <tr><td>Periodic, multi-site</td><td>Ops Consultants</td><td>Performance reviews across restaurants</td></tr>
+ <tr><td>Periodic, brand-level</td><td>Corporate teams</td><td>Brand-standard audits (Customer Service / Quality Assurance / Employee Relations — see §3 triangulation)</td></tr>
+ </tbody>
+</table>
+<p>Historically: carbon-copy paper forms → binders → seldom reviewed → no closed loop. Trajectory: <strong>migration to iPad digital checklists already partially underway</strong>. Confirm with Paul/Kathy on Monday how far along, and whether any of it is on SafetyCulture today.</p>
+
+<div class="examples-strip">
+ <div class="examples-label">Real examples — actual McD checklists, from shift-floor to training</div>
+ <div class="examples-grid">
+  <a href="../assets/checklists/manager-checklist.jpg" target="_blank" class="example-tile">
+   <div class="example-thumb" style="background-image: url('../assets/checklists/manager-checklist.jpg')"></div>
+   <div class="example-title">Shift Manager pre-shift checklist</div>
+   <div class="example-sub">Daily — store opening &amp; line readiness</div>
+  </a>
+  <a href="../assets/checklists/shift-manager-competency-check.png" target="_blank" class="example-tile">
+   <div class="example-thumb" style="background-image: url('../assets/checklists/shift-manager-competency-check.png')"></div>
+   <div class="example-title">Shift Manager competency check</div>
+   <div class="example-sub">Training — reviewing a trainee shift mgr</div>
+  </a>
+  <a href="../assets/checklists/soc-fries.png" target="_blank" class="example-tile">
+   <div class="example-thumb" style="background-image: url('../assets/checklists/soc-fries.png')"></div>
+   <div class="example-title">SOC — Fries</div>
+   <div class="example-sub">Crew certification per station</div>
+  </a>
+  <a href="../assets/checklists/soc-mfy-buns.webp" target="_blank" class="example-tile">
+   <div class="example-thumb" style="background-image: url('../assets/checklists/soc-mfy-buns.webp')"></div>
+   <div class="example-title">SOC — MFY Buns</div>
+   <div class="example-sub">Crew certification per station</div>
+  </a>
+ </div>
+</div>
+
+<details>
+<summary>Why SOCs (Station Observation Checklists) matter to the McD ear</summary>
+<p>The "competency sheet" is the <strong>SOC</strong> — McD's named, standardised competency-assessment instrument. Crew trainers use SOCs to certify crew on each station. Paper-and-binder historically, migrating to iPad. <strong>Speaking in "SOC" language signals fluency.</strong> Replacing the paper SOC workflow is a concrete, repeatable wedge that scales across every station in every store.</p>
+</details>
+</section>
+
+<section id="s3">
+<h2><span class="num">3.</span> Framework triangulation</h2>
+
+<p>McDonald's organises operational accountability across three overlapping frameworks that <strong>align</strong>. One platform serving all three lenses at once is "speaking McD's language across departments."</p>
+
+<table>
+ <thead>
+ <tr>
+ <th style="width:25%">QSC pillar (cultural)</th>
+ <th style="width:37%">Store-level department manager (operational)</th>
+ <th style="width:38%">McD corporate team (functional, in the room Monday)</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr><td><strong>Quality</strong></td><td>Product Quality</td><td>Quality Assurance (health inspector visits, food safety incidents)</td></tr>
+ <tr><td><strong>Service</strong></td><td>Customer Experience</td><td>Customer Service</td></tr>
+ <tr><td><em>(no QSC equivalent — people)</em></td><td>People Performance</td><td>Employee Relations / Workplace Investigations (bullying, harassment, misconduct)</td></tr>
+ <tr><td><strong>Cleanliness</strong></td><td><em>(rolls up under Product Quality / Customer Experience)</em></td><td><em>(typically Quality Assurance)</em></td></tr>
+ </tbody>
+</table>
+</section>
+
+<section id="s4">
+<h2><span class="num">4.</span> For Monday's demo</h2>
+
+<div class="pitch">
+<h3>What this means for the demo</h3>
+<ul>
+ <li><strong>Lead with Shift Manager &amp; Restaurant Manager on phone/iPad</strong>, in-restaurant. Not desktop. Not safety team.</li>
+ <li><strong>Show different lenses on the same record</strong> — restaurant capture → ops consultant / supervisor review → safety team analytics → CS / Food Safety / ER branching. Mirrors how they actually work.</li>
+ <li><strong>Surface the area supervisor as a high-leverage persona.</strong> Multi-site, mobile, run off feet — they'll reward any tool that saves effort, and they carry audit data back up.</li>
+</ul>
+</div>
+
+<div class="pitch">
+<h3>Who's in the room</h3>
+<p>The CFT is <strong>McD AU corporate</strong> — Paul (Insurance &amp; Safety), the safety team, plus daily-user departments (CS, Food Safety/QA, SIM, Ops, ER, IT). They interact with store-level personas via systems and reporting — they don't live on the floor. <strong>Show them the in-restaurant experience their counterparts would have, then how that data surfaces into the corporate lens they live in.</strong></p>
+</div>
+
+<div class="pitch">
+<h3>Selling structure</h3>
+<p>Corporate-led RFP. Paul owns it, the CFT advises, corporate decides. Licensees were consulted (~300 feedback items) but don't hold a vote. Win corporate, then make the in-restaurant experience good enough that licensees don't quietly abandon it.</p>
+</div>
+
+</section>
+</div>
+</body>
+</html>

@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ben's Maccas Knowledge Base</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #5a5a5a;
+    --soft: #8a8a85;
+    --line: #d4d4d4;
+    --line-soft: #ececec;
+    --bg: #fafaf7;
+    --card: #ffffff;
+    --accent: #ffbc0d;
+    --corp: #27251f;
+    --franchise: #da291c;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--bg);
+    padding: 32px 24px 80px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  header.page-head {
+    border-bottom: 3px solid var(--corp);
+    padding-bottom: 14px;
+    margin-bottom: 22px;
+  }
+  .badge-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--corp);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 3px;
+  }
+  .badge.muted { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
+  h1 { font-size: 28px; font-weight: 600; margin: 0; letter-spacing: -0.4px; color: var(--corp); }
+  h2 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: var(--corp);
+    margin: 36px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--corp);
+    margin: 24px 0 8px;
+  }
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--corp);
+    margin: 18px 0 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  p { margin: 8px 0 12px; }
+  ul, ol { margin: 8px 0 14px; padding-left: 24px; }
+  li { margin-bottom: 4px; }
+  strong { color: var(--corp); }
+  em { color: #333; }
+  blockquote {
+    margin: 12px 0;
+    padding: 10px 16px;
+    background: #fffdf5;
+    border-left: 4px solid var(--accent);
+    color: #4a4031;
+    font-size: 13.5px;
+  }
+  blockquote p { margin: 4px 0; }
+  figure.kb-figure {
+    margin: 14px 0;
+    padding: 8px;
+    background: #fcfbf8;
+    border: 1px solid var(--line-soft);
+    border-radius: 6px;
+    max-width: 520px;
+  }
+  figure.kb-figure a { display: block; }
+  figure.kb-figure img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid var(--line-soft);
+    background: #fff;
+  }
+  figure.kb-figure figcaption {
+    margin-top: 6px;
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.4;
+    padding: 0 2px;
+  }
+  figure.kb-figure + figure.kb-figure { margin-top: 8px; }
+  code {
+    background: #f0eee9;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    font-size: 12.5px;
+  }
+  pre {
+    background: #f5f3ee;
+    border: 1px solid var(--line-soft);
+    padding: 10px 14px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 12.5px;
+  }
+  pre code { background: transparent; padding: 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  th, td { border: 1px solid var(--line); padding: 7px 10px; vertical-align: top; text-align: left; }
+  th { background: #f5f3ee; font-weight: 600; }
+  hr { border: none; border-top: 1px solid var(--line-soft); margin: 24px 0; }
+  a { color: var(--corp); text-decoration: underline; text-decoration-color: var(--line); }
+  a:hover { color: var(--franchise); text-decoration-color: var(--franchise); }
+  /* Provenance callout */
+  .provenance {
+    background: linear-gradient(180deg, #fffdf5 0%, #fff 100%);
+    border: 1px solid var(--accent);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 28px;
+  }
+  .provenance .prov-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--corp);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .provenance p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .provenance p + p { margin-top: 8px; }
+  .provenance strong { color: var(--corp); }
+  /* In-page TOC */
+  nav.kb-toc {
+    background: var(--card);
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    font-size: 13px;
+  }
+  nav.kb-toc strong {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  nav.kb-toc ul { margin: 0; padding-left: 18px; columns: 2; column-gap: 24px; }
+  @media (max-width: 720px) { nav.kb-toc ul { columns: 1; } }
+  nav.kb-toc li { margin-bottom: 4px; break-inside: avoid; }
+  nav.kb-toc a { text-decoration: none; color: var(--corp); }
+  nav.kb-toc a:hover { color: var(--franchise); text-decoration: underline; }
+  nav.kb-toc ul ul { columns: 1; padding-left: 14px; margin-top: 2px; }
+  nav.kb-toc ul ul li { font-size: 12px; color: var(--muted); }
+  nav.kb-toc ul ul a { color: var(--muted); }
+  /* Dash rail */
+  body { padding-left: 188px; }
+  .dash-rail {
+    position: fixed; top: 0; left: 0; bottom: 0; width: 168px;
+    background: #fff; border-right: 1px solid #e5e5e5;
+    padding: 22px 14px 22px 18px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 12.5px; z-index: 1000; overflow-y: auto; box-sizing: border-box;
+  }
+  .dash-rail__brand {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.7px;
+    color: #8a8a85; margin-bottom: 4px;
+  }
+  .dash-rail__home {
+    display: block; font-weight: 700; color: #27251f;
+    text-decoration: none; padding-bottom: 14px; margin-bottom: 14px;
+    border-bottom: 1px solid #ececec; letter-spacing: -0.1px; font-size: 14px;
+  }
+  .dash-rail__home:hover { color: #da291c; }
+  .dash-rail__label {
+    font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.7px;
+    color: #8a8a85; margin: 14px 0 8px; padding: 0 4px;
+  }
+  .dash-rail__label:first-of-type { margin-top: 0; }
+  .dash-rail nav { display: flex; flex-direction: column; gap: 1px; }
+  .dash-rail nav a {
+    color: #5a5a5a; text-decoration: none; padding: 7px 8px;
+    border-radius: 4px; line-height: 1.35; border-left: 3px solid transparent;
+  }
+  .dash-rail nav a:hover { background: #fafaf7; color: #27251f; }
+  .dash-rail nav a.current {
+    background: #fffdf5; color: #27251f; font-weight: 600;
+    border-left-color: #ffbc0d;
+  }
+  @media (max-width: 820px) {
+    body { padding-left: 24px; }
+    .dash-rail {
+      position: static; width: auto; height: auto;
+      border-right: none; border-bottom: 1px solid #e5e5e5; padding: 12px 16px;
+    }
+    .dash-rail__home { padding-bottom: 8px; margin-bottom: 8px; }
+    .dash-rail nav { flex-direction: row; flex-wrap: wrap; gap: 4px; }
+    .dash-rail__label { display: none; }
+  }
+  @media print {
+    .dash-rail { display: none; }
+    body { padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+<aside class="dash-rail">
+  <div class="dash-rail__brand">McD RFP prep</div>
+  <a class="dash-rail__home" href="../index.html">← Dashboard</a>
+  <div class="dash-rail__label">Artefacts</div>
+  <nav>
+    <a href="../artefacts/operating-model-briefer.html">Operating model</a>
+    <a href="../artefacts/personas-onepager.html">Personas</a>
+    <a href="../artefacts/demo-scenarios.html">Demo scenarios</a>
+    <a href="../artefacts/feature-workflow-map.html">Feature mapping</a>
+  </nav>
+  <div class="dash-rail__label">Source material</div>
+  <nav>
+    <a href="knowledge-bank.html" class="current">Knowledge bank</a>
+  </nav>
+</aside>
+
+<div class="wrap">
+
+<header class="page-head">
+  <div class="badge-row">
+    <span class="badge">Source material</span>
+    <span class="badge muted">Knowledge bank</span>
+  </div>
+  <h1>Ben's Maccas Knowledge Base</h1>
+</header>
+
+<div class="provenance">
+  <div class="prov-label">A note on what this is</div>
+  <p>Everything in here is <strong>my own thinking and personal knowledge</strong> from four years working at McDonald's (Dickson ACT, 2013&ndash;2017). It's not research. It's not sourced from the web, McD's public materials, or anyone else's notes.</p>
+  <p>I used AI to <strong>transcribe and structure</strong> what was in my head into the format you see here &mdash; but the underlying content, the observations, the framings, the judgements about what matters and why &mdash; all mine.</p>
+</div>
+
+<nav class="kb-toc">
+  <strong>Contents</strong>
+  <ul>
+<li><a href="#1-corporate-franchisee-relationship">1. Corporate &lt;&gt; Franchisee Relationship</a><ul>
+<li><a href="#11-profit-motive-friction-why-franchise-rollouts-are-harder">1.1 Profit-motive friction — why franchise rollouts are harder</a></li>
+</ul>
+</li>
+<li><a href="#2-store-types-franchise-vs-mcopco">2. Store Types: Franchise vs McOpCo</a><ul>
+<li><a href="#21-how-to-tell-them-apart">2.1 How to tell them apart</a></li>
+<li><a href="#22-mcopcos-strategic-role-operational-laboratory-not-profit-centre">2.2 McOpCo's strategic role — operational laboratory, not profit centre</a></li>
+<li><a href="#23-the-mcopco-franchise-adoption-challenge">2.3 The McOpCo → franchise adoption challenge</a></li>
+</ul>
+</li>
+<li><a href="#3-career-pathway-personas">3. Career Pathway &amp; Personas</a><ul>
+<li><a href="#31-the-hierarchy-at-a-glance">3.1 The hierarchy at a glance</a></li>
+<li><a href="#32-crew-the-workforce-backbone-but-not-the-right-primary-user">3.2 Crew (the workforce backbone — but NOT the right primary user)</a></li>
+<li><a href="#33-crew-trainer-crew-coach">3.3 Crew Trainer / Crew Coach</a></li>
+<li><a href="#34-shift-manager">3.4 Shift Manager</a></li>
+<li><a href="#35-assistant-restaurant-manager-2ic-and-department-managers">3.5 Assistant Restaurant Manager (2IC) and Department Managers</a></li>
+<li><a href="#36-restaurant-manager">3.6 Restaurant Manager</a></li>
+<li><a href="#37-area-supervisor">3.7 Area Supervisor</a></li>
+<li><a href="#38-operations-consultants-corporate-field-roles">3.8 Operations consultants / corporate field roles</a></li>
+<li><a href="#39-unofficial-minor-side-roles">3.9 Unofficial / minor side roles</a></li>
+<li><a href="#310-mcopco-equivalents">3.10 McOpCo equivalents</a></li>
+</ul>
+</li>
+<li><a href="#4-training-system">4. Training System</a><ul>
+<li><a href="#41-metime-the-central-lms-employee-platform">4.1 MeTime — the central LMS / employee platform</a></li>
+<li><a href="#42-the-crew-member-training-journey">4.2 The crew member training journey</a></li>
+<li><a href="#43-the-training-loop-typical-pattern-for-any-new-area">4.3 The training loop (typical pattern for any new area)</a></li>
+<li><a href="#431-station-observation-checklists-socs-the-core-training-validation-mechanism">4.3.1 Station Observation Checklists (SOCs) — the core training validation mechanism</a></li>
+<li><a href="#44-the-stars-system">4.4 The "stars" system</a></li>
+<li><a href="#45-training-content-quality">4.5 Training content quality</a></li>
+<li><a href="#46-the-crew-room-where-training-actually-happens">4.6 The crew room — where training actually happens</a></li>
+<li><a href="#47-what-worked">4.7 What worked</a></li>
+<li><a href="#48-what-didnt-work-opportunities">4.8 What didn't work / opportunities</a></li>
+<li><a href="#49-retraining-refresher-consequences">4.9 Retraining / refresher / consequences</a></li>
+</ul>
+</li>
+<li><a href="#5-operational-systems">5. Operational Systems</a><ul>
+<li><a href="#51-pos-point-of-sale">5.1 POS (point of sale)</a></li>
+<li><a href="#52-kitchen-display-screens-kds">5.2 Kitchen Display Screens (KDS)</a></li>
+<li><a href="#53-drive-through">5.3 Drive-through</a></li>
+<li><a href="#54-headsets">5.4 Headsets</a></li>
+<li><a href="#55-audio-environment">5.5 Audio environment</a></li>
+<li><a href="#56-automated-drinks-machine">5.6 Automated drinks machine</a></li>
+<li><a href="#57-clamshell-grill-cooking-automation">5.7 Clamshell grill &amp; cooking automation</a></li>
+<li><a href="#571-fry-station-informal-procedures-vs-standard">5.7.1 Fry station — informal procedures vs standard</a></li>
+<li><a href="#58-known-peak-events-canberra-context">5.8 Known peak events — Canberra context</a></li>
+<li><a href="#59-scheduling-clock-inout">5.9 Scheduling &amp; clock-in/out</a></li>
+<li><a href="#510-other-equipment">5.10 Other equipment</a></li>
+</ul>
+</li>
+<li><a href="#6-metricated-environment">6. Metricated Environment</a><ul>
+<li><a href="#61-what-gets-measured">6.1 What gets measured</a></li>
+<li><a href="#62-perfect-car-count-the-streak-game">6.2 Perfect Car Count — the streak game</a></li>
+<li><a href="#63-carrot-stick">6.3 Carrot &amp; stick</a></li>
+<li><a href="#64-speed-vs-quality-balance">6.4 Speed vs quality balance</a></li>
+<li><a href="#65-wastage-tracking">6.5 Wastage tracking</a></li>
+<li><a href="#66-no-personal-leaderboards">6.6 No personal leaderboards</a></li>
+</ul>
+</li>
+<li><a href="#7-scalability-componentisation">7. Scalability &amp; Componentisation</a><ul>
+<li><a href="#71-side-1-side-2-production-lines">7.1 Side 1 / Side 2 production lines</a></li>
+<li><a href="#72-station-granularity-scales">7.2 Station granularity scales</a></li>
+<li><a href="#73-double-stores">7.3 Double stores</a></li>
+<li><a href="#74-flex-roles">7.4 Flex roles</a></li>
+</ul>
+</li>
+<li><a href="#8-safety-compliance-incidents">8. Safety, Compliance &amp; Incidents</a><ul>
+<li><a href="#81-incident-frequency-bens-observation">8.1 Incident frequency (Ben's observation)</a></li>
+<li><a href="#82-near-miss-incident-reporting">8.2 Near-miss / incident reporting</a></li>
+<li><a href="#821-the-verbal-to-shift-manager-to-forgotten-pattern-the-current-state-pain">8.2.1 The verbal-to-shift-manager-to-forgotten pattern (the current-state pain)</a></li>
+<li><a href="#83-multi-level-audit-inspection-cadence">8.3 Multi-level audit &amp; inspection cadence</a></li>
+<li><a href="#84-corporate-visits">8.4 Corporate visits</a></li>
+<li><a href="#85-youth-labour-law-enforcement-the-standout-integration">8.5 Youth labour law enforcement — the standout integration</a></li>
+<li><a href="#86-quality-cleaning-protocols-drilled-hands-on">8.6 Quality / cleaning protocols (drilled, hands-on)</a></li>
+<li><a href="#87-service-scripting-drilled">8.7 Service scripting (drilled)</a></li>
+</ul>
+</li>
+<li><a href="#9-communication-culture">9. Communication &amp; Culture</a><ul>
+<li><a href="#91-communication-channels-bens-era-limited">9.1 Communication channels (Ben's-era — limited)</a></li>
+<li><a href="#92-no-employee-gatherings">9.2 No employee gatherings</a></li>
+<li><a href="#93-no-phones">9.3 No phones</a></li>
+<li><a href="#94-qsc-v-framework">9.4 QSC + V framework</a></li>
+<li><a href="#95-framework-triangulation-three-lenses-on-the-same-operating-model">9.5 Framework Triangulation — three lenses on the same operating model</a></li>
+<li><a href="#96-reward-culture">9.6 Reward culture</a></li>
+<li><a href="#97-per-shift-information-needs">9.7 Per-shift information needs</a></li>
+<li><a href="#98-employment-pay-structure">9.8 Employment &amp; pay structure</a></li>
+</ul>
+</li>
+<li><a href="#10-systems-integration">10. Systems Integration</a><ul>
+<li><a href="#101-current-trajectory-paper-ipad">10.1 Current trajectory — paper → iPad</a></li>
+<li><a href="#single-sign-on">Single sign-on</a></li>
+</ul>
+</li>
+<li><a href="#11-australia-specific-context">11. Australia-Specific Context</a></li>
+<li><a href="#12-glossary">12. Glossary</a></li>
+<li><a href="#source-legend">Source legend</a></li>
+<li><a href="#footnotes-open-items">Footnotes / open items</a></li>
+</ul>
+</nav>
+
+
+<p><strong>Version:</strong> v2 (May 2026)
+<strong>Source experience anchor:</strong> Ben worked at McDonald's Canberra (Dickson ACT store, among others) for 4 years, 2013–2017, from age ~14 to ~18. Crew member only — front of house (front counter, drive-through, McCafé, drinks). Never a crew trainer or manager.</p>
+<p>Citations trace claims back to one of: deep-dive transcript, deep-dive slides, deeper-dive notes, deeper-dive transcript, QSR notes, brain-dump (operating model / personas / feature use cases / examples).</p>
+<p>[DATED] tags flag things likely to have shifted since 2017.</p>
+<h2 id="1-corporate-franchisee-relationship">1. Corporate &lt;&gt; Franchisee Relationship</h2>
+<p>McDonald's corporate holds essentially all the power; the franchisee–franchisor relationship is strict and top-down. Franchisees control very little (deep-dive transcript; QSR notes).</p>
+<p><strong>Becoming a franchisee:</strong>
+- 12-month full-time, <strong>unpaid</strong> training program required <em>before</em> you qualify to buy a franchise (deep-dive transcript; deeper-dive notes).
+- Then you pay <strong>$1–2M AUD</strong> for franchise rights (deep-dive transcript).
+- <strong>No choice of location.</strong> Corporate sends you where they need you. One ex-colleague worked his way up to franchisee in Canberra and was sent to Alice Springs for his first store, then later Adelaide (deep-dive transcript; deeper-dive transcript).
+- Once awarded a store, the new franchisee must work in the store full-time (in uniform-ish, on headset, alongside crew) for an initial period (deep-dive transcript; deeper-dive transcript).
+- McDonald's usually <strong>owns the land</strong> and rents it to the franchisee (deep-dive transcript; deeper-dive transcript).</p>
+<p><strong>What corporate controls (i.e. franchisee has zero discretion over):</strong>
+- Menu, food, recipes
+- Pricing strategy
+- Promotions, new product rollouts, Happy Meal cycles
+- Equipment — make, model, supplier (e.g. "this is the soft serve machine you have to buy, this is the supplier, this is the cost") (deeper-dive transcript)
+- Training content
+- Operating standards</p>
+<p><strong>Where variation creeps in:</strong> purely in <em>implementation on the ground</em>. Stores can supplement and tweak how things are executed, but only within the rails. The severity of how strictly something must be done by-the-book depends on the area — food and safety are tight, soft stuff (e.g. internal communication, incentives) has slack (deeper-dive transcript).</p>
+<p><strong>Pecking order among franchisees:</strong> Larger franchisee families exist who own multiple stores. Ben's store changed hands during his time there to a family that owned ~15 Canberra stores; the actual owner and 2IC were essentially never on the floor — there were more management layers (deeper-dive transcript).</p>
+<p><strong>Sales access:</strong> The route to selling anything to McDonald's is <strong>through corporate</strong>, not through franchisees — even franchisees with 10+ stores don't have buying authority over anything material. This is a structural contrast to looser franchise QSRs like Domino's, where franchisees have real discretion (deep-dive transcript).</p>
+<p><strong>Investment thesis:</strong> Despite the lack of control, it's a "pretty sure thing" — average mid-2010s store did ~<strong>$500K profit/year</strong> even when only "performing alright" [DATED] (deep-dive transcript). Ben can't recall a McDonald's closing for underperformance (one anecdotal exception: Newtown).</p>
+<blockquote>
+<p><strong>Aside / interpretation:</strong> It's less "franchise" in the conventional sense than "managed partnership with sweat equity." Comparable to a law firm partnership model — pay your way in, then work hard for the privilege (Speaker 3, deep-dive transcript).</p>
+</blockquote>
+<h3 id="11-profit-motive-friction-why-franchise-rollouts-are-harder">1.1 Profit-motive friction — why franchise rollouts are harder</h3>
+<p>(brain-dump: operating model)</p>
+<p>For a licensee or franchised entity, the paramount driver is <strong>maximising profit</strong>. This financial imperative fundamentally shifts the risk/reward calculation around quality and operational standards. Franchisees are inherently more inclined to:</p>
+<ul>
+<li>Seek efficiencies by cutting corners</li>
+<li>Take operational shortcuts</li>
+<li>Deviate from established corporate policies, procedures, and guidelines</li>
+</ul>
+<p>…regardless of what corporate's stated expectations are. This is structural, not a character defect — when the entity bearing the cost of compliance is the same entity capturing the profit upside from non-compliance, you get friction.</p>
+<p><strong>Implication for the SC pitch:</strong> Any initiative that succeeds inside McOpCo (where staff are corporate employees on fixed salaries and just execute) cannot be ported into the franchise base by re-running the same playbook. The franchise rollout demands shifting the sell from "visibility/control/quality adherence" (corporate's lens) to "tangible workload benefit for frontline management" (franchisee/shift manager/restaurant manager/area supervisor lens). See §2.2.</p>
+<hr />
+<h2 id="2-store-types-franchise-vs-mcopco">2. Store Types: Franchise vs McOpCo</h2>
+<p>Most Australian McDonald's stores are franchised. Corporate operates a handful directly — <strong>McOpCo</strong> (McDonald's-Owned &amp; Operated). Ben's-era language uses "corporate stores"; McOpCo is the industry standard term and the one McD uses internally.</p>
+<h3 id="21-how-to-tell-them-apart">2.1 How to tell them apart</h3>
+<ul>
+<li>McOpCo stores are visibly more "by the book" — pristine, perfect execution. Ben names <strong>Thornleigh</strong> (the store near McD's Australia corporate office) as the canonical AU example: "the pristine, perfect example of a Macca's" (deeper-dive transcript; deeper-dive notes).</li>
+<li>Franchised stores can be tidy, but McOpCo is unmistakable once you know to look.</li>
+</ul>
+<h3 id="22-mcopcos-strategic-role-operational-laboratory-not-profit-centre">2.2 McOpCo's strategic role — operational laboratory, not profit centre</h3>
+<p>(brain-dump: operating model)</p>
+<p>This is the critical reframing. <strong>McOpCo stores exist primarily as controlled operational laboratories — proving grounds for new systems, standards, equipment, and operating models.</strong> Profit is a secondary outcome, not the dominant objective.</p>
+<p>Why this works:
+- Staff are <strong>corporate employees on fixed salaries</strong>, so there's no profit-motive resistance to executing new corporate directives.
+- Compliance is essentially inherent — the staff just do what they're told.
+- A diverse portfolio of McOpCo locations covers more operational variation than a single test kitchen at HQ ever could.</p>
+<p>The dominant objective is <strong>establishing a perfected operational model and rigorously testing new concepts</strong> so they're robust and scalable before wider deployment to the franchise base.</p>
+<h3 id="23-the-mcopco-franchise-adoption-challenge">2.3 The McOpCo → franchise adoption challenge</h3>
+<p>(brain-dump: operating model)</p>
+<p>Translating a McOpCo success into the franchise system is <strong>not</strong> a copy-paste exercise. Initiatives that function flawlessly in McOpCo conditions must be adapted for franchise economics (see §1.1 — profit-motive friction).</p>
+<p><strong>What changes in the sell to franchisees:</strong></p>
+<table>
+<thead>
+<tr>
+<th>McOpCo framing</th>
+<th>Franchise rollout framing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Visibility for corporate</td>
+<td>Tangible benefit for the frontline manager</td>
+</tr>
+<tr>
+<td>Quality and standards adherence</td>
+<td>Workload reduction — fewer cumbersome forms</td>
+</tr>
+<tr>
+<td>Brand-level outcomes</td>
+<td>Time saved, annual obligations made less burdensome</td>
+</tr>
+<tr>
+<td>Centralised control</td>
+<td>Streamlined execution for shift mgrs / restaurant mgrs / area supervisors</td>
+</tr>
+</tbody>
+</table>
+<p>The key adoption levers are <strong>paper elimination</strong> and <strong>improved efficiency through digitisation</strong> — pitched directly at the frontline managers responsible for execution. The corporate-side benefits land too, but they're not what unlocks adoption.</p>
+<p><strong>Implication for the SC pitch:</strong> When McD evaluates SC vs Donesafe, the cleanest performance signal will come from McOpCo data, which is also the easiest environment to roll something into. But the <em>commercial</em> logic — what justifies the platform spend across the whole estate — depends on whether the franchise base will actually use it. Frame the franchise rollout as "less paper, less binder filing, more efficient annual obligation completion for restaurant managers and area supervisors" — not "more corporate oversight."</p>
+<blockquote>
+<p><strong>Open item:</strong> Confirm current McD AU split between McOpCo and franchised stores. Not in Ben's source material.</p>
+</blockquote>
+<hr />
+<h2 id="3-career-pathway-personas">3. Career Pathway &amp; Personas</h2>
+<p>The official McDonald's "Pathways to the Future" diagram lays out the headline hierarchy (deep-dive slides). The brain-dump (personas) sharpens these into operational personas with care factor, age, and motivations.</p>
+<h3 id="31-the-hierarchy-at-a-glance">3.1 The hierarchy at a glance</h3>
+<ol>
+<li><strong>Crew</strong> — entry level</li>
+<li><strong>Crew Trainer / Crew Coach</strong> — barely elevated, slightly more on floor responsibility</li>
+<li><strong>Shift Manager</strong> — runs a shift</li>
+<li><strong>Assistant Restaurant Manager</strong> (2IC) and <strong>Department Managers</strong> — same level, parallel roles, both salaried</li>
+<li><strong>Restaurant Manager</strong> — runs the store</li>
+<li><strong>Area Supervisor</strong> — sits above the restaurant manager, between the store and the licensee/corporate</li>
+<li><strong>Corporate Office</strong> — head office roles (HR, finance, marketing, legal, supply chain, IT, etc.)</li>
+<li><strong>Leadership</strong> — exec / national</li>
+</ol>
+<p><strong>Rough headcount per store</strong> (deeper-dive notes; deeper-dive transcript):
+- ~<strong>200–300 crew members</strong> (high turnover, rolling hires every 1–2 weeks)
+- ~<strong>20–50 crew trainers</strong> (call it ~10% of crew)
+- <strong>Max ~10 shift managers</strong>
+- <strong>2–3 senior managers</strong> (restaurant manager + assistant restaurant manager / 2IC, sometimes a department manager — see §3.5)</p>
+<p><strong>Franchise owner-operator pathway:</strong> Some franchisees come up from crew. Ben knows of a McD Corporate senior (head of commercial insights &amp; planning) who started as crew, became youngest restaurant manager, then corporate. A former AU CEO has a similar story arc (deeper-dive transcript).</p>
+<p><strong>Visual reference:</strong> the official "Pathways to the Future" poster is the canonical artefact (deep-dive slides) — worth higher-res if needed for the demo.</p>
+<h3 id="32-crew-the-workforce-backbone-but-not-the-right-primary-user">3.2 Crew (the workforce backbone — but NOT the right primary user)</h3>
+<p>(brain-dump: personas; deep-dive transcript)</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Age</td>
+<td><strong>14–18</strong>, avg ~16</td>
+</tr>
+<tr>
+<td>Employment</td>
+<td>Casual, hourly, low wage</td>
+</tr>
+<tr>
+<td>Tenure</td>
+<td>Transient — high turnover</td>
+</tr>
+<tr>
+<td>Care factor</td>
+<td><strong>Low</strong> — temporary, low-wage, low investment in store's long-term success</td>
+</tr>
+<tr>
+<td>Number per store</td>
+<td>~200–300</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why crew should NOT be the primary user of any new platform:</strong></p>
+<ul>
+<li><strong>Historical signal of poor judgement:</strong> Per Ben's brain dump, when a previous platform enabled issue reporting for crew, it produced "an unmanageable flood of submissions" — a deluge indicative of low filtering and lack of professional judgement. This is structural to the demographic, not a process problem.</li>
+<li><strong>No digital infrastructure:</strong> Crew lack standardised device access. SSO is either absent or, where it exists [DATED — by 2026 maybe], fundamentally less integrated than corporate management access.</li>
+<li><strong>Physically prevented from carrying personal devices:</strong> Uniform deliberately has <strong>no pockets</strong> (only fake stitched ones), expressly to prevent phone use during shift (deep-dive transcript; deeper-dive transcript; brain-dump: personas). Operational focus + risk mitigation (no phones in oil vats).</li>
+<li><strong>Disengaged from process work:</strong> Low care factor + casual employment status = they're not the audience for compliance tooling. They're the <em>object</em> of compliance, not the <em>agent</em>.</li>
+</ul>
+<p><strong>Demographic colour:</strong>
+- Weekday 9–5 (school term) skews 20s+; weekday evenings, weekends, school holidays skew teenage.
+- Ben's-era: front-of-house skewed female + "talkative guys"; kitchen skewed male. [DATED — McD's stated DEI posture has shifted since 2017.]
+- Track preference (front/back/cafe) is nominally asked at interview but in practice you go where the store needs you.</p>
+<h3 id="33-crew-trainer-crew-coach">3.3 Crew Trainer / Crew Coach</h3>
+<p>(brain-dump: personas; deep-dive transcript; deeper-dive transcript)</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Age</td>
+<td><strong>16–21</strong></td>
+</tr>
+<tr>
+<td>Employment</td>
+<td>Casual, ~50c–$1/hour extra over crew (brain-dump says "maybe $1/hour"; deep-dive transcript says "50c")</td>
+</tr>
+<tr>
+<td>Tenure</td>
+<td>Slightly less transient than crew but still casual</td>
+</tr>
+<tr>
+<td>Care factor</td>
+<td>Slightly above crew — more invested because of the responsibility</td>
+</tr>
+<tr>
+<td>Number per store</td>
+<td>~20–50</td>
+</tr>
+</tbody>
+</table>
+<p>A crew trainer is barely elevated from crew — distinct shirt colour (blue, in Ben's store), trained on how to train, paired 1:1 with new crew on early shifts (see §4).</p>
+<p><strong>Important:</strong> Crew trainers are <strong>the most likely cohort to use store-based digital tools</strong> — e.g. a shared store iPad — for operational tasks: tracking training progress on others, ticking off competency checklists (SOCs — see §4), procedural lists. A localised digital interface (not personal device, not desktop) is the right form factor for them.</p>
+<blockquote>
+<p><strong>Terminology:</strong> McD's "Pathways to the Future" official material uses <strong>Crew Coach</strong>; Ben consistently uses <strong>Crew Trainer</strong>. Treating these as the same role with a rename — Crew Coach is the current term.</p>
+</blockquote>
+<h3 id="34-shift-manager">3.4 Shift Manager</h3>
+<p>(brain-dump: personas; deeper-dive transcript)</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Age</td>
+<td><strong>19–25</strong></td>
+</tr>
+<tr>
+<td>Employment</td>
+<td>Hourly or low-tier salary; <strong>most are part-time uni students</strong></td>
+</tr>
+<tr>
+<td>Path in</td>
+<td><strong>Always promoted from crew</strong> — never hired directly into the role</td>
+</tr>
+<tr>
+<td>Care factor</td>
+<td><strong>Low to medium</strong></td>
+</tr>
+<tr>
+<td>Number per store</td>
+<td>Up to ~10</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Motivations and behaviour:</strong>
+- Primary focus: <strong>maintain a smooth, trouble-free shift; minimise conflict; avoid scrutiny from the Restaurant Manager.</strong>
+- Most aim to meet minimum expectations to avoid reprimand and secure ongoing employment — not to drive performance.
+- A minority of high-performers genuinely pursue business targets, but they're the exception.
+- <strong>Big behavioural delta</strong> between shifts run by a shift manager (especially quiet periods — Sunday nights, overnight) and shifts when the Restaurant Manager is present.</p>
+<p><strong>Pitch implication:</strong> If the platform increases the work the shift manager has to do, adoption fails. If it reduces work and lowers the chance of getting in trouble (fewer missed steps, less paperwork to chase), adoption is plausible.</p>
+<h3 id="35-assistant-restaurant-manager-2ic-and-department-managers">3.5 Assistant Restaurant Manager (2IC) and Department Managers</h3>
+<p>(brain-dump: personas; deeper-dive transcript)</p>
+<p>The first <strong>salaried</strong> rung. Significant commitment from the employee.</p>
+<p><strong>Assistant Restaurant Manager (2IC):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Age</td>
+<td>Mid 20s onwards</td>
+</tr>
+<tr>
+<td>Employment</td>
+<td>Salaried</td>
+</tr>
+<tr>
+<td>Care factor</td>
+<td><strong>High</strong> for overall store performance</td>
+</tr>
+<tr>
+<td>Working style</td>
+<td>Highly operational — "in the trenches" alongside crew and shift managers; willing to do any task</td>
+</tr>
+</tbody>
+</table>
+<p>The 2IC is the most reliable operational leader inside the store — professional demeanour, hands-on, real engagement with quality and process. They're materially more rigorous than the average shift manager (deeper-dive transcript).</p>
+<p><strong>Department Managers (same hierarchical level as Assistant Manager):</strong></p>
+<p>(brain-dump: personas — net-new content versus v1)</p>
+<p>Each store has up to three Department Managers, aligned to operational pillars:</p>
+<ul>
+<li><strong>Customer Experience</strong> (≈ Service)</li>
+<li><strong>People Performance</strong> (≈ training / staffing / culture)</li>
+<li><strong>Product Quality</strong> (≈ kitchen / food)</li>
+</ul>
+<p><strong>Role blur:</strong>
+- It's likely the most senior, experienced, motivated shift managers wear a department manager hat alongside their shift mgr duties.
+- Possible the 2IC also takes on one of the department manager hats.
+- Boundaries are blurry — overlap with the assistant manager and senior shift managers is the norm.</p>
+<p><strong>Why department managers matter for the pitch:</strong> They map directly onto the QSC pillars and onto McD corporate teams — see §9.5 Framework Triangulation. This three-way alignment is one of the strongest demo angles for showing SC can "speak in McD's language" across departments.</p>
+<h3 id="36-restaurant-manager">3.6 Restaurant Manager</h3>
+<p>(brain-dump: personas; deeper-dive transcript)</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Age</td>
+<td>Late 20s (high achievers) up to 40s</td>
+</tr>
+<tr>
+<td>Employment</td>
+<td>Salaried</td>
+</tr>
+<tr>
+<td>Working hours</td>
+<td>Closer to <strong>traditional business hours</strong> (e.g. ~9-to-5 Mon–Fri) — distinct from the shift-based work of their subordinates</td>
+</tr>
+<tr>
+<td>Care factor</td>
+<td><strong>Highest among store staff</strong></td>
+</tr>
+<tr>
+<td>Style</td>
+<td>Less hands-on than the 2IC; more administrative / strategic / vendor / office work; steps in during peak</td>
+</tr>
+</tbody>
+</table>
+<p>Their presence dramatically improves rigour and performance — the "RM is in" effect is observable across the floor.</p>
+<h3 id="37-area-supervisor">3.7 Area Supervisor</h3>
+<p>(brain-dump: personas)</p>
+<p>The role between the store and the franchisee/corporate. Net-new persona vs v1.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Age</td>
+<td><strong>30s–40s</strong></td>
+</tr>
+<tr>
+<td>Working style</td>
+<td><strong>Very mobile</strong> — covers a cluster of restaurants</td>
+</tr>
+<tr>
+<td>Lived experience</td>
+<td><strong>Run off their feet</strong> — long hours, too much to do in too little time</td>
+</tr>
+<tr>
+<td>Care factor</td>
+<td><strong>Highly variable</strong> — depends on the licensee/franchisee culture they're embedded in</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Two archetypes (per brain-dump):</strong></p>
+<ul>
+<li><strong>"Tight ship" archetype:</strong> enforces stringent operational standards; functions as brand ambassador; high care factor; pushes adherence.</li>
+<li><strong>"Cost minimisation" archetype:</strong> prioritises cost reduction to maximise the owner's profit, sometimes at the expense of operational excellence; lower care factor on standards.</li>
+</ul>
+<p><strong>Pitch implication:</strong> Area supervisors are a <strong>high-value, high-leverage</strong> persona for SC. They visit multiple stores; they need lightweight tooling (mobile-first, fast to log issues during a walk-through); they're the natural carrier of multi-site audit data back to the franchisee/corporate. Time-pressed → they'll reward any tool that genuinely saves them effort. They are <em>the</em> persona where "less burdensome compliance" lands hardest.</p>
+<h3 id="38-operations-consultants-corporate-field-roles">3.8 Operations consultants / corporate field roles</h3>
+<p>(brain-dump: feature use cases; deeper-dive transcript by inference)</p>
+<p>Above area supervisors sit corporate field roles — operations consultants conducting performance reviews, corporate teams executing brand-standard audits across many sites. Personas not fully detailed in Ben's sources — flag as a gap for the pitch.</p>
+<h3 id="39-unofficial-minor-side-roles">3.9 Unofficial / minor side roles</h3>
+<p>(deep-dive transcript)</p>
+<ul>
+<li>"Café supervisor" or similar lead roles — informal, not formally part of the pathway.</li>
+<li>Ben never saw a formal "academic supervisor" or similar but speculates these might exist.</li>
+</ul>
+<h3 id="310-mcopco-equivalents">3.10 McOpCo equivalents</h3>
+<p>The brain dumps don't directly distinguish McOpCo personas from franchise personas. The most relevant differences:</p>
+<ul>
+<li>McOpCo store staff are <strong>corporate employees on fixed salaries</strong> rather than franchisee-employed casuals (§2.2).</li>
+<li>Area Supervisors at McOpCo report into corporate structure rather than a licensee — so the "cost minimisation" archetype is much less likely.</li>
+<li>Compliance friction is structurally lower (no profit-motive tradeoff).</li>
+</ul>
+<p>Otherwise the role names and rough hierarchy hold.</p>
+<hr />
+<h2 id="4-training-system">4. Training System</h2>
+<p>McDonald's is a <strong>Registered Training Organisation (RTO)</strong> in Australia — crew can earn Cert 1, 2, 3 in retail and McD-specific qualifications through the training pathway (deep-dive transcript; deeper-dive transcript).</p>
+<p><strong>Standout strength:</strong> Compared to friends working at other QSRs and big corporates, McD's training is <strong>more structured and consistent</strong> — Ben treats this as one of McDonald's genuine strengths (deeper-dive transcript; deeper-dive notes).</p>
+<h3 id="41-metime-the-central-lms-employee-platform">4.1 MeTime — the central LMS / employee platform</h3>
+<p><strong>MeTime</strong> is McDonald's central employee system [DATED — "called something slightly different now"] (deeper-dive transcript). It houses:
+- Personal details, bank details
+- Roster / shift acknowledgement
+- Training modules and pathways
+- Pay slip delivery (via personal email linked to the account)</p>
+<p>Login is via employee ID (a number, e.g. "7…") plus a password — and an additional shorter PIN (4 or 6 digits) for clock-in screens, plus an optional fingerprint enrolment for faster clock-in (deep-dive transcript; deeper-dive transcript).</p>
+<p>[DATED] At the time, MeTime was "very ugly" and visibly stitched-together — different training modules would sometimes open in a new browser window, others embedded; SCORM-style; some content built on Flash and therefore not portable to tablet/phone (deep-dive transcript; deeper-dive transcript). Dave (in the deep-dive) noted current MeTime — possibly renamed "MeOut" — sits behind a Microsoft-stack IDP front door that launches the underlying tools (deep-dive transcript). [Confirm current name and stack for the pitch.]</p>
+<h3 id="42-the-crew-member-training-journey">4.2 The crew member training journey</h3>
+<p><strong>Pre-shift / onboarding:</strong>
+- Online onboarding modules done <em>before</em> coming into the store: physical restaurant security, health and safety, slips/trips/falls (deep-dive transcript; deeper-dive transcript). Roughly 3 hours total of online + walkthrough before doing anything customer-facing (deep-dive slides; deeper-dive transcript).
+- An informal store walkthrough by the restaurant manager or someone delegated (deeper-dive transcript).</p>
+<p><strong>Universal first step:</strong> <strong>Everyone starts on cleaning.</strong> First few shifts, ~3 hours each, are just cleaning, paired with a crew trainer (deep-dive transcript; deeper-dive transcript).</p>
+<p><strong>Track fork — front vs back:</strong>
+- <strong>Back:</strong> kitchen.
+- <strong>Front:</strong> customer-facing.
+- You're nominally asked your preference but in practice are placed where the store needs people (deeper-dive transcript).</p>
+<p><strong>Front-of-house progression (Ben's track):</strong>
+1. Cleaning (everyone)
+2. Secondary front — fries, drinks/beverages, desserts (still not customer-facing)
+3. Front counter — taking orders
+4. Drive-through (treated as a distinct level)
+5. McCafé — considered the "fancy" / most skilled (some training is positioned as more advanced) (deeper-dive transcript)</p>
+<p>There are <strong>no fixed timeframes</strong> — progression is driven by hours worked and the store's operational need. Rough guide ~6 months between levels but no formal cadence (deeper-dive transcript). If the store needs more trained people in an area, they push more crew through; otherwise it sits.</p>
+<h3 id="43-the-training-loop-typical-pattern-for-any-new-area">4.3 The training loop (typical pattern for any new area)</h3>
+<p>For each new area, the loop is (deep-dive transcript; deeper-dive transcript):</p>
+<ol>
+<li><strong>30–60 min online module</strong> in the crew room on the desktop, at the start of your shift</li>
+<li><strong>Crew trainer takes you out</strong> onto the floor — shows you, then watches you do it</li>
+<li>They stay alongside you for the rest of the shift (or a second shift if it's complex or you struggled)</li>
+<li>After that, you're broadly on your own</li>
+<li><strong>Station Observation Checklist (SOC)</strong> — the formal competency assessment. The crew trainer goes through it during a later shift, observes you executing competencies without help (no "stopwatch" feel — just observation), and ticks off. Uploaded into MeTime; eventually you see you've been signed off for that area.</li>
+</ol>
+<h3 id="431-station-observation-checklists-socs-the-core-training-validation-mechanism">4.3.1 Station Observation Checklists (SOCs) — the core training validation mechanism</h3>
+<p>(brain-dump: feature use cases)</p>
+<p>The "competency sheet on McD letterhead" Ben describes is the <strong>Station Observation Checklist (SOC)</strong> — McD's named, standardised instrument for training validation. SOCs are <em>the</em> mechanism by which a crew member is certified competent on a station.</p>
+<p><strong>Historical workflow [DATED 2017]:</strong>
+- Paper SOC (carbon-copy form), McD letterhead
+- Crew trainer systematically checks off competencies during a live shift
+- Top copy filed in a binder; binder seldom referenced afterwards
+- Sign-off eventually transcribed/uploaded into MeTime; visibility back to the worker is weak (§4.8)</p>
+<p><strong>Current trajectory:</strong>
+- Migration to <strong>iPad-based digital checklist</strong> is partially underway (brain-dump: feature use cases). McD is incrementally replacing the paper SOC with digital checklists that support rich media (photo/video) as evidence. Worth confirming current state with Paul/Kathy — this matters because if SOCs have already moved to a SafetyCulture-like format in some pilots, the demo can plug into something tangible.</p>
+<p><strong>Why this matters for the pitch:</strong> SOCs sit at the intersection of training, compliance, and operations. They are McDonald's-named, McDonald's-standardised, and ubiquitous. Speaking in "SOC" language signals fluency. Replacing the paper-and-binder SOC workflow is a concrete, repeatable wedge that scales across every station in every store.</p>
+<h3 id="44-the-stars-system">4.4 The "stars" system</h3>
+<p>Quality, Service, Cleanliness (QSC) — plus a fourth, <strong>V</strong> (Value) — are the four pillars. Completing each track earns a coloured <strong>star</strong> on your name badge (deep-dive transcript; deeper-dive transcript; deep-dive slides):</p>
+<ul>
+<li><strong>Quality</strong> — kitchen track fully complete</li>
+<li><strong>Service</strong> — front counter + drive-through fully complete</li>
+<li><strong>Cleanliness</strong> — cleaning track complete</li>
+<li><strong>M</strong> — McCafé fully complete (sometimes referenced as a fifth, separate progression)</li>
+<li>A fifth "X" star — Ben thinks for "excellent" or as a reward for collecting the other four (less certain — flagged) (deep-dive transcript)</li>
+</ul>
+<p>The mechanic: the visual training path on MeTime shows a gridded RPG-style map with locked/unlocked sections. When you complete a sub-track, the system prompts "go collect your star from your manager," who pulls one from a bag and physically pins it to your shirt (deeper-dive transcript).</p>
+<blockquote>
+<p>Ben rates the gamification as effective for a teenage workforce. The visual locked-path metaphor and physical star pinning both help. Teenagers actually liked it (deeper-dive transcript; deeper-dive notes).</p>
+</blockquote>
+<h3 id="45-training-content-quality">4.5 Training content quality</h3>
+<p>Highly variable, depending on when the module was last updated (deep-dive transcript; deeper-dive transcript; deeper-dive notes):</p>
+<ul>
+<li><strong>Older content:</strong> very basic click-through LMS slides, click-to-reveal, end-of-module quiz. Some on Flash. Felt old.</li>
+<li><strong>Newer content:</strong> properly gamified — burger-building simulations (looks like an iPhone game), interactive customer-interaction simulators (deep-dive slides show a POS-simulator screenshot and module video screenshots).</li>
+<li><strong>A lot of video</strong> — and the video format struggles with the noisy crew room.</li>
+</ul>
+<p><strong>Production:</strong> All content in <strong>English only</strong> (90–95% confident — deeper-dive transcript). Produced by McDonald's Australia.</p>
+<p><strong>External reference:</strong> A McD POS training simulator exists publicly at https://mcdonaldspostraining.app/download/ — Ben notes other countries have access to a POS simulator for front counter training; this didn't appear to be used at his Australian store (deeper-dive notes).</p>
+<h3 id="46-the-crew-room-where-training-actually-happens">4.6 The crew room — where training actually happens</h3>
+<ul>
+<li>Desktop computer in the crew/break room. Photo in deep-dive slides shows a typical setup.</li>
+<li><strong>Loud</strong> — kitchen is on the other side of the wall.</li>
+<li><strong>No headphones.</strong> Video training is hard to absorb.</li>
+<li>Walls plastered with posters: McD Standards section, "What's New," "Listening Notes / Sharing Notes / Laughter" corners (yes, "Laughter" — joke target during the deep-dive).</li>
+<li>A microwave, a bench seat, a small table, the desktop.</li>
+</ul>
+<figure class="kb-figure">
+<a href="../assets/reference/crew-break-room-missing-computer.jpg" target="_blank"><img src="../assets/reference/crew-break-room-missing-computer.jpg" alt="Crew break room — desktop training computer in the corner" loading="lazy"></a>
+<figcaption>The crew room as Ben remembers it — Dickson ACT. The training desktop is missing from this photo (was where the chair on the right would be facing). Kitchen wall directly behind, no acoustic separation.</figcaption>
+</figure>
+
+<p>[DATED] Ben suspects desktop-only training likely persists in some form because of the legacy content base, but assumes there's been some progression. Worth confirming.</p>
+<h3 id="47-what-worked">4.7 What worked</h3>
+<p>(Synthesised from deeper-dive notes and deeper-dive transcript)
+- Structured onboarding — notably more structured than friends' QSR experiences
+- 1:1 crew trainer pairing during early shifts — hands-on, effective for hands-on tasks
+- Gamified progression (MeTime visual paths, star badges) — tangibly motivating for a teenage workforce
+- Newer training modules (gamified, video-tailored to younger audiences) — genuinely good
+- Competency checklists — gave a clear bar for "done"
+- Drive-through gamification (perfect car count, national rankings) — created real competitive motivation on the floor
+- Shift/rostering ↔ kitchen screen integration for youth labour law violations (see §10)</p>
+<h3 id="48-what-didnt-work-opportunities">4.8 What didn't work / opportunities</h3>
+<p>(Synthesised from deeper-dive notes and deeper-dive transcript)
+- <strong>Theory–practice disconnect</strong> — long theory sessions in the crew room (sometimes 30+ min) with no immediate floor application. Ben prefers see-do-see-do loops.
+- <strong>No POS simulator</strong> — front counter training happened on live customers (referencing the "fourth register" workaround where the kitchen ignores incoming orders, but it's still live).
+- <strong>Inconsistent training quality</strong> — heavily dependent on when content was last updated. Older areas (e.g. desserts, drinks/McFlurries, frappes) had almost no structured training — "go out and figure it out."
+- <strong>No quick reference during service</strong> — seasonal items (McFlurries, frappes, shakes) only had printed recipes stuck on machines; limited space, can't fit everything. No way to look up ratios mid-shift. Quality drops off. Ben pondered smart glasses, voice (noisy), or a side-tap interface; rejected AI typing as too slow.
+- <strong>Weak feedback loop</strong> — competency checklists get ticked but feedback doesn't reach the worker meaningfully.
+- <strong>Informal annual refresher</strong> — so casual workers often didn't know it was happening. No real mechanism to catch and correct skill drift. Ben attributes this to low effort, not intent.
+- <strong>Noisy training environment</strong> — crew room with kitchen noise behind the wall, no headphones.
+- <strong>No at-home training</strong> — minimum engagement is 3 hours of paid time, so they don't push at-home training (would have to pay you for 3 hours).
+- <strong>Paper-heavy scheduling and communication</strong> — handwritten availability diary, notice boards, Facebook group. Only beginning to digitise as Ben left (2017).</p>
+<h3 id="49-retraining-refresher-consequences">4.9 Retraining / refresher / consequences</h3>
+<ul>
+<li><strong>Informal refresher</strong> ~annually — crew trainer observes you on a normal shift, ticks off core competencies. Casual enough that workers often didn't know it was happening (deeper-dive transcript).</li>
+<li><strong>Retraining for poor performance</strong> — Ben never experienced it personally. The bar is high — it would take sustained, severe poor performance to trigger formal retraining. Most underperformance just gets tolerated or absorbed (deeper-dive transcript).</li>
+<li><strong>Performance signal for poor quality</strong> — usually comes via <strong>customer complaints</strong>, after the fact. The customer doesn't usually come back; quality varies as a result (deeper-dive notes; deeper-dive transcript).</li>
+</ul>
+<hr />
+<h2 id="5-operational-systems">5. Operational Systems</h2>
+<h3 id="51-pos-point-of-sale">5.1 POS (point of sale)</h3>
+<p><strong>Hardware:</strong> Touch-screen POS at every counter. Specific layout: numbered keypad (0–9), tabs for Breakfast/Lunch/Dinner/Drinks/Desserts/Condiments/LSM-Promo, value/size selectors (S/M/L), make-meal, void line, function buttons (deep-dive slides — POS photo).</p>
+<p><strong>Auth:</strong> Login is your MeTime employee ID + a 4–6 digit code, or optional fingerprint. In practice [DATED] tills are rarely actually logged in as the right person — Ben says he was "very rarely actually logged into a POS that had my name on it" — usually someone from shifts earlier (deep-dive transcript). Fingerprint was <em>optional</em> in Ben's time. (Likely stricter now.)</p>
+<p><strong>Order-to-kitchen shortcut:</strong> As soon as you press an item, it appears on the relevant kitchen display screens around the store — <em>before the customer has paid</em>. The kitchen can start making the order while you're still taking it. Net wastage from cancellations is worth the speed gain (deep-dive transcript; deeper-dive transcript). The first thing on the POS starts the timer (deep-dive slides — top-left "24 (27)" highlighted).</p>
+<figure class="kb-figure">
+<a href="../assets/reference/drive-thru-order-taker-pos-point-of-view.jpg" target="_blank"><img src="../assets/reference/drive-thru-order-taker-pos-point-of-view.jpg" alt="Drive-thru order taker POS point of view" loading="lazy"></a>
+<figcaption>Drive-thru order-taker POS view. Two lanes typically handled by one person mid-shift; timer top-left, current order centre, item grid right.</figcaption>
+</figure>
+
+<h3 id="52-kitchen-display-screens-kds">5.2 Kitchen Display Screens (KDS)</h3>
+<p>Every station in the store that <em>makes</em> or <em>serves</em> something has a KDS tailored to it. Filters are station-specific — the cafe screen only shows cafe items; the drinks station only shows drinks; the assembly line only shows what they assemble. (deeper-dive transcript; deep-dive slides)</p>
+<p><strong>Mechanics (deep-dive slides; deep-dive transcript; deeper-dive transcript):</strong>
+- Orders appear instantly as POS items are entered.
+- Each order shows the items, the side (1 or 2) it belongs to, and a paid/unpaid marker (bottom bar — "Paid" highlighted in deep-dive slides screenshot).
+- Timer starts the moment the order appears.
+- Color progression: grey → green → yellow → red as it runs over time.
+- A rolling average is displayed across a sliding window (visible at the bottom of the screen — deep-dive slides).
+- The order clears when the relevant person presses <strong>serve</strong> on the <strong>bump bar</strong>.</p>
+<p><strong>Bump bars:</strong> A physical bar with hard buttons — <em>not</em> a touchscreen (in most cases) — sitting below the screen. Buttons include serve/hold/receipt/next. Some stores are migrating to touchscreens for these but most are still bump bars (deeper-dive transcript).</p>
+<p><strong>Per-station granularity:</strong> In a fully staffed line, even individual sub-stations like the <strong>bun toaster</strong> get their own screen telling them which buns to toast in what sequence, so their speed is tracked (deep-dive transcript).</p>
+<figure class="kb-figure">
+<a href="../assets/reference/kitchen-video-system-display-screen1.jpg" target="_blank"><img src="../assets/reference/kitchen-video-system-display-screen1.jpg" alt="Kitchen Video System display — station orders" loading="lazy"></a>
+<figcaption>KDS at an assembly station. Each card is an order; colour shifts grey → green → yellow → red as the timer counts up. Rolling average shown bottom.</figcaption>
+</figure>
+
+<figure class="kb-figure">
+<a href="../assets/reference/kitchen-video-system-display-screen2.jpg" target="_blank"><img src="../assets/reference/kitchen-video-system-display-screen2.jpg" alt="Kitchen Video System display — second view" loading="lazy"></a>
+<figcaption>Another KDS view — same operating model, different station filter. Every order-making and order-serving point in the store has one of these.</figcaption>
+</figure>
+
+<p><strong>Management overlay:</strong> Managers walk around with sticky notes / receipt-paper goals stuck to the top of screens — "this is your goal at the end of this shift" — incentivising with meal rewards for hitting numbers (deep-dive transcript; deeper-dive transcript).</p>
+<p><strong>Consequences for missing metrics:</strong> No strict punishment — too many uncontrollable variables. Manager nags ("come on, why's your screen all red?"); Facebook posts or notice board reminders if a trend gets bad (deeper-dive transcript).</p>
+<h3 id="53-drive-through">5.3 Drive-through</h3>
+<p>The most heavily instrumented part of the store.</p>
+<p><strong>Targets</strong> (deep-dive transcript; deeper-dive transcript; deeper-dive notes):
+- <strong>3 minutes 30 seconds total</strong> — sensor entry to sensor exit. This is the hard ceiling.
+- <strong>2 minutes 30 seconds goal</strong> — for the perfect car count streak (see §6).</p>
+<p><strong>Why it's so optimised:</strong> Drive-through can be <strong>up to ~50% of store revenue</strong> (Dave's commentary in deep-dive transcript — research-derived). Unlike the front counter where you can serve the next person if one is waiting, <strong>drive-through cars must be served in arrival order</strong> — there's no parallelism beyond two lanes, except the "park-and-wait" option (a button that pushes a slow car off to the side for kitchen to catch up) (deep-dive transcript).</p>
+<p><strong>Two-lane operation:</strong> Most drive-throughs have two order lanes. Officially you need two order-takers; in practice 99% of the time it's <strong>one person handling both lanes</strong> — toggling mic between lanes, processing payment for one car while taking the next car's order (deep-dive transcript). The drive-through screens show two order screens for this reason.</p>
+<p><strong>Sensors:</strong> Embedded at the start (entry) and end (exit) of the drive-through path. Trigger the timer.</p>
+<p><strong>CSS / Car Count display</strong> (deep-dive slides, screenshots): Shows real-time per-station progress through the drive-through — Order 1, Order 2, Cash (window 1), Present (window 2), Pull Forward — with target times and live performance percentages per station. Total time per car displayed bottom-right. Cars in lane counter top-right.</p>
+<p>[DATED — confirm exact target seconds for current AU stores; the deep-dive slide screenshots reference an OEPE metric and slightly different targets, e.g. COD1/COD2 0:30, Cashier 0:25, Presenter 0:25, PullForward 1:00.]</p>
+<h3 id="54-headsets">5.4 Headsets</h3>
+<p>(deep-dive transcript; deeper-dive transcript)</p>
+<ul>
+<li>Worn by everyone working drive-through (order taker, presenter), and by managers.</li>
+<li><strong>Shared</strong> between shifts — physically gross ("a bit damp from the last person sweating on you").</li>
+<li>Always-on by default — you constantly hear orders coming from the lane you're not actively taking, plus internal team chat.</li>
+<li>Press-and-hold the middle button to talk internally to anyone else with a headset.</li>
+<li><strong>The kitchen has a live audio feed of the drive-through order taker</strong> through speakers — so kitchen can start prepping based on what the customer says, before the POS-presser has even keyed the item.</li>
+</ul>
+<h3 id="55-audio-environment">5.5 Audio environment</h3>
+<p>Speakers throughout the store; everything beeps (deep-dive transcript):
+- Drive-through booth: timer beeps escalate as a car approaches and passes time thresholds. At 3:30 the final sound is "like something going down the drain" — you've lost the car.
+- Kitchen speakers: drive-through live feed + station alerts.
+- Fryer stations: 3:30 cook cycle, shake at 30s, beeps at every interval.
+- Cooking stations: each beep on cycle.
+- Hand-washing stations: beep.
+- "Everything beeps." Ben describes hearing it in his head after Saturday night shifts.</p>
+<h3 id="56-automated-drinks-machine">5.6 Automated drinks machine</h3>
+<p>Drive-through has automated drinks machines that <em>pull the cup, ice, and pour</em> with no human intervention. Originally you'd key it in directly; <strong>now it integrates with the POS feed</strong> — as the order is entered at the front, the drink starts being made automatically downstream (deeper-dive transcript). Ben flags this as one of the more impressive integrations he saw.</p>
+<figure class="kb-figure">
+<a href="../assets/reference/automated-beverage-system.jpg" target="_blank"><img src="../assets/reference/automated-beverage-system.jpg" alt="Automated drinks machine — drive-thru" loading="lazy"></a>
+<figcaption>Automated beverage system in the drive-thru — pulls cup, dispenses ice, pours, all triggered by the POS feed upstream.</figcaption>
+</figure>
+
+<h3 id="57-clamshell-grill-cooking-automation">5.7 Clamshell grill &amp; cooking automation</h3>
+<p>(deep-dive transcript)
+- <strong>No flipping patties.</strong> Double-sided clamshell grill — put patties down, select which type (7 different patty types), press button, grill clamps down, cooks both sides simultaneously, raises, you remove.
+- Cook times automated — no human discretion. Humans can manually pull early in a rush (managers do this with fries occasionally).
+- Sydney airport store is referenced as next-level automation (someone else's anecdote — not Ben's).</p>
+<figure class="kb-figure">
+<a href="../assets/reference/kitchen-double-sided-grill.jpg" target="_blank"><img src="../assets/reference/kitchen-double-sided-grill.jpg" alt="Kitchen double-sided clamshell grill" loading="lazy"></a>
+<figcaption>Double-sided clamshell grill. Patties go down, the type is selected (7 varieties), and the clamp cooks both sides simultaneously. No flipping, no human discretion on cook time.</figcaption>
+</figure>
+
+<h3 id="571-fry-station-informal-procedures-vs-standard">5.7.1 Fry station — informal procedures vs standard</h3>
+<p>(brain-dump: examples)</p>
+<p>The fry station illustrates a wider pattern: there's the standard procedure McD has trained for, and there's the <strong>informal, crew-evolved technique</strong> that happens in practice. Example:</p>
+<ul>
+<li><strong>Standard:</strong> Lift fry basket, hold over the vat to drain, drop into the holding bay.</li>
+<li><strong>Informal (widely practiced):</strong> Lift fry basket, hook it on the retaining hook above the vat, then <strong>bang the handle against the stainless steel hood</strong> to dislodge excess oil before dropping fries into the holding bay.</li>
+</ul>
+<p>The informal technique is accepted crew-side as "more thorough drainage" and gets passed down crew-to-crew. It is not a trained, sanctioned procedure — and it puts mechanical stress on the hood mounting that wasn't designed for it. See §8.1 for a specific incident this contributed to.</p>
+<p><strong>Pattern to flag:</strong> Wherever the standard procedure is silent or feels slow, crew invent shortcuts. Those shortcuts are invisible to corporate, untracked, and propagate by demonstration. They're a structural source of safety incidents and quality drift.</p>
+<figure class="kb-figure">
+<a href="../assets/reference/fry-station-vats.jpg" target="_blank"><img src="../assets/reference/fry-station-vats.jpg" alt="Fry station vats" loading="lazy"></a>
+<figcaption>The fry station — three vats, baskets in stainless steel hood above. The informal "bang the basket on the hood" drainage technique gets done dozens of times per shift across these baskets.</figcaption>
+</figure>
+
+<h3 id="58-known-peak-events-canberra-context">5.8 Known peak events — Canberra context</h3>
+<p>(brain-dump: examples)</p>
+<p>Beyond the standard demand peaks (weekend evenings, school holidays), specific <strong>local events</strong> drive store-level extreme peaks. Most relevant for the Canberra context:</p>
+<ul>
+<li><strong>Summernats</strong> — annual summer car festival, Canberra. Genuinely one of the busiest periods of the year for local stores. Ben worked it. Single-station crew assignment for the duration (e.g. 100% on fry). Mechanical failures and safety incidents become more likely under this load — see §8.1.</li>
+</ul>
+<p>Other AU stores will have their own known events (regional shows, sporting fixtures, festivals). The general lesson: corporate-level demand forecasting is good but doesn't capture every regional anomaly — store managers carry that knowledge.</p>
+<h3 id="59-scheduling-clock-inout">5.9 Scheduling &amp; clock-in/out</h3>
+<p>(deeper-dive transcript)</p>
+<p><strong>Availability:</strong>
+- Initial availability set online during application — full calendar of available/not available per hour over a 7-day rolling week.
+- [DATED 2017] Ongoing updates done by hand in a <strong>black notebook in the manager's office</strong> — you'd write "not available [date]" or "regular availability now changes to X." Just being digitised as Ben left.</p>
+<p><strong>Roster delivery:</strong>
+- Weekly email to your personal email saying "your shifts are ready in MeTime."
+- You log in, see shifts, acknowledge.
+- <strong>No option to decline a shift</strong> in MeTime — if you couldn't work, you had to contact the store and find your own replacement.</p>
+<p><strong>On-shift assignment:</strong>
+- Shifts in MeTime show only your <strong>area</strong> (e.g. "DPS1: OTC/Asmbl/Pres/DD/DrvThru", "MC1: McCafé Barista", "Close Front (D/Thru)") — drawn from Ben's actual schedule for week ending 8 Jan 2017, Dickson ACT (deep-dive slides).</p>
+<figure class="kb-figure">
+<a href="../assets/reference/crew-roster-screenshot.jpg" target="_blank"><img src="../assets/reference/crew-roster-screenshot.jpg" alt="Crew roster screenshot — Ben's actual schedule" loading="lazy"></a>
+<figcaption>Ben's actual MeTime roster, week ending 8 Jan 2017. Shows the area-only granularity (no specific station) — station assignment is handwritten on the day.</figcaption>
+</figure>
+
+<ul>
+<li>More granular station assignment is given on the day via a lo-fi paper at the manager's station — they'd handwrite who's where, plus what "<strong>flex role</strong>" you do when not busy at your primary station.</li>
+</ul>
+<p><strong>Clock-in/out screen:</strong>
+- Separate from MeTime — its own dedicated screen.
+- Enter employee ID + 4-digit PIN (or fingerprint).
+- Options: start shift, end shift, start break, end break.
+- Shows you what area you're on.
+- <strong>You cannot clock in before your shift start time</strong> — strict; Ben got told off for clocking in 2–3 minutes early. Crew huddle around the screen waiting for the time to tick over.</p>
+<h3 id="510-other-equipment">5.10 Other equipment</h3>
+<ul>
+<li>Equipment maintenance handled by specialised <strong>third-party contractors</strong>, not McD employees. They tend to specialise (e.g. ice cream machine specialists). Maintenance happens overnight/daytime — Ben rarely saw it because he worked weekends/evenings (deeper-dive transcript).</li>
+</ul>
+<hr />
+<h2 id="6-metricated-environment">6. Metricated Environment</h2>
+<p>This is the most distinctive aspect of working in McDonald's. <strong>Everything is timed; everything is ranked; everything is gamified</strong> (deep-dive transcript; deeper-dive transcript).</p>
+<h3 id="61-what-gets-measured">6.1 What gets measured</h3>
+<ul>
+<li>POS time per order</li>
+<li>Every station's time-to-serve via KDS</li>
+<li>Drive-through end-to-end time per car</li>
+<li>Each drive-through sub-station (order 1, order 2, cash, present, pull-forward)</li>
+<li>Rolling averages across all of the above</li>
+<li>Wastage per shift (manually rung up at the till every hour)</li>
+<li>Drive-through "Perfect Car Count" (see below)</li>
+</ul>
+<figure class="kb-figure">
+<a href="../assets/reference/metricated-environment-drive-thru-tracking.jpg" target="_blank"><img src="../assets/reference/metricated-environment-drive-thru-tracking.jpg" alt="Drive-thru per-stage tracking display" loading="lazy"></a>
+<figcaption>Per-car drive-thru tracking — order 1, order 2, cash, present, pull-forward — with live performance vs targets. Total time bottom-right; cars in lane top-right.</figcaption>
+</figure>
+
+<h3 id="62-perfect-car-count-the-streak-game">6.2 Perfect Car Count — the streak game</h3>
+<p>(deep-dive transcript; deeper-dive transcript; deep-dive slides)</p>
+<p>The marquee metric. Behaves like a Snapchat streak:
+- Under 2:30 → <strong>perfect car</strong>, streak +1
+- 2:30 – 3:30 → doesn't add to streak, doesn't break it
+- Over 3:30 → streak <strong>resets to zero</strong></p>
+<p>A dedicated screen behind the drive-through presenter shows:
+- Your store's current PCC
+- Your <strong>state rank</strong> vs every other store in the state
+- Your <strong>district rank</strong>
+- A leaderboard table (deep-dive slides show a Victorian district view: Mernda VIC 144 PCC #1, Scoresby VIC 144 PCC #2, etc., down to Barnawartha VIC at 14 PCC with 5:28 total time)
+- Per-stage breakdowns vs targets</p>
+<p>Targets are also tracked at "this hour" and "day" levels — a wall-mounted small screen in Ben's reference photo shows "This Hour 3/745" and "Wyndham Waters VIC Perfect Car Count: 74" (deep-dive slides).</p>
+<figure class="kb-figure">
+<a href="../assets/reference/metricated-environment-drive-thru-ranking-screen.jpg" target="_blank"><img src="../assets/reference/metricated-environment-drive-thru-ranking-screen.jpg" alt="Drive-thru ranking screen — district leaderboard" loading="lazy"></a>
+<figcaption>Drive-thru Perfect Car Count leaderboard — district view. Every store sees its own rank against neighbours in real time, behind the presenter.</figcaption>
+</figure>
+
+<figure class="kb-figure">
+<a href="../assets/reference/metricated-environment-drive-thru-ranking-screen2.jpg" target="_blank"><img src="../assets/reference/metricated-environment-drive-thru-ranking-screen2.jpg" alt="Drive-thru ranking screen — alternate view" loading="lazy"></a>
+<figcaption>Another PCC view — same metric, different store context. Visible to crew during the shift.</figcaption>
+</figure>
+
+<h3 id="63-carrot-stick">6.3 Carrot &amp; stick</h3>
+<p>(deeper-dive transcript)
+- <strong>Carrot:</strong> national/state pride, manager-set goals ("get PCC to X by end of shift, free meal"), competitive streaks
+- <strong>Stick:</strong> the beeping, the screens going red, the verbal manager pressure on headset ("closed loop, closed questioning")</p>
+<p><strong>Reality check:</strong> Past a certain point — full drive-through, never-ending cars — the leaderboard becomes background noise. You're just trying to keep things moving. But the headset and beeping cannot be tuned out (deep-dive transcript).</p>
+<h3 id="64-speed-vs-quality-balance">6.4 Speed vs quality balance</h3>
+<p>Officially both matter. In practice, <strong>speed is #1</strong> — easier to measure, directly drives revenue. Quality is checked retrospectively, mostly via customer complaints (deep-dive transcript; deeper-dive transcript).</p>
+<h3 id="65-wastage-tracking">6.5 Wastage tracking</h3>
+<p>(deep-dive transcript; deeper-dive transcript)</p>
+<ul>
+<li>Items wasted (made wrong, returned, made-and-cancelled before payment) go in a specific bin.</li>
+<li>Every hour or so the manager rings them all up in the register as <strong>wastage</strong>.</li>
+<li>A receipt prints from the till listing what was wasted.</li>
+<li>The manager (somewhere) types this into a system.</li>
+<li><strong>Very analog.</strong> Could be tied back to who, what time, which station — but Ben describes it as a disconnected, downstream-only flow.</li>
+<li>Also functions as anti-theft: stops people from "accidentally" making a McFlurry and eating it (Ben confesses to having done this in the dead zone of the drive-through booth).</li>
+</ul>
+<p><strong>Most common causes of wastage:</strong>
+- Customer complaining about quality (cold, messy, missing) → remade
+- Customer customisation not delivered correctly → remade
+- Accidental wrong item made (wrong McFlurry flavour)
+- Order entered but cancelled by customer before paying — already made (the order-to-kitchen shortcut creates this)</p>
+<p><strong>Customer rights:</strong> Heavy deference to the customer. If they want a remake, they get a remake. No real friction (deeper-dive transcript).</p>
+<h3 id="66-no-personal-leaderboards">6.6 No personal leaderboards</h3>
+<p>(deeper-dive transcript)</p>
+<p>Crucially: leaderboards are at the <strong>store / district / state</strong> level, never personalised to the individual. No public "Ben hit X this week." The competition is collective. Manager-driven personal incentives (free meal for hitting Y) are loose, store-by-store, often handwritten and pinned up.</p>
+<hr />
+<h2 id="7-scalability-componentisation">7. Scalability &amp; Componentisation</h2>
+<p>McDonald's stores are built to <strong>dial capacity up and down dramatically</strong> within the same physical footprint.</p>
+<h3 id="71-side-1-side-2-production-lines">7.1 Side 1 / Side 2 production lines</h3>
+<p>(deep-dive transcript; deeper-dive transcript; deep-dive slides)</p>
+<p>The main assembly line has a mirror — <strong>Side 1 and Side 2</strong>. Most of the time only one side runs. A manager can press a button and Side 2 comes online instantly: orders split across both sides, theoretical 2× capacity.</p>
+<p><strong>Triggers:</strong>
+- Pre-planned for forecasted demand (algorithms based on historical patterns)
+- On-the-fly by a manager seeing the queue build</p>
+<h3 id="72-station-granularity-scales">7.2 Station granularity scales</h3>
+<p>The same line can be staffed at radically different densities (QSR notes; deep-dive transcript; deeper-dive transcript):
+- <strong>Overnight: 1–5 people total</strong> in the whole store, sometimes 1 person doing the entire line start-to-finish. "One big happy family."
+- <strong>Normal shift: ~10 people</strong>
+- <strong>Peak shift: ~15 people</strong>
+- <strong>Fully staffed (theoretical maximum): ~30 people</strong> — every sub-station broken out (bun toaster, meat-putter, topping assembler, packer, etc.)</p>
+<p>The KDS infrastructure supports this granularity natively — when stations get split out, each gets its own filtered screen.</p>
+<h3 id="73-double-stores">7.3 Double stores</h3>
+<p>Some sites are physically doubled — <em>two complete stores</em> in one building, often with the second mothballed and opened only at peak (deeper-dive transcript). Ben names the one on the Sydney–Canberra highway as an example (likely Pheasants Nest or similar) — mirror-image layouts. Customer doesn't know; throughput is effectively 2× a single store.</p>
+<p>(Distinct from the two-on-either-side-of-highway phenomenon, which is two separate stores serving opposing traffic directions.)</p>
+<h3 id="74-flex-roles">7.4 Flex roles</h3>
+<p>When a station isn't busy, you have a <strong>flex role</strong> — usually menial filler tasks. Ben gives examples: cut back cardboard in the stockroom; pre-make 100 chip trays; clean. McDonald's is strict that you <strong>never stand still</strong> — if there are no customers, you're cleaning or doing something (deeper-dive transcript).</p>
+<hr />
+<h2 id="8-safety-compliance-incidents">8. Safety, Compliance &amp; Incidents</h2>
+<h3 id="81-incident-frequency-bens-observation">8.1 Incident frequency (Ben's observation)</h3>
+<p>(deeper-dive transcript)</p>
+<p>Low overall in Ben's experience. Most common:
+- <strong>Burns and cuts</strong> — fry station especially. Oil splashes, hot metal contact. Ben routinely walked away with small burns.
+- <strong>Slips and falls</strong> — occasional, nothing dramatic.</p>
+<p>Specific incidents Ben recalls:
+- <strong>Oil leak under the fry station</strong> during a busy period — he kept working; tray-slides along the floor "actually helped efficiency."
+- <strong>A fryer tray over the vat fell</strong> — Ben caught it precariously over hot oil.</p>
+<h3 id="82-near-miss-incident-reporting">8.2 Near-miss / incident reporting</h3>
+<p>(deeper-dive transcript; brain-dump: examples)</p>
+<p>Ben is "sure there was something about logging near misses" — but his observation: it lived in a <strong>binder</strong>, and care factor varied by role.</p>
+<ul>
+<li>Crew, crew trainers, shift managers — limited engagement with logging. "Achievers / try-hards" did it; others didn't.</li>
+<li>2IC / Restaurant Manager — actually on point about it.</li>
+</ul>
+<p><strong>Read:</strong> Process exists on paper [DATED 2017]; cultural follow-through varies by store and by individual manager. This is exactly the gap Donesafe was likely brought in to close.</p>
+<h3 id="821-the-verbal-to-shift-manager-to-forgotten-pattern-the-current-state-pain">8.2.1 The verbal-to-shift-manager-to-forgotten pattern (the current-state pain)</h3>
+<p>(brain-dump: examples)</p>
+<p>The dominant failure mode for incident reporting, as Ben observed it on the floor, is:</p>
+<ol>
+<li><strong>Incident happens</strong> — e.g. equipment failure, oil spill, near-miss with hot surface.</li>
+<li><strong>Crew verbally informs the shift manager</strong> on the floor (often mid-task, both hands full).</li>
+<li><strong>Shift manager <em>might</em> jot a note</strong> — but more commonly, the incident is <strong>forgotten amidst the constant demands of the shift</strong>.</li>
+<li><strong>No formal log created.</strong> No follow-up. No corrective action. The systemic cause (e.g. mechanical mounting weakness, or an unsafe informal procedure — see §5.7.1) is never surfaced.</li>
+</ol>
+<p>This pattern is the structural reason near-miss data underreports reality. It's not that crew don't notice; it's that the bridge from "noticing" to "documented in a system" is a single, overloaded human carrier (the shift manager) who's running a peak shift.</p>
+<p><strong>Pitch implication:</strong> Anything that collapses the report-creation friction — voice-to-text on a manager's already-in-hand device, instant photo capture, low/zero mandatory fields at capture time, AI populating the form post-hoc — directly attacks this failure mode. The system has to make it <em>faster to log than to forget</em>. This is concrete, hand-mappable to specific incidents Ben can speak to on Monday.</p>
+<h3 id="83-multi-level-audit-inspection-cadence">8.3 Multi-level audit &amp; inspection cadence</h3>
+<p>(brain-dump: feature use cases)</p>
+<p>Structured inspections are <strong>ubiquitous</strong> in McDonald's operations and happen at multiple organisational levels. Each level uses inspections for slightly different purposes:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Who</th>
+<th>Cadence / purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Within-shift</td>
+<td>Shift Manager</td>
+<td>Routine internal checks during the shift — cleanliness, line readiness, basic compliance</td>
+</tr>
+<tr>
+<td>Daily / weekly</td>
+<td>Restaurant Manager</td>
+<td>Comprehensive store-level assessment; signs off on standards</td>
+</tr>
+<tr>
+<td>Per-visit, multi-site</td>
+<td>Area Supervisor</td>
+<td>Walk-the-floor non-conformity logging across their store cluster; standards compliance</td>
+</tr>
+<tr>
+<td>Periodic, multi-site</td>
+<td>Operations Consultants</td>
+<td>Performance reviews of restaurants</td>
+</tr>
+<tr>
+<td>Periodic, brand-level</td>
+<td>Corporate teams (Customer Service / Quality Assurance / Employee Relations — see §9.5)</td>
+<td>Brand standard audits</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Common non-conformity types flagged during walk-throughs:</strong>
+- Unsanitary dining areas
+- Incorrect or damaged merchandising displays
+- Deviations from mandated staff procedures (uniform, handling techniques)
+- Equipment in disrepair</p>
+<p><strong>Historical state:</strong> Carbon-copy paper forms → filed in binders → seldom reviewed → no closed-loop on corrective actions.</p>
+<p><strong>Current trajectory:</strong> Migration to <strong>iPad-based digital checklists</strong> is partially in progress (see §10). The shift toward digital captures rich media (photos/video) as supporting evidence and ties non-conformities to follow-up actions automatically.</p>
+<p><strong>Why this is a strong angle for the SC pitch:</strong>
+- Audits already happen — this isn't introducing a new process, it's replacing paper with a better surface.
+- The same digital checklist instrument scales across all five levels above without bespoke tooling per level.
+- Closing the corrective-action loop (failed criteria → auto-created follow-up issue) is one of the most concrete "Donesafe replacement plus" value props.</p>
+<h3 id="84-corporate-visits">8.4 Corporate visits</h3>
+<p>(deeper-dive transcript)</p>
+<p>When McD Corporate visits, the store transforms:
+- <strong>Double the crew on shift</strong>
+- Everything cleaned — Ben recalls cleaning walk-in freezer nooks "with a toothbrush"
+- Pristine execution to standard</p>
+<p>The visit creates a clear before/after — and tells you what's <em>normally</em> not done.</p>
+<h3 id="85-youth-labour-law-enforcement-the-standout-integration">8.5 Youth labour law enforcement — the standout integration</h3>
+<p>(deep-dive transcript; deeper-dive transcript)</p>
+<p>The most striking integration Ben observed:</p>
+<p>The <strong>shift clock-in/out system</strong> (rostering, very desktop/internet-based) is connected to the <strong>kitchen display screens</strong> (in-store operating systems).</p>
+<p>If an under-18 worker:
+- Works past 11pm on a weeknight, OR
+- Goes over the maximum continuous hours without a break</p>
+<p>Then:
+- The manager gets a <strong>5-minute warning</strong>
+- If not actioned, <strong>every kitchen screen in the store goes red</strong> with a "Shift Violation" banner
+- The restaurant <strong>stops functioning</strong> until the person clocks out / takes a break / leaves
+- <strong>No override.</strong></p>
+<p>Ben's inference: this almost certainly comes from a past court case or significant fine — McD doesn't want the legal exposure.</p>
+<p><strong>Why this matters for the pitch:</strong> It's the clearest demonstration of how McDonald's <em>can</em> integrate compliance triggers across systems when there's enough motivation (legal/financial). Most other integrations are weaker. Suggests they value tight cross-system enforcement when the stakes are high.</p>
+<h3 id="86-quality-cleaning-protocols-drilled-hands-on">8.6 Quality / cleaning protocols (drilled, hands-on)</h3>
+<p>(deep-dive transcript; deep-dive slides; deeper-dive transcript)</p>
+<ul>
+<li><strong>Figure-of-eight mopping</strong> — researched as the most efficient + effective. Trained on, demonstrated to a crew trainer, ticked off.</li>
+<li><strong>Spray-on-cloth, never on surface</strong> — to avoid concentrated chemical residue. Spray cloth, then wipe.</li>
+<li><strong>Wastage discipline</strong> — discard anything not up to scratch (see §6.5).</li>
+<li><strong>Toilet cleaning</strong> — done by crew during the day (overnight cleaners do the "proper" clean). Generally assigned to a guy from the kitchen as a flex role. Ben says toilet duty was the universally most-disliked task — new crew on cleaning meant 3 hours of toilets, the rest of the crew got relief.</li>
+</ul>
+<h3 id="87-service-scripting-drilled">8.7 Service scripting (drilled)</h3>
+<p>(deep-dive transcript; deep-dive slides)</p>
+<ul>
+<li><strong>2-metre rule</strong> — anytime you're within 2m of a customer, smile and say hello. Theoretical — Ben confirms it doesn't actually happen in practice, but heavily reinforced in training and on notice boards.</li>
+<li><strong>Two-part greeting at order point</strong> — first part welcomes, second part asks what they want. Cannot say "how are you," cannot ask anything else outside the script. Practiced 1:1 with crew trainer.</li>
+<li><strong>Closed questioning</strong> — always ask closed questions. If Beth orders a Big Mac meal, you say "<strong>Is it a Coke for the drink?</strong>" — not "what drink do you want?" Manager can hear you on the headset and will call out "closed loop, closed questioning" if you slip.</li>
+<li><strong>Order close-out</strong> — specific phrases mandatory: "drive through to the next window," "check the screens." Strict.</li>
+<li><strong>Upselling</strong> — drilled.</li>
+</ul>
+<hr />
+<h2 id="9-communication-culture">9. Communication &amp; Culture</h2>
+<h3 id="91-communication-channels-bens-era-limited">9.1 Communication channels (Ben's-era — limited)</h3>
+<p>(deep-dive transcript; deeper-dive transcript; deeper-dive notes)</p>
+<ul>
+<li><strong>Notice boards</strong> in the crew room — the primary channel</li>
+<li><strong>Posters</strong> — McD Standards, "What's New," seasonal</li>
+<li><strong>Facebook group</strong> [DATED 2017] — every store had one; new promotions, renovations, shift swaps, occasional heads-up posts. McD now has its own app for this (per Dave's mention in deep-dive transcript).</li>
+<li><strong>"Knee-ups"</strong> — short standup-style team huddles (Ben mentions but doesn't expand)</li>
+<li><strong>Email</strong> — only for scheduled comms (e.g. "your shifts are ready in MeTime") and payslips. Never used for free-form communication.</li>
+</ul>
+<h3 id="92-no-employee-gatherings">9.2 No employee gatherings</h3>
+<p>(deeper-dive transcript)</p>
+<p>"There's never any gathering of any employees to disseminate information." Everyone's coming and going at different times — no shift-wide assembly. Hence the reliance on async (Facebook, notice boards).</p>
+<h3 id="93-no-phones">9.3 No phones</h3>
+<p>(deep-dive transcript; deeper-dive transcript)</p>
+<ul>
+<li><strong>Uniforms have no pockets</strong> — only fake stitched pockets. Designed so you cannot carry your phone.</li>
+<li>Strict enforcement of "no phones on the floor."</li>
+<li>Dual rationale: focus + risk of dropping a phone in an oil vat.</li>
+<li>[DATED] Likely persists but worth confirming.</li>
+</ul>
+<h3 id="94-qsc-v-framework">9.4 QSC + V framework</h3>
+<p>The cultural backbone (deep-dive transcript; deeper-dive transcript):</p>
+<ul>
+<li><strong>Q</strong>uality — kitchen / food</li>
+<li><strong>S</strong>ervice — front counter / drive-through / customer interaction</li>
+<li><strong>C</strong>leanliness — cleaning protocols</li>
+<li><strong>V</strong>alue — added on top; less emphasis in Ben's training memory than QSC</li>
+</ul>
+<p>Stars on the badge correspond to QSC + M (McCafé) and possibly an "X" / V finisher (deep-dive transcript — see §4.4).</p>
+<h3 id="95-framework-triangulation-three-lenses-on-the-same-operating-model">9.5 Framework Triangulation — three lenses on the same operating model</h3>
+<p>(brain-dump: personas; brain-dump: examples; gong call — Kathy quote, surfaced via brain-dump)</p>
+<p>McDonald's uses three overlapping frameworks to organise operational accountability. They align imperfectly but consistently — <strong>and that alignment is a pitch angle.</strong></p>
+<table>
+<thead>
+<tr>
+<th>QSC pillar (cultural)</th>
+<th>Store-level department manager (operational)</th>
+<th>McD corporate team (functional)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Quality</strong></td>
+<td><strong>Product Quality</strong></td>
+<td><strong>Quality Assurance</strong> (incl. health inspector visits, food safety incidents)</td>
+</tr>
+<tr>
+<td><strong>Service</strong></td>
+<td><strong>Customer Experience</strong></td>
+<td><strong>Customer Service</strong></td>
+</tr>
+<tr>
+<td><em>(no direct QSC equivalent — people side)</em></td>
+<td><strong>People Performance</strong></td>
+<td><strong>Employee Relations / Workplace Investigations</strong> (bullying, harassment, misconduct)</td>
+</tr>
+<tr>
+<td><strong>Cleanliness</strong></td>
+<td><em>(rolls up under Product Quality / Customer Experience depending on the issue)</em></td>
+<td><em>(typically Quality Assurance)</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Kathy's quote from the Gong call (via brain-dump: examples):</strong></p>
+<blockquote>
+<p><em>"…customer service, employee relations team and quality assurance all use it for investigation purposes as well. So for example, they, if there's a food safety incident, they put it through our Donesafe as an incident… Quality assurance is the same. So they might have like, you know, health inspector visits they enter in there as well. But our employee relations team and our workplace investigation teams use it for obviously any, you know, bullying harassment investigations or misconduct…"</em></p>
+</blockquote>
+<p><strong>Why this matters:</strong>
+- The three frameworks <strong>agree</strong> on Quality, Service, and the People dimension. The crossover between QSC and the corporate team structure is the People dimension (corporate has it; QSC doesn't name it explicitly — it lives implicitly in Service).
+- One platform demonstrating it can serve all three lenses simultaneously is the "speak in McD's language across departments" angle.
+- The investigation-as-incident pattern Kathy describes (food safety incident → Donesafe → investigation) is exactly what SC's Issues + Heads-Up + Actions stack maps onto.</p>
+<p><strong>Demo angle:</strong> Prepare three example flows for Monday, one per corporate team — Customer Service / Quality Assurance / Employee Relations — each tied back to one of the QSC pillars and one of the store-level department managers. This shows McD that SC isn't just a Donesafe replacement; it's a single instrument that joins three frameworks they already use.</p>
+<h3 id="96-reward-culture">9.6 Reward culture</h3>
+<p>(deeper-dive transcript)
+- <strong>Loosely centralised, very informal.</strong> A manager prints a sheet of A4: "upsell $50 of bacon today, your shift gets a free meal." Pin it up. Done.
+- <strong>Never personal leaderboards.</strong> Always team/shift/store level.
+- Most recognition (e.g. a kudos in a customer review) might earn a shout-out on the notice board — that's it.</p>
+<h3 id="97-per-shift-information-needs">9.7 Per-shift information needs</h3>
+<p>(deeper-dive notes)</p>
+<p>When a worker arrives for shift, they need to know <strong>which station they're working today</strong> — and nothing else.</p>
+<p>Per Ben (deeper-dive transcript): the one piece of useful periodic info is the <strong>new promotion / new Happy Meal</strong>, especially for back-of-house — recipes for new burgers, etc. Those get printed and pinned somewhere; no formal training, the expectation is read-it-on-the-board-and-assemble-it.</p>
+<p>Workers would love to know who they're working with and which manager is on, but the business doesn't surface this — no operational value to the business.</p>
+<h3 id="98-employment-pay-structure">9.8 Employment &amp; pay structure</h3>
+<p>(deeper-dive transcript)</p>
+<ul>
+<li>Crew are employed by the <strong>franchisee entity</strong> (a trust or company), not by McDonald's itself.</li>
+<li>Pay processed through the franchisee, separate from McDonald's corporate timesheets.</li>
+<li>Ben recalls payslip format changing dramatically when his store changed ownership.</li>
+<li><strong>No reciprocity</strong> — Ben could never work a shift at another McDonald's, even another store in the same town, because employer is the franchisee.</li>
+<li>Most crew are <strong>casual</strong> — terminable at any time.</li>
+</ul>
+<hr />
+<h2 id="10-systems-integration">10. Systems Integration</h2>
+<p>(deeper-dive transcript)</p>
+<p>The recurring observation: <strong>lots of systems running, very mixed integration</strong>.</p>
+<p><strong>Tightly integrated (good examples):</strong>
+- POS → KDS → Automated drinks machine (drinks make themselves from the menu data)
+- Rostering ↔ KDS for youth labour law violations (§8.4) — the standout
+- Order-to-kitchen short-circuit (drink/food prep starts before payment)
+- Clock-in screen ↔ what-area-am-I-on</p>
+<p><strong>Disparate / disconnected (poor examples):</strong>
+- Wastage capture (paper receipts from till → manually typed into a system somewhere)
+- Availability updates (paper diary in manager's office [DATED 2017])
+- Training competency sign-off → MeTime, but the feedback loop back to the worker is weak (§4.8)
+- Reward structures (printed-on-A4-paper, pinned)
+- Communication (Facebook group + notice boards + email — three separate planets)
+- Inspection records (Ben: "inspections would go really far. Just digitising a lot of paper" would be low-hanging fruit)</p>
+<p><strong>Still paper-based [DATED 2017]:</strong>
+- Availability updates (black notebook)
+- Per-shift station assignments (handwritten sheet at manager's station)
+- Reward / incentive sheets
+- <strong>Station Observation Checklists (SOCs)</strong> — carbon-copy forms filed in binders; see §4.3.1 (the trajectory below is changing this)
+- Inspection / audit forms across all levels (see §8.3)</p>
+<h3 id="101-current-trajectory-paper-ipad">10.1 Current trajectory — paper → iPad</h3>
+<p>(brain-dump: feature use cases)</p>
+<p>Migration of paper checklists/SOCs/inspections to <strong>iPad-based digital checklists</strong> is partially in progress. Key features driving the shift:</p>
+<ul>
+<li><strong>Mobile-device optimised</strong> — purpose-built for the fast-paced restaurant environment; eliminates reliance on the clunky, slow desktop in the noisy crew room.</li>
+<li><strong>Rich media capture</strong> — photo/video as supporting evidence on any checklist item.</li>
+<li><strong>Automated follow-up action creation</strong> — failed criteria can auto-generate corrective issues, closing the loop that paper-in-a-binder broke.</li>
+</ul>
+<p>This trajectory is already underway inside McD — worth confirming with Paul/Kathy how far it's progressed and whether any of it is on SafetyCulture today. If the answer is "yes, on some pilots," the demo can plug into an existing internal advocate story. If "no, paper still," then SC's pitch is exactly the right wedge.
+- Some inspection / audit material
+- Near-miss / incident logging (binders)
+- Recipe sheets for new seasonal items (taped to machines)</p>
+<h3 id="single-sign-on">Single sign-on</h3>
+<p>Old MeTime: employee ID + password. <strong>No password reset to email</strong> [DATED 2017].</p>
+<p>New version (per Ben/Dave): single sign-on with social login (deeper-dive transcript) — though Ben isn't sure if this applies to Australia specifically. Worth confirming.</p>
+<hr />
+<h2 id="11-australia-specific-context">11. Australia-Specific Context</h2>
+<p>(deeper-dive transcript)</p>
+<p><strong>Australia is one of McDonald's more advanced markets globally.</strong></p>
+<ul>
+<li>Among the first countries to roll out <strong>touchscreen self-order kiosks</strong> — alongside Austria, Singapore, and France. Now standard globally.</li>
+<li>Generally more open to early adoption of new tech.</li>
+<li>This means: McD AU corporate sees themselves as a sandbox / proving ground for global rollouts. Anything that lands in AU first has a path to scale globally. <strong>Useful angle for the pitch.</strong></li>
+</ul>
+<p><strong>McDonald's Australia as RTO:</strong> the local entity is a registered training organisation in its own right (§4) — content is built for the Australian audience, in English only, by McDonald's Australia (deeper-dive transcript).</p>
+<p><strong>Corporate office location:</strong> Thornleigh (Sydney) is referenced as a canonical corporate-store location (§2; deeper-dive transcript).</p>
+<p>[DATED — confirm current AU McD corporate HQ for the Monday demo — the Gong transcript may have this. Ben's source set doesn't.]</p>
+<hr />
+<h2 id="12-glossary">12. Glossary</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2m rule</strong></td>
+<td>Smile and say hello within 2m of any customer (theoretical; rarely happens in practice)</td>
+</tr>
+<tr>
+<td><strong>Area Supervisor</strong></td>
+<td>Multi-site role between restaurant manager and licensee/corporate; 30s–40s; mobile; run off feet; care factor varies with franchisee culture</td>
+</tr>
+<tr>
+<td><strong>Bump bar</strong></td>
+<td>Physical button bar (serve/hold/next/receipt) below each kitchen display screen; usually not touchscreen [DATED]</td>
+</tr>
+<tr>
+<td><strong>Closed questioning</strong></td>
+<td>Mandatory front-counter scripting style — always ask closed questions, e.g. "Is it a Coke for the drink?"</td>
+</tr>
+<tr>
+<td><strong>Clamshell grill</strong></td>
+<td>Double-sided grill that cooks patties on both sides at once; no flipping; 7 patty types selectable</td>
+</tr>
+<tr>
+<td><strong>Crew</strong></td>
+<td>Entry-level frontline worker; ages 14–18; casual; low care factor; NOT the right primary user for new platforms</td>
+</tr>
+<tr>
+<td><strong>Crew Coach</strong></td>
+<td>McD's current term for the on-floor trainer role — likely the rebrand of "Crew Trainer"</td>
+</tr>
+<tr>
+<td><strong>Crew Trainer</strong></td>
+<td>Ben's-era term for the trainer role — extra 50c–$1/hour, blue (different-colour) shirt; ~10% of store crew are crew trainers; ages 16–21</td>
+</tr>
+<tr>
+<td><strong>CSS / Car Count</strong></td>
+<td>The drive-through performance display — per-station times, total time, capacity, cars in lane</td>
+</tr>
+<tr>
+<td><strong>Department Manager</strong></td>
+<td>Store-level salaried role, parallel to Assistant Restaurant Manager. Three flavours: Customer Experience, People Performance, Product Quality. Boundaries blurry — may overlap with 2IC or senior shift mgrs</td>
+</tr>
+<tr>
+<td><strong>Drive-through sensors</strong></td>
+<td>Embedded sensors at entry and exit that trigger the per-car timer</td>
+</tr>
+<tr>
+<td><strong>Flex role</strong></td>
+<td>Filler task you do when not busy at your primary station — cardboard cutting, chip trays, cleaning</td>
+</tr>
+<tr>
+<td><strong>KDS (Kitchen Display Screen)</strong></td>
+<td>Station-specific filtered order screen; timer + colour progression grey → green → yellow → red; rolling average shown</td>
+</tr>
+<tr>
+<td><strong>Knee-up</strong></td>
+<td>Short team huddle / standup (Ben mentions; doesn't expand)</td>
+</tr>
+<tr>
+<td><strong>LSM</strong></td>
+<td>"Local Store Marketing" — promo button category on the POS (inferred from POS screenshot in deep-dive slides)</td>
+</tr>
+<tr>
+<td><strong>McCafé / MC</strong></td>
+<td>The café-within-a-store; treated as the most skilled / "fancy" track</td>
+</tr>
+<tr>
+<td><strong>McOpCo</strong></td>
+<td>McDonald's-owned &amp; operated store; functions as a controlled operational laboratory / proving ground (NOT a profit centre); Thornleigh is the canonical AU example. Ben's-era language: "corporate stores"</td>
+</tr>
+<tr>
+<td><strong>MeTime</strong></td>
+<td>McDonald's employee platform (LMS, rostering, payslips, personal details) [DATED — renamed since, possibly "MeOut"]</td>
+</tr>
+<tr>
+<td><strong>OEPE</strong></td>
+<td>Drive-through metric shown on CSS display (visible in deep-dive slide screenshots — exact meaning not in Ben's sources)</td>
+</tr>
+<tr>
+<td><strong>Operational laboratory</strong></td>
+<td>The role of McOpCo stores — controlled environments for testing new systems, standards, equipment before franchise rollout</td>
+</tr>
+<tr>
+<td><strong>OTC</strong></td>
+<td>"Order Taker / Cashier" — a drive-through station role (visible on Ben's actual roster in deep-dive slides)</td>
+</tr>
+<tr>
+<td><strong>Park-and-wait</strong></td>
+<td>Drive-through option to push a slow car aside via a button so others can be served</td>
+</tr>
+<tr>
+<td><strong>PCC (Perfect Car Count)</strong></td>
+<td>Drive-through streak metric — cars under 2:30 build it, cars over 3:30 reset it</td>
+</tr>
+<tr>
+<td><strong>POS</strong></td>
+<td>Point-of-sale touchscreen at the front counter</td>
+</tr>
+<tr>
+<td><strong>Profit-motive friction</strong></td>
+<td>Structural reason franchisees deviate from corporate standards — when the entity bearing compliance cost captures non-compliance upside, you get drift</td>
+</tr>
+<tr>
+<td><strong>QSC</strong></td>
+<td>Quality, Service, Cleanliness — the cultural pillars</td>
+</tr>
+<tr>
+<td><strong>QSC + V</strong></td>
+<td>QSC plus Value — the four pillars; correspond to badge stars</td>
+</tr>
+<tr>
+<td><strong>RTO</strong></td>
+<td>Registered Training Organisation — McDonald's AU is one</td>
+</tr>
+<tr>
+<td><strong>Shift Manager</strong></td>
+<td>First management rung; 19–25; usually a part-time uni student; promoted from crew (never hired directly); low-to-medium care factor; focus is "don't get in trouble"</td>
+</tr>
+<tr>
+<td><strong>Side 1 / Side 2</strong></td>
+<td>The two parallel kitchen assembly lines; only one runs at a time normally; manager presses a button to bring Side 2 online for 2× capacity</td>
+</tr>
+<tr>
+<td><strong>SOC (Station Observation Checklist)</strong></td>
+<td>McD's named, standardised competency-assessment instrument used by crew trainers to certify crew on a station. Historically paper + carbon copy + binder; migrating to iPad</td>
+</tr>
+<tr>
+<td><strong>Stars</strong></td>
+<td>Physical badge stars awarded for completing each QSC + M (+ X) track</td>
+</tr>
+<tr>
+<td><strong>Summernats</strong></td>
+<td>Annual summer car festival, Canberra — known extreme-peak demand event for local stores</td>
+</tr>
+<tr>
+<td><strong>Two-part greeting</strong></td>
+<td>Mandatory front-counter opening — welcome + ask for order; no "how are you"</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="source-legend">Source legend</h2>
+<p><strong>Primary (v2 authoritative — brain dumps):</strong>
+- <strong>brain-dump: operating model</strong> = ben-brain-dump-operating-model.md (McOpCo as proving ground; profit-motive friction; franchise adoption challenge)
+- <strong>brain-dump: personas</strong> = ben-brain-dump-personas.md (detailed persona breakdowns: crew, crew trainer, shift mgr, 2IC, department mgrs, restaurant mgr, area supervisor)
+- <strong>brain-dump: feature use cases</strong> = ben-brain-dump-feature-use-cases.md (SOCs, multi-level audits, paper-to-iPad migration)
+- <strong>brain-dump: examples</strong> = ben-brain-dump-examples.md (fry station incidents; Summernats; verbal-to-mgr-forgotten pattern; Kathy's corporate-teams quote)</p>
+<p><strong>Secondary (v1 source material — deep dives):</strong>
+- <strong>deep-dive transcript</strong> = ben-maccas-deep-dive-presentation-transcript.md (group session; multiple SC speakers)
+- <strong>deep-dive slides</strong> = ben-maccas-deep-dive-presentation-slides-and-notes.pdf (slides + Ben's speaker notes; includes screenshots of POS, KDS, drive-through CSS, leaderboards, Ben's actual schedule)
+- <strong>deeper-dive notes</strong> = ben-maccas-deeper-dive-notes.md (curated bullet summary from PM session; includes interview questions)
+- <strong>deeper-dive transcript</strong> = ben-maccas-deeper-dive-transcript.md (full Zoom transcript with Ruchi)
+- <strong>QSR notes</strong> = qsr-maccas-experience-bens-notes.md (Ben's talking-point bullets)</p>
+<h2 id="footnotes-open-items">Footnotes / open items</h2>
+<ul>
+<li><strong>Crew Coach vs Crew Trainer terminology</strong> — McD's "Pathways to the Future" official material uses "Crew Coach"; Ben consistently uses "Crew Trainer." Treating these as the same role with a rename; worth confirming.</li>
+<li><strong>Crew trainer pay bump</strong> — deep-dive transcript says +50c/hour; brain-dump (personas) says "maybe $1/hour." Likely drift over time. Treat as 50c–$1.</li>
+<li><strong>MeTime current name and stack</strong> — Dave referenced "MeOut" / Microsoft IDP front door (deep-dive transcript). Ben says "called something slightly different now" (deeper-dive transcript). Not confirmed; flag for pitch.</li>
+<li><strong>Exact AU drive-through targets today</strong> — deep-dive slides show different per-station targets (COD1 0:30, Cashier 0:25, Presenter 0:25, PullForward 1:00) than Ben's verbal 2:30 / 3:30 overall framing. Both are real (overall vs per-stage), but worth confirming current targets.</li>
+<li><strong>Average drive-through revenue share</strong> — Dave cites "almost half" (deep-dive transcript). Worth verifying with a public source for pitch use.</li>
+<li><strong>Average mid-2010s store profit ($500K)</strong> [DATED] — Ben's recollection, not from a public source.</li>
+<li><strong>2007–2017 dating in deeper-dive notes</strong> — likely a transcription error; Ben's actual McDonald's tenure is 2013–2017 (per project instructions and consistent with his "started at 13yrs 9mo" + "4 years" in deep-dive transcript). Treating 2013–2017 as the authoritative range.</li>
+<li><strong>McOpCo persona equivalents</strong> — brain-dump (operating model) sharpens the McOpCo vs franchise distinction structurally (§2.2) but doesn't enumerate role-by-role differences. Working assumption (§3.10): role names and hierarchy hold; key differences are employment terms (corporate salaried vs franchisee casual) and reporting line.</li>
+<li><strong>AU McOpCo/franchise ratio</strong> — not in any source; worth confirming.</li>
+<li><strong>iPad SOC/checklist deployment state</strong> — brain-dump (feature use cases) says migration is "partially in progress" but doesn't specify whether any of it is on SafetyCulture today. Confirm with Paul/Kathy.</li>
+<li><strong>Department manager role boundaries</strong> — brain-dump (personas) explicitly flags these as blurry, with overlap likely between assistant manager, senior shift managers, and the three department-manager hats (Customer Experience / People Performance / Product Quality). Worth confirming current McD AU practice during the demo.</li>
+<li><strong>Ben knows current contacts</strong> in the McD ecosystem he could potentially reach: (1) an owner-operator in Adelaide who was previously a manager in Canberra (the one sent to Alice Springs); (2) a member of the Canberra family that owns ~15 stores; (3) a former McD Corporate head of commercial insights &amp; planning (now departed, but 30-year tenure). Reference: deeper-dive transcript.</li>
+</ul>
+
+</div>
+</body>
+</html>

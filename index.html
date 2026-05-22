@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>McDonald's RFP — Ben's prep bundle</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #5a5a5a;
+    --soft: #8a8a85;
+    --line: #d4d4d4;
+    --line-soft: #ececec;
+    --bg: #fafaf7;
+    --card: #ffffff;
+    --accent: #ffbc0d;
+    --corp: #27251f;
+    --franchise: #da291c;
+    --warn-bg: #fff8e1;
+    --warn-line: #e3a008;
+    --tile-hover: #fffdf5;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--bg);
+    padding: 40px 24px 80px;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; }
+
+  header.page-head {
+    border-bottom: 3px solid var(--corp);
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+  }
+  .badge-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--corp);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 3px;
+  }
+  .badge.muted { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 600; }
+  h1 { font-size: 28px; margin: 0 0 4px; letter-spacing: -0.4px; }
+  .subtitle { color: var(--muted); font-size: 14px; }
+  .why-lede {
+    margin: 14px 0 0;
+    font-size: 15px;
+    color: var(--ink);
+    max-width: 760px;
+  }
+
+  section.context {
+    background: var(--card);
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    padding: 22px 24px;
+    margin-bottom: 18px;
+  }
+  section.context h2 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--franchise);
+    margin: 0 0 10px;
+    font-weight: 700;
+  }
+  section.context p { margin: 0 0 10px; }
+  section.context p:last-child { margin-bottom: 0; }
+  section.context .lede { font-size: 15px; }
+
+  .context-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+  @media (max-width: 760px) { .context-grid { grid-template-columns: 1fr; } }
+
+  .caveats {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-line);
+    border-radius: 8px;
+    padding: 20px 22px;
+  }
+  .caveats h2 { color: #8a5a00; }
+  .caveats ul { margin: 0; padding-left: 18px; }
+  .caveats li { margin-bottom: 5px; }
+  .caveats li:last-child { margin-bottom: 0; }
+
+  .sources { padding: 22px 24px; }
+  .sources h2 { color: var(--corp); }
+  .sources ul.top {
+    margin: 0;
+    padding-left: 18px;
+    column-count: 2;
+    column-gap: 32px;
+  }
+  .sources ul.top > li {
+    margin-bottom: 8px;
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  @media (max-width: 760px) { .sources ul.top { column-count: 1; } }
+  .sources ul.sub {
+    margin: 4px 0 0 0;
+    padding-left: 16px;
+    color: var(--muted);
+    font-size: 13px;
+    list-style-type: '— ';
+  }
+  .sources ul.sub li { margin-bottom: 2px; }
+  .source-meta { color: var(--soft); font-size: 12px; margin-left: 6px; }
+
+  /* Tiles */
+  .tiles-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 8px 0 14px;
+  }
+  .tiles-head h2 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--franchise);
+    margin: 0;
+    font-weight: 700;
+  }
+  .tiles-head .count { color: var(--muted); font-size: 12px; }
+
+  .subsection-head {
+    margin: 28px 0 14px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .subsection-head h3 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--corp);
+    margin: 0 0 4px;
+    font-weight: 700;
+  }
+  .subsection-head p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    max-width: 720px;
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .tiles.tiles-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 900px) { .tiles.tiles-3 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 760px) {
+    .tiles { grid-template-columns: 1fr; }
+    .tiles.tiles-3 { grid-template-columns: 1fr; }
+  }
+
+  a.tile {
+    display: block;
+    background: var(--card);
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    padding: 20px 22px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.15s, background 0.15s, transform 0.05s;
+    position: relative;
+  }
+  a.tile:hover {
+    border-color: var(--accent);
+    background: var(--tile-hover);
+  }
+  a.tile:active { transform: translateY(1px); }
+  a.tile .tile-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--franchise);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  a.tile .tile-tag.scenarios { color: #2e5aa8; }
+  a.tile .tile-tag.personas { color: #2e7d32; }
+  a.tile .tile-tag.feature  { color: #8a5a00; }
+  a.tile h3 {
+    font-size: 17px;
+    margin: 0 0 8px;
+    letter-spacing: -0.2px;
+    color: var(--corp);
+  }
+  a.tile p {
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-size: 13.5px;
+  }
+  a.tile .tile-meta {
+    font-size: 11.5px;
+    color: var(--soft);
+    border-top: 1px solid var(--line-soft);
+    padding-top: 8px;
+    margin-top: 6px;
+  }
+  a.tile .arrow {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    color: var(--soft);
+    font-size: 18px;
+  }
+  a.tile:hover .arrow { color: var(--franchise); }
+
+  footer.foot {
+    margin-top: 32px;
+    color: var(--soft);
+    font-size: 12px;
+    text-align: center;
+  }
+</style>
+<style id="unified-design">
+  /* Unified design tokens — locks look & feel across the prep bundle */
+  body {
+    background: #fafaf7 !important;
+    color: #1a1a1a !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Page title — exactly one per page */
+  h1 {
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.4px !important;
+    color: #27251f !important;
+    margin: 0 0 6px !important;
+  }
+
+  /* Page header bar — flat, with thick corp-dark bottom border */
+  .wrap > header,
+  .wrap > header.top,
+  .wrap > header.intro,
+  header.page-head {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 3px solid #27251f !important;
+    border-radius: 0 !important;
+    padding: 0 0 14px !important;
+    margin: 0 0 22px !important;
+  }
+
+  /* Main section headers — skip small-caps label sections (.context on dashboard, .tldr on op-model) */
+  section:not(.context):not(.tldr) > h2 {
+    color: #27251f !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.1px !important;
+  }
+
+  /* Stat strip & subtitles */
+  .stat-strip { color: #5a5a5a !important; }
+  .stat-strip strong { color: #27251f !important; }
+  .subtitle, .sub { color: #5a5a5a !important; }
+
+  /* TOC chip */
+  nav.toc { border: 1px solid #ececec !important; background: #ffffff !important; }
+  nav.toc strong { color: #27251f !important; }
+  nav.toc a { color: #27251f !important; }
+  nav.toc a:hover { color: #da291c !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="page-head">
+    <div class="badge-row">
+      <span class="badge">McDonald's RFP prep</span>
+      <span class="badge muted">Internal — SafetyCulture</span>
+    </div>
+    <h1>Maccas prep bundle</h1>
+    <div class="subtitle">Tailored McD context for Friday's prep call &amp; Monday's demo at McD HQ — Ben Maliel</div>
+    <p class="why-lede">I worked at McDonald's for four years through high school, 2013–2017 — crew across front counter, drive-thru, and McCafé.</p>
+  </header>
+
+  <div class="tiles-head">
+    <h2>Artefacts</h2>
+    <span class="count">4 documents · click any tile to open</span>
+  </div>
+
+  <div class="tiles">
+
+    <a class="tile" href="artefacts/operating-model-briefer.html">
+      <span class="arrow">→</span>
+      <h3>Corporate &lt;&gt; Franchise Operating Model Summary</h3>
+      <p>How McD AU is structured, the differences between McOpCo and franchise stores, and what this means for our demo.</p>
+      <div class="tile-meta">Best read first · grounding for everything else</div>
+    </a>
+
+    <a class="tile" href="artefacts/personas-onepager.html">
+      <span class="arrow">→</span>
+      <h3>Personas — crew to licensee</h3>
+      <p>From on-the-floor workers, to store management, through to licensee management teams.</p>
+      <div class="tile-meta">Use this to inform who interacts with the process and the role they play</div>
+    </a>
+
+    <a class="tile" href="artefacts/demo-scenarios.html">
+      <span class="arrow">→</span>
+      <h3>Tangible demo scenarios</h3>
+      <p>Realistic McDonald's scenarios and where SafetyCulture would fit in — with real-life examples from my own experience for a personal touch.</p>
+      <div class="tile-meta">For input to the demos</div>
+    </a>
+
+    <a class="tile" href="artefacts/feature-workflow-map.html">
+      <span class="arrow">→</span>
+      <h3>SC feature-mapping to McD workflows</h3>
+      <p>How I see SafetyCulture's features mapping to McDonald's use cases.</p>
+      <div class="tile-meta">For framing our platform features against McDonald's needs</div>
+    </a>
+
+  </div>
+
+  <div class="tiles-head">
+    <h2>Source material</h2>
+    <span class="count">3 sources · click any tile to open</span>
+  </div>
+
+  <div class="tiles tiles-3">
+
+    <a class="tile" href="https://us-98120.app.gong.io/call?id=8621693304965206494" target="_blank" rel="noopener">
+      <span class="arrow">↗</span>
+      <h3>Gong call — 17 May 2026</h3>
+      <p>McD &lt;&gt; SafetyCulture discovery call with Paul, Kathy, and Chris.</p>
+      <div class="tile-meta">Opens in Gong</div>
+    </a>
+
+    <a class="tile" href="sources/chris-briefing-pack.pdf" target="_blank">
+      <span class="arrow">↗</span>
+      <h3>Chris's briefing pack</h3>
+      <p>Internal AE prep doc — deal context, stakeholders, what's already been discussed, what's still open.</p>
+      <div class="tile-meta">PDF · opens in browser</div>
+    </a>
+
+    <a class="tile" href="sources/knowledge-bank.html">
+      <span class="arrow">→</span>
+      <h3>Ben's knowledge bank</h3>
+      <p>My own personal notes and thinking on McD's operating model — not research, not sourced from the web. 12 sections covering corporate↔franchise, personas, training, safety, systems, and AU-specific context.</p>
+      <div class="tile-meta">Full reference · view in browser</div>
+    </a>
+
+  </div>
+
+  <div class="subsection-head">
+    <h3>Additional reference material</h3>
+    <p>Not used directly in preparing these artefacts, but useful background if you want to go deeper.</p>
+  </div>
+
+  <div class="tiles tiles-3">
+
+    <a class="tile" href="sources/policies-and-procedures.pdf" target="_blank">
+      <span class="arrow">↗</span>
+      <h3>McDonald's policies and procedures</h3>
+      <p>Publicly available policy and procedure documentation from McDonald's.</p>
+      <div class="tile-meta">PDF · opens in browser</div>
+    </a>
+
+  </div>
+
+  <footer class="foot">
+    Prepared by Ben Maliel · ben.maliel@safetyculture.io
+  </footer>
+
+</div>
+</body>
+</html>

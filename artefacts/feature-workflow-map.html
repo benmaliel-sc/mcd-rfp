@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SC feature-mapping to McD workflows</title>
+<style>
+ :root {
+ --bg: #FAFAF7;
+ --card: #FFFFFF;
+ --ink: #14171A;
+ --muted: #5B6166;
+ --line: #E5E5DF;
+ --line-strong: #CFCFC7;
+ --core: #E04403;
+ --core-bg: #FFF2EC;
+ --expand: #1F4DC4;
+ --expand-bg: #ECF0FB;
+ --pillar-q: #B23A3A;
+ --pillar-s: #2C6EAB;
+ --pillar-c: #2F8050;
+ --pillar-p: #7A4FB0;
+ --chip-bg: #F1F1EB;
+ --chip-bg-active: #14171A;
+ --chip-ink-active: #FFFFFF;
+ }
+ * { box-sizing: border-box; }
+ html, body {
+ margin: 0;
+ padding: 0;
+ background: var(--bg);
+ color: var(--ink);
+ font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+ font-size: 14px;
+ line-height: 1.45;
+ -webkit-font-smoothing: antialiased;
+ }.wrap {
+ max-width: 1320px;
+ margin: 0 auto;
+ padding: 28px 32px 80px;
+ }
+ header.top {
+ display: flex;
+ align-items: flex-end;
+ justify-content: space-between;
+ gap: 24px;
+ margin-bottom: 18px;
+ padding-bottom: 14px;
+ border-bottom: 1px solid var(--line);
+ }
+ header.top h1 {
+ font-size: 22px;
+ font-weight: 650;
+ margin: 0 0 4px;
+ letter-spacing: -0.01em;
+ }
+ header.top p.sub {
+ margin: 0;
+ color: var(--muted);
+ font-size: 13px;
+ max-width: 720px;
+ }
+ header.top.meta {
+ text-align: right;
+ color: var(--muted);
+ font-size: 12px;
+ white-space: nowrap;
+ }
+ header.top.meta strong { color: var(--ink); }.filters {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 18px 28px;
+ align-items: center;
+ padding: 14px 0 18px;
+ border-bottom: 1px solid var(--line);
+ margin-bottom: 22px;
+ }.filter-group {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ flex-wrap: wrap;
+ }.filter-group.label {
+ font-size: 11px;
+ font-weight: 600;
+ color: var(--muted);
+ text-transform: uppercase;
+ letter-spacing: 0.06em;
+ margin-right: 4px;
+ }.chip {
+ display: inline-flex;
+ align-items: center;
+ gap: 4px;
+ padding: 4px 10px;
+ border-radius: 999px;
+ background: var(--chip-bg);
+ color: var(--ink);
+ font-size: 12px;
+ font-weight: 500;
+ border: 1px solid transparent;
+ cursor: pointer;
+ user-select: none;
+ transition: background 0.12s, color 0.12s, border-color 0.12s;
+ }.chip:hover { border-color: var(--line-strong); }.chip.active {
+ background: var(--chip-bg-active);
+ color: var(--chip-ink-active);
+ }.chip.count {
+ font-size: 10px;
+ opacity: 0.65;
+ margin-left: 2px;
+ }.reset {
+ margin-left: auto;
+ font-size: 12px;
+ color: var(--muted);
+ text-decoration: underline;
+ text-decoration-color: var(--line-strong);
+ background: none;
+ border: none;
+ cursor: pointer;
+ padding: 4px 0;
+ }.reset:hover { color: var(--ink); }.grid {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 16px;
+ }
+ @media (max-width: 1080px) {.grid { grid-template-columns: repeat(2, 1fr); } }
+ @media (max-width: 720px) {.grid { grid-template-columns: 1fr; } }.section { margin-bottom: 28px; }.section:last-child { margin-bottom: 0; }.section.hidden { display: none; }.section-head {
+ display: flex;
+ align-items: baseline;
+ gap: 14px;
+ margin-bottom: 12px;
+ flex-wrap: wrap;
+ }.section-head h3 {
+ font-size: 15px;
+ font-weight: 650;
+ margin: 0;
+ letter-spacing: -0.005em;
+ display: inline-flex;
+ align-items: center;
+ gap: 8px;
+ }.section-head.count-badge {
+ font-size: 10px;
+ font-weight: 600;
+ padding: 2px 7px;
+ border-radius: 999px;
+ letter-spacing: 0.04em;
+ }.section-head.count-badge.core { background: var(--core-bg); color: var(--core); }.section-head.count-badge.expand { background: var(--expand-bg); color: var(--expand); }.section-head p.lede {
+ margin: 0;
+ color: var(--muted);
+ font-size: 12.5px;
+ flex: 1;
+ min-width: 240px;
+ }.card {
+ background: var(--card);
+ border: 1px solid var(--line);
+ border-radius: 10px;
+ padding: 16px 17px 15px;
+ display: flex;
+ flex-direction: column;
+ gap: 9px;
+ transition: opacity 0.18s, border-color 0.18s, transform 0.18s;
+ position: relative;
+ }.card.dimmed {
+ opacity: 0.18;
+ pointer-events: none;
+ }.card.badges {
+ display: flex;
+ align-items: center;
+ gap: 6px;
+ margin-bottom: 1px;
+ }.badge {
+ font-size: 10px;
+ font-weight: 600;
+ text-transform: uppercase;
+ letter-spacing: 0.06em;
+ padding: 2px 7px;
+ border-radius: 4px;
+ line-height: 1.4;
+ }.badge.core { background: var(--core-bg); color: var(--core); }.badge.expand { background: var(--expand-bg); color: var(--expand); }.pillar {
+ font-size: 10px;
+ font-weight: 700;
+ width: 18px;
+ height: 18px;
+ border-radius: 4px;
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ color: #fff;
+ }.pillar.q { background: var(--pillar-q); }.pillar.s { background: var(--pillar-s); }.pillar.c { background: var(--pillar-c); }.pillar.p { background: var(--pillar-p); }.card h2 {
+ font-size: 14.5px;
+ font-weight: 650;
+ margin: 0;
+ line-height: 1.3;
+ letter-spacing: -0.005em;
+ }.card.workflow {
+ font-size: 12.5px;
+ color: var(--muted);
+ margin: -3px 0 0;
+ line-height: 1.4;
+ }.card.row {
+ display: flex;
+ gap: 7px;
+ align-items: baseline;
+ font-size: 12.5px;
+ line-height: 1.45;
+ }.card.row.k {
+ font-size: 10px;
+ font-weight: 700;
+ color: var(--muted);
+ text-transform: uppercase;
+ letter-spacing: 0.07em;
+ flex: 0 0 60px;
+ padding-top: 2px;
+ }.card.row.v { flex: 1; color: var(--ink); }.card.row.today.v { color: #3A3F45; }.card.personas {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 4px;
+ }.ptag {
+ font-size: 11px;
+ background: var(--chip-bg);
+ color: #3A3F45;
+ padding: 2px 7px;
+ border-radius: 999px;
+ white-space: nowrap;
+ }.card.caveat {
+ font-size: 11.5px;
+ color: var(--core);
+ background: var(--core-bg);
+ padding: 6px 9px;
+ border-radius: 6px;
+ line-height: 1.4;
+ }.card.caveat strong { font-weight: 650; }.empty {
+ text-align: center;
+ color: var(--muted);
+ font-size: 13px;
+ padding: 60px 0;
+ display: none;
+ }.empty.show { display: block; }
+
+ footer {
+ margin-top: 36px;
+ padding-top: 14px;
+ border-top: 1px solid var(--line);
+ color: var(--muted);
+ font-size: 11px;
+ display: flex;
+ justify-content: space-between;
+ gap: 16px;
+ flex-wrap: wrap;
+ }
+ footer.left strong { color: var(--ink); }
+ footer.right { text-align: right; }.legend {
+ display: flex;
+ gap: 16px;
+ flex-wrap: wrap;
+ font-size: 11px;
+ color: var(--muted);
+ margin-top: 6px;
+ }.legend span { display: inline-flex; align-items: center; gap: 5px; }
+</style>
+<style id="dash-rail-style">
+ body { padding-left: 188px !important; }.dash-rail {
+ position: fixed;
+ top: 0;
+ left: 0;
+ bottom: 0;
+ width: 168px;
+ background: #ffffff;
+ border-right: 1px solid #e5e5e5;
+ padding: 22px 14px 22px 18px;
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+ font-size: 12.5px;
+ z-index: 1000;
+ overflow-y: auto;
+ box-sizing: border-box;
+ }.dash-rail__brand {
+ font-size: 10px;
+ text-transform: uppercase;
+ letter-spacing: 0.7px;
+ color: #8a8a85;
+ margin-bottom: 4px;
+ }.dash-rail__home {
+ display: block;
+ font-weight: 700;
+ color: #27251f;
+ text-decoration: none;
+ padding-bottom: 14px;
+ margin-bottom: 14px;
+ border-bottom: 1px solid #ececec;
+ letter-spacing: -0.1px;
+ font-size: 14px;
+ }.dash-rail__home:hover { color: #da291c; }.dash-rail__label {
+ font-size: 9.5px;
+ text-transform: uppercase;
+ letter-spacing: 0.7px;
+ color: #8a8a85;
+ margin: 0 0 8px;
+ padding: 0 4px;
+ }.dash-rail nav { display: flex; flex-direction: column; gap: 1px; }.dash-rail nav a {
+ color: #5a5a5a;
+ text-decoration: none;
+ padding: 7px 8px;
+ border-radius: 4px;
+ line-height: 1.35;
+ border-left: 3px solid transparent;
+ }.dash-rail nav a:hover { background: #fafaf7; color: #27251f; }.dash-rail nav a.current {
+ background: #fffdf5;
+ color: #27251f;
+ font-weight: 600;
+ border-left-color: #ffbc0d;
+ }
+ @media (max-width: 820px) {
+ body { padding-left: 0 !important; }.dash-rail {
+ position: static;
+ width: auto;
+ height: auto;
+ border-right: none;
+ border-bottom: 1px solid #e5e5e5;
+ padding: 12px 16px;
+ }.dash-rail__home { padding-bottom: 8px; margin-bottom: 8px; }.dash-rail nav { flex-direction: row; flex-wrap: wrap; gap: 4px; }.dash-rail__label { display: none; }
+ }
+ @media print {.dash-rail { display: none; }
+ body { padding-left: 0 !important; }
+ }
+</style>
+<style id="responsive-hotfix">
+ /* Restored descendant-selector rules (bare classes + child combinators so the formatter can't collapse them) */
+ .badges {
+   display: flex;
+   align-items: center;
+   flex-wrap: wrap;
+   gap: 6px;
+   margin-bottom: 1px;
+ }
+ .pillar { flex-shrink: 0; }
+ .workflow {
+   font-size: 12.5px;
+   color: var(--muted);
+   margin: -3px 0 0;
+   line-height: 1.4;
+ }
+ .row {
+   display: flex;
+   gap: 7px;
+   align-items: baseline;
+   font-size: 12.5px;
+   line-height: 1.45;
+ }
+ .row > .k {
+   font-size: 10px;
+   font-weight: 700;
+   color: var(--muted);
+   text-transform: uppercase;
+   letter-spacing: 0.07em;
+   flex: 0 0 60px;
+   padding-top: 2px;
+ }
+ .row > .v { flex: 1; color: var(--ink); min-width: 0; }
+ .row.today > .v { color: #3A3F45; }
+ .personas {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 4px;
+ }
+ .caveat {
+   font-size: 11.5px;
+   color: var(--core);
+   background: var(--core-bg);
+   padding: 6px 9px;
+   border-radius: 6px;
+   line-height: 1.4;
+ }
+ .caveat strong { font-weight: 650; }
+ .count-badge {
+   font-size: 10px;
+   font-weight: 600;
+   padding: 2px 7px;
+   border-radius: 999px;
+   letter-spacing: 0.04em;
+ }
+ .count-badge.core { background: var(--core-bg); color: var(--core); }
+ .count-badge.expand { background: var(--expand-bg); color: var(--expand); }
+ .filter-group > .label {
+   font-size: 11px;
+   font-weight: 600;
+   color: var(--muted);
+   text-transform: uppercase;
+   letter-spacing: 0.06em;
+   margin-right: 4px;
+ }
+
+ /* Responsive grid — auto-fit so cards reflow naturally regardless of viewport or rail width */
+ .grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important; }
+ .wrap { max-width: 1280px; padding-left: 24px; padding-right: 24px; }
+ @media (max-width: 600px) {
+   .wrap { padding-left: 16px; padding-right: 16px; }
+   .filters { gap: 12px 16px; }
+ }
+
+ /* Example checklists strip */
+ .examples-strip {
+   background: #fcfbf8;
+   border: 1px solid #ececec;
+   border-radius: 8px;
+   padding: 14px 16px;
+   margin: 20px 0 0;
+ }
+ .examples-label {
+   font-size: 10.5px;
+   text-transform: uppercase;
+   letter-spacing: 0.7px;
+   color: #5a5a5a;
+   font-weight: 700;
+   margin-bottom: 10px;
+ }
+ .examples-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+   gap: 10px;
+ }
+ .example-tile {
+   display: flex;
+   flex-direction: column;
+   gap: 6px;
+   text-decoration: none;
+   color: #1a1a1a;
+   border-radius: 6px;
+   border: 1px solid #ececec;
+   background: #fff;
+   padding: 8px;
+   transition: border-color 0.15s, transform 0.05s;
+ }
+ .example-tile:hover { border-color: #ffbc0d; color: #1a1a1a; }
+ .example-tile:active { transform: translateY(1px); }
+ .example-thumb {
+   width: 100%;
+   height: 96px;
+   background-size: cover;
+   background-position: top center;
+   background-color: #f5f3ee;
+   border-radius: 4px;
+   border: 1px solid #ececec;
+ }
+ .example-title {
+   font-size: 12px;
+   font-weight: 600;
+   color: #27251f;
+   line-height: 1.3;
+ }
+ .example-sub {
+   font-size: 10.5px;
+   color: #5a5a5a;
+   line-height: 1.3;
+ }
+</style>
+<style id="unified-design">
+  /* Unified design tokens — locks look & feel across the prep bundle */
+  body {
+    background: #fafaf7 !important;
+    color: #1a1a1a !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Page title — exactly one per page */
+  h1 {
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.4px !important;
+    color: #27251f !important;
+    margin: 0 0 6px !important;
+  }
+
+  /* Page header bar — flat, with thick corp-dark bottom border */
+  .wrap > header,
+  .wrap > header.top,
+  .wrap > header.intro,
+  header.page-head {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 3px solid #27251f !important;
+    border-radius: 0 !important;
+    padding: 0 0 14px !important;
+    margin: 0 0 22px !important;
+  }
+
+  /* Main section headers — skip small-caps label sections (.context on dashboard, .tldr on op-model) */
+  section:not(.context):not(.tldr) > h2 {
+    color: #27251f !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.1px !important;
+  }
+
+  /* Stat strip & subtitles */
+  .stat-strip { color: #5a5a5a !important; }
+  .stat-strip strong { color: #27251f !important; }
+  .subtitle, .sub { color: #5a5a5a !important; }
+
+  /* TOC chip */
+  nav.toc { border: 1px solid #ececec !important; background: #ffffff !important; }
+  nav.toc strong { color: #27251f !important; }
+  nav.toc a { color: #27251f !important; }
+  nav.toc a:hover { color: #da291c !important; }
+</style>
+</head>
+<body>
+<aside class="dash-rail">
+ <div class="dash-rail__brand">McD RFP prep</div>
+ <a class="dash-rail__home" href="../index.html">← Dashboard</a>
+ <div class="dash-rail__label">Artefacts</div>
+ <nav>
+ <a href="operating-model-briefer.html" class="">Operating model</a>
+ <a href="personas-onepager.html" class="">Personas</a>
+ <a href="demo-scenarios.html" class="">Demo scenarios</a>
+ <a href="feature-workflow-map.html" class="current">Feature mapping</a>
+ </nav>
+</aside>
+
+<div class="wrap">
+
+ <header class="top">
+ <div>
+ <h1>SC feature-mapping to McD workflows</h1>
+ <p class="sub">Where SC fits beyond the Donesafe replacement. Each card maps a SC feature to a real Maccas workflow, the personas who'd use it, what they do today, and why it lands. Filter by persona, QSC pillar, or scope.</p>
+ </div>
+ </header>
+
+ <div class="filters" id="filters">
+ <div class="filter-group" data-group="scope">
+ <span class="label">Scope</span>
+ <span class="chip" data-filter="core">Core ask</span>
+ <span class="chip" data-filter="expansion">Expansion</span>
+ </div>
+ <div class="filter-group" data-group="pillar">
+ <span class="label">QSC + People</span>
+ <span class="chip" data-filter="q"><span class="pillar q">Q</span> Quality</span>
+ <span class="chip" data-filter="s"><span class="pillar s">S</span> Service</span>
+ <span class="chip" data-filter="c"><span class="pillar c">C</span> Cleanliness</span>
+ <span class="chip" data-filter="p"><span class="pillar p">P</span> People</span>
+ </div>
+ <div class="filter-group" data-group="persona">
+ <span class="label">Persona</span>
+ <span class="chip" data-filter="shift-mgr">Shift mgr</span>
+ <span class="chip" data-filter="restaurant-mgr">Restaurant mgr</span>
+ <span class="chip" data-filter="area-sup">Area supervisor</span>
+ <span class="chip" data-filter="ops-consultant">Ops consultant</span>
+ <span class="chip" data-filter="crew-trainer">Crew trainer</span>
+ <span class="chip" data-filter="corporate">Corporate teams</span>
+ <span class="chip" data-filter="licensee">Licensee</span>
+ </div>
+ <button class="reset" id="reset">Clear filters</button>
+ </div>
+
+ <section class="section" id="section-core">
+ <div class="section-head">
+ <h3>Core asks <span class="count-badge core">4 cards</span></h3>
+ <p class="lede">What McD has explicitly asked for via the Gong + Chris's briefing. Donesafe-replacement table-stakes.</p>
+ </div>
+ <div class="grid">
+
+ <!-- 1. Issues — incident reporting (CORE) -->
+ <article class="card" data-scope="core" data-pillar="q s c p" data-persona="shift-mgr restaurant-mgr area-sup ops-consultant corporate licensee">
+ <div class="badges">
+ <span class="badge core">Core ask</span>
+ <span class="pillar q" title="Quality">Q</span>
+ <span class="pillar s" title="Service">S</span>
+ <span class="pillar c" title="Cleanliness">C</span>
+ <span class="pillar p" title="People">P</span>
+ </div>
+ <h2>Issues — incident & near-miss reporting</h2>
+ <p class="workflow">Slips, burns, cuts, equipment failures, abuse-harassment incidents — the direct Donesafe replacement.</p>
+ <div class="personas">
+ <span class="ptag">Shift mgr</span><span class="ptag">Restaurant mgr</span><span class="ptag">Ops consultant</span><span class="ptag">Area supervisor</span><span class="ptag">Safety team</span>
+ </div>
+ <div class="row today"><span class="k">Today</span><span class="v">Crew tells the shift mgr verbally mid-shift; shift mgr's hands are full, the note doesn't get made, the incident is forgotten. Donesafe = pinned browser tab, no real app.</span></div>
+ <div class="row"><span class="k">Why</span><span class="v">~6,000 hazards + ~3,000 incidents logged in April alone. Mobile-native capture closes the verbal-to-forgotten gap that the current setup can't.</span></div>
+ </article>
+
+ <!-- 5. Mobile-first capture (CORE) -->
+ <article class="card" data-scope="core" data-pillar="q s c p" data-persona="shift-mgr restaurant-mgr area-sup ops-consultant">
+ <div class="badges">
+ <span class="badge core">Core ask</span>
+ <span class="pillar q">Q</span><span class="pillar s">S</span><span class="pillar c">C</span><span class="pillar p">P</span>
+ </div>
+ <h2>Mobile-first capture</h2>
+ <p class="workflow">Native iOS/Android — incidents, inspections, dictation — on the device that's already in the manager's hand on the floor.</p>
+ <div class="personas">
+ <span class="ptag">Shift mgr</span><span class="ptag">Restaurant mgr</span><span class="ptag">Area supervisor</span><span class="ptag">Ops consultant</span>
+ </div>
+ <div class="row today"><span class="k">Today</span><span class="v">Donesafe = pinned browser tab on phone/iPad. No real app. Crew-room desktop is loud, slow, unsuited to restaurant tempo.</span></div>
+ <div class="row"><span class="k">Why</span><span class="v">Paul, verbatim: "purpose built to be on a phone or an iPad or an android." This is non-negotiable. Restaurant > support functions is his priority hierarchy.</span></div>
+ <div class="caveat"><strong>Caveat:</strong> Paul wants <em>online</em>, not "offline-then-sync." Pre-empt this — SC's sync model needs framing, or he hears "same problem as today."</div>
+ </article>
+
+ <!-- 6. Automated follow-up actions (CORE) -->
+ <article class="card" data-scope="core" data-pillar="q s c" data-persona="restaurant-mgr area-sup ops-consultant corporate">
+ <div class="badges">
+ <span class="badge core">Core ask</span>
+ <span class="pillar q">Q</span><span class="pillar s">S</span><span class="pillar c">C</span>
+ </div>
+ <h2>Automated follow-up actions</h2>
+ <p class="workflow">Failed inspection criteria auto-generate corrective actions — assigned, owned, due-dated, closed.</p>
+ <div class="personas">
+ <span class="ptag">Restaurant mgr</span><span class="ptag">Area supervisor</span><span class="ptag">Ops consultant</span><span class="ptag">Corporate QA</span>
+ </div>
+ <div class="row today"><span class="k">Today</span><span class="v">Failed audit item lives in a binder. Whether it gets fixed depends on which manager remembers. No closure data, no trend visibility.</span></div>
+ <div class="row"><span class="k">Why</span><span class="v">"Donesafe replacement plus." Collapses the silent gap between "audit done" and "fix happened" — the exact loop ops consultants chase manually.</span></div>
+ </article>
+
+ <!-- 7. AI Issue Capture (CORE) -->
+ <article class="card" data-scope="core" data-pillar="q s c p" data-persona="shift-mgr restaurant-mgr area-sup">
+ <div class="badges">
+ <span class="badge core">Core ask</span>
+ <span class="pillar q">Q</span><span class="pillar s">S</span><span class="pillar c">C</span><span class="pillar p">P</span>
+ </div>
+ <h2>AI Issue Capture — photo + voice</h2>
+ <p class="workflow">Snap a photo, dictate a sentence, AI populates the form. Manager logs the issue and returns to duties in seconds.</p>
+ <div class="personas">
+ <span class="ptag">Shift mgr</span><span class="ptag">Restaurant mgr</span><span class="ptag">Area supervisor</span>
+ </div>
+ <div class="row today"><span class="k">Today</span><span class="v">Free-text forms with mandatory fields. Manager either ignores it (peak shift), tells someone (forgotten), or scribbles a note (lost).</span></div>
+ <div class="row"><span class="k">Why</span><span class="v">This is how SC delivers Paul's stated ask — "removing free-text fields, more automated smart fields." Photo + voice means no free text and no form-navigation friction. Makes it faster to log than to forget.</span></div>
+ </article>
+
+ </div>
+ </section>
+
+ <section class="section" id="section-expand">
+ <div class="section-head">
+ <h3>Expansion areas <span class="count-badge expand">3 cards</span></h3>
+ <p class="lede">Workflows McD hasn't asked about — where SC becomes more than a Donesafe replacement. Seed these in the demo.</p>
+ </div>
+ <div class="grid">
+
+ <!-- 2. Issues — quality & standards non-conformities -->
+ <article class="card" data-scope="expansion" data-pillar="q s c" data-persona="area-sup ops-consultant restaurant-mgr corporate">
+ <div class="badges">
+ <span class="badge expand">Expansion</span>
+ <span class="pillar q">Q</span><span class="pillar s">S</span><span class="pillar c">C</span>
+ </div>
+ <h2>Issues — quality & standards non-conformities</h2>
+ <p class="workflow">Walk-the-floor logging: unsanitary dining, damaged merchandising, uniform/handling deviations, equipment in disrepair.</p>
+ <div class="personas">
+ <span class="ptag">Area supervisor</span><span class="ptag">Ops consultant</span><span class="ptag">Restaurant mgr</span><span class="ptag">Corporate QA</span>
+ </div>
+ <div class="row today"><span class="k">Today</span><span class="v">Verbal feedback or a jotted note. Whether it gets fixed depends on which manager happened to be there.</span></div>
+ <div class="row"><span class="k">Why</span><span class="v">Same Issues instrument, different lens. Area supervisors are "run off their feet" — they'll reward any tool that captures findings in seconds on a walk-through.</span></div>
+ </article>
+
+ <!-- 3. Inspections & checklists -->
+ <article class="card" data-scope="expansion" data-pillar="q s c" data-persona="shift-mgr restaurant-mgr area-sup ops-consultant corporate">
+ <div class="badges">
+ <span class="badge expand">Expansion</span>
+ <span class="pillar q">Q</span><span class="pillar s">S</span><span class="pillar c">C</span>
+ </div>
+ <h2>Inspections — multi-level audits</h2>
+ <p class="workflow">Within-shift → daily/weekly store → per-visit area → periodic ops consultant → brand-standard corporate audits. One instrument, five levels.</p>
+ <div class="personas">
+ <span class="ptag">Shift mgr</span><span class="ptag">Restaurant mgr</span><span class="ptag">Area supervisor</span><span class="ptag">Ops consultant</span><span class="ptag">Corporate QA</span>
+ </div>
+ <div class="row today"><span class="k">Today</span><span class="v">Carbon-copy paper forms → binder → seldom reviewed → no closed loop. Already partially migrating to iPad per the KB.</span></div>
+ <div class="row"><span class="k">Why</span><span class="v">Audits already happen across all five levels — this isn't a new process, it's a better surface. Rich-media evidence (photo/video) and corrective-action linkage scale without bespoke tooling per level.</span></div>
+ </article>
+
+ <!-- 4. Training — SOCs -->
+ <article class="card" data-scope="expansion" data-pillar="p q s" data-persona="crew-trainer shift-mgr restaurant-mgr corporate">
+ <div class="badges">
+ <span class="badge expand">Expansion</span>
+ <span class="pillar p">P</span><span class="pillar q">Q</span><span class="pillar s">S</span>
+ </div>
+ <h2>Training — Station Observation Checklists (SOCs)</h2>
+ <p class="workflow">iPad-based competency sign-off during a live shift, replacing the McD letterhead carbon-copy SOC.</p>
+ <div class="personas">
+ <span class="ptag">Crew trainer (Crew Coach)</span><span class="ptag">Shift mgr</span><span class="ptag">Restaurant mgr</span><span class="ptag">People Performance</span>
+ </div>
+ <div class="row today"><span class="k">Today</span><span class="v">Paper SOC ticked during shift → top copy in a binder → eventually transcribed to MeTime. Worker feedback loop is broken.</span></div>
+ <div class="row"><span class="k">Why</span><span class="v">SOCs are McD-named, McD-standardised, ubiquitous. Speaking "SOC" in the demo signals fluency. Plugs into the People Performance dept mgr + corporate Employee Relations stack.</span></div>
+ </article>
+
+ </div>
+
+ <div class="examples-strip">
+  <div class="examples-label">Real examples — the actual SOCs and competency checks we'd be digitising</div>
+  <div class="examples-grid">
+   <a href="../assets/checklists/soc-fries.png" target="_blank" class="example-tile">
+    <div class="example-thumb" style="background-image: url('../assets/checklists/soc-fries.png')"></div>
+    <div class="example-title">SOC — Fries</div>
+    <div class="example-sub">Crew certification per station</div>
+   </a>
+   <a href="../assets/checklists/soc-mfy-buns.webp" target="_blank" class="example-tile">
+    <div class="example-thumb" style="background-image: url('../assets/checklists/soc-mfy-buns.webp')"></div>
+    <div class="example-title">SOC — MFY Buns</div>
+    <div class="example-sub">Crew certification per station</div>
+   </a>
+   <a href="../assets/checklists/shift-manager-competency-check.png" target="_blank" class="example-tile">
+    <div class="example-thumb" style="background-image: url('../assets/checklists/shift-manager-competency-check.png')"></div>
+    <div class="example-title">Shift Manager competency check</div>
+    <div class="example-sub">Training a trainee shift manager</div>
+   </a>
+  </div>
+ </div>
+ </section>
+
+ <div class="empty" id="empty">No cards match the current filters. <button class="reset" id="reset2" style="display:inline">Clear all</button></div>
+
+ <div class="legend">
+ <span><span class="pillar q">Q</span> Quality</span>
+ <span><span class="pillar s">S</span> Service</span>
+ <span><span class="pillar c">C</span> Cleanliness</span>
+ <span><span class="pillar p">P</span> People (implicit 4th — corporate Employee Relations / People Performance)</span>
+ </div>
+</div>
+
+<script>
+ (function () {
+ const state = { scope: new Set(), pillar: new Set(), persona: new Set() };
+ const groupOf = {};
+ document.querySelectorAll('.filter-group').forEach(g => {
+ const groupName = g.dataset.group;
+ g.querySelectorAll('.chip').forEach(c => {
+ groupOf[c.dataset.filter] = groupName;
+ c.addEventListener('click', () => {
+ const f = c.dataset.filter;
+ if (state[groupName].has(f)) {
+ state[groupName].delete(f);
+ c.classList.remove('active');
+ } else {
+ state[groupName].add(f);
+ c.classList.add('active');
+ }
+ apply();
+ });
+ });
+ });
+
+ function apply() {
+ const sections = document.querySelectorAll('.section');
+ let totalVisible = 0;
+ sections.forEach(section => {
+ let sectionVisible = 0;
+ section.querySelectorAll('.card').forEach(card => {
+ const scope = card.dataset.scope;
+ const pillars = card.dataset.pillar.split(' ');
+ const personas = card.dataset.persona.split(' ');
+ const scopeOk = state.scope.size === 0 || state.scope.has(scope);
+ const pillarOk = state.pillar.size === 0 || pillars.some(p => state.pillar.has(p));
+ const personaOk = state.persona.size === 0 || personas.some(p => state.persona.has(p));
+ const show = scopeOk && pillarOk && personaOk;
+ card.classList.toggle('dimmed', !show);
+ if (show) sectionVisible++;
+ });
+ section.classList.toggle('hidden', sectionVisible === 0);
+ totalVisible += sectionVisible;
+ });
+ document.getElementById('empty').classList.toggle('show', totalVisible === 0);
+ }
+
+ function reset() {
+ ['scope','pillar','persona'].forEach(k => state[k].clear());
+ document.querySelectorAll('.chip.active').forEach(c => c.classList.remove('active'));
+ apply();
+ }
+ document.getElementById('reset').addEventListener('click', reset);
+ const r2 = document.getElementById('reset2');
+ if (r2) r2.addEventListener('click', reset);
+ })();
+</script>
+</body>
+</html>
